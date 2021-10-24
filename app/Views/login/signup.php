@@ -93,7 +93,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" style="text-align: left">
-                        <p>2021版規修訂調整<br>
+                        <p>
+                        2021版規修訂調整
+                        <br><br>
                         加入資格：中正大學學生及教職員或者中正周邊住戶店家，私訊粉專「中正買賣審核用」學生證/教職員證明以利管理員審核。
                         <br><br>
                         📌社團總則：本社團成立目的為物品交流，希望大家友善讓利交易商品，以雙方可接受的價格為主，但不可超過原價！不可超過原價！不可超過原價！（重要）<br>
@@ -121,7 +123,8 @@
                         【內容】：商品詳細內容、相關網頁等⋯<br>
                         【備註/其他】：使用狀況，產品來源，為何出清等等⋯<br>
                         ▲周邊店家廣告：一年只可被一人推廣一次<br>
-                        ▲罰則：輕則刪文禁言，重則踢除社團。如有發現有違版規的事宜也歡迎使用檢舉功能，共同維持社團環境！</p>
+                        ▲罰則：輕則刪文禁言，重則踢除社團。如有發現有違版規的事宜也歡迎使用檢舉功能，共同維持社團環境
+                        </p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">我已閱讀本網站規範</button>
