@@ -66,16 +66,14 @@
             <div class="col-4" align="center">
                 <br><br><br>
                 <p class="type0">中 正 大 學 買 賣 交 流</p>
-                <br><br>
-                <form name = "accounts" action = "/LoginController/compare_account" method="POST" style="border: 1px rgb(230, 215, 210) solid">
+                <br><br><br><br>
+                <form name = "accounts" action = "/LoginController/forget_account" method="POST" style="border: 1px rgb(230, 215, 210) solid">
                     <br>
-                    <p class="type1">登入</p>
+                    <p class="type1">忘記密碼</p>
                     <input id = "account" name = "account" type = "email" class="type2" style="height:35px; width:250px" placeholder = "帳號/電子郵件" required><br><br>
-                    <input id = "password" name = "password" type = "password" class="type2" style="height:35px; width:250px" placeholder = "密碼" required><br><br>
-                    <a class="btn btn-primary" role="button" href="/LoginController/signup" style="font-weight: bold; margin-right: 30px"> 註冊 </a>
-                    <button class="btn btn-primary" style="font-weight: bold;"> 登入 </button><br><br>
-                    <a href="/LoginController/forget" type="button">忘記密碼 ？</a><br><br>
-                    <p class="type4">※ 請使用學校電子郵件登入</p>
+                    <a class="btn btn-primary" role="button" href="/LoginController/login" style="font-weight: bold; margin-right: 30px"> 返回 </a>
+                    <button class="btn btn-primary" style="font-weight: bold;"> 找回密碼 </button><br><br>
+                    <p class="type4">※ 請使用學校電子郵件找回密碼</p>
                 </form>
             </div>
             <div class="col-4"></div>

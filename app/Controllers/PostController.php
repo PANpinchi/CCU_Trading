@@ -6,8 +6,9 @@ use App\Controllers\BaseController;
 
 class PostController extends BaseController
 {
-    public function index()
-    {
-        //
-    }
+    /* 發文頁面 */
+	public function post()
+	{
+        return view('posts/post');
+	}
 }

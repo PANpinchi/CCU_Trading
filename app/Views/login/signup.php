@@ -70,11 +70,11 @@
                 <br><br><br>
                 <p class="type0">中 正 大 學 買 賣 交 流</p>
                 <br><br>
-                <form name = "accounts" action = "/LoginController/compare_account" method="POST" style="border: 1px rgb(230, 215, 210) solid">
+                <form name = "accounts" action = "/LoginController/store_account" method="POST" style="border: 1px rgb(230, 215, 210) solid">
                     <br>
                     <p class="type1">註冊</p>
-                    <input type = "email" class="type2" style="height:35px; width:250px" placeholder = "帳號/電子郵件" required><br><br>
-                    <input type = "password" class="type2" style="height:35px; width:250px" placeholder = "密碼" required><br><br>
+                    <input id = "account" name = "account" type = "email" class="type2" style="height:35px; width:250px" placeholder = "帳號/電子郵件" required><br><br>
+                    <input id = "password" name = "password" type = "password" class="type2" style="height:35px; width:250px" placeholder = "密碼" required><br><br>
                     <a class="btn btn-primary" role="button" href="/LoginController/login" style="font-weight: bold; margin-right: 30px"> 返回 </a>
                     <button class="btn btn-primary" style="font-weight: bold;"> 註冊 </button><br><br>
                     <input type="checkbox" value="1" required>我已閱讀並同意本<a href="#" type="button" data-bs-toggle="modal" data-bs-target="#standard">網站規範</a><br><br>
