@@ -15,15 +15,10 @@
                 position: fixed;
                 bottom: 0px;
             }
-
-            textarea{
-                border-radius: 5px;
-                resize: none;
-                width:60%;
-            }
             input{
+                padding-left: 10px;
                 width:80%;
-                height:60px;
+                height:40px;
                 border-radius: 5px;
                 border: 1px solid;
             }
@@ -35,6 +30,7 @@
     <body >
         <div class="col-2"></div>
         <div class="col-8" align="center" style="background-color: rgb(250, 250, 250)">
+            <div style="height: 80px;"></div>
             <div align="center">
                 <!--訊息-->
                 <p>訊息</p>
@@ -42,7 +38,8 @@
             <div class="footer" style="width:66.6%;">
                 <!--輸入-->
                 <form name = "messages" action="/ChatController/message" method="POST">
-                    <input name = "message" id = "message" type="text" placeholder=" 輸入文字"></input>
+                    <input name = "message" id = "message" type="text" placeholder="輸入文字" autocomplete="off"></input>
+                    <button class="btn btn-primary" type="submit" style="height:40px;">發送</button>
                     <br><br>
                 </form>
             </div>
