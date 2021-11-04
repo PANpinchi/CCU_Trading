@@ -77,7 +77,6 @@ class LoginController extends BaseController
 		}
 
 		/* 寄送找回密碼Email */
-		
 	}
 
 	/* 儲存帳戶 */
