@@ -23,7 +23,7 @@
         <div class="col-2"></div>
         <div class="col-8" align="center">
             <div style="height: 80px"></div>
-            <p id="name">潘品齊</p>
+            <p id="name">陳俊騰</p>
             <button onclick="GetName()">私訊</button>
         </div>
         <div class="col-2"></div>

@@ -16,6 +16,23 @@
                 position: fixed;
                 bottom: 0px;
             }
+
+            .type1{
+                font: bold 20px sans-serif;
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+            .speech-bubble-left {
+                background: #3db5ff;
+                border-radius: 1em;
+            }
+
+            .speech-bubble-right {
+                background: #3db5ff;
+                border-radius: 1em;
+            }
+
             input{
                 padding-left: 10px;
                 width:80%;
@@ -31,27 +48,43 @@
     <body >
         <div class="col-2"></div>
         <div class="col-8" align="center" style="background-color: rgb(250, 250, 250)">
-            <div style="height: 80px;"></div>
-            <div align="center">
+            <div style="height: 100px;"></div>
+            <div>
                 <!--訊息-->
                 <?php 
-                    for($i = 0; isset($from[$i]); $i++){
+                    for($i = 1; isset($from[$i]); $i++){
                         if($from[$i] == $_SESSION['name']){
-                            echo '<p>'.$content[$i].'</p>';
+                            echo '
+                            <div align="right">
+                                <div class="speech-bubble-right" style="width: fit-content;">
+                                    <p class="type1">
+                                        &nbsp&nbsp'.$content[$i].'&nbsp&nbsp
+                                    </p>
+                                </div>
+                            </div>';
                         }
                         else{
-                            echo '<p>_________'.$content[$i].'</p>';
+                            echo '
+                            <div align="left">
+                                <div class="speech-bubble-left" style="width: fit-content;">
+                                    <p class="type1">
+                                        &nbsp&nbsp'.$content[$i].'&nbsp&nbsp
+                                    </p>
+                                </div>
+                            </div>';
                         }
                     }
                 ?>
             </div>
-            <div class="footer" style="width:66.6%;">
+            <div style="height: 100px;"></div>
+            <div class="footer" style="width:66.6%; background-color: rgb(250, 250, 250);">
+                <div style="height: 20px;"></div>
                 <!--輸入-->
                 <form name = "messages" action="/ChatController/message" method="POST">
                     <input name = "message" id = "message" type="text" placeholder="輸入文字" autocomplete="off"></input>
                     <button class="btn btn-primary" type="submit" style="height:40px;">發送</button>
-                    <br><br>
                 </form>
+                <div style="height: 20px;"></div>
             </div>
         </div>
         <div class="col-2"></div>

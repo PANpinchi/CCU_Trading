@@ -74,8 +74,8 @@ class ChatController extends BaseController
 			$cmp_to = strcmp($_SESSION['to'], $users[$i]['from']);
 
 			if($cmp_from == 0 && $cmp_to == 0){
-				array_push($from, $users[$i]['to']);
-				array_push($to, $users[$i]['from']);
+				array_push($from, $users[$i]['from']);
+				array_push($to, $users[$i]['to']);
 				array_push($content, $users[$i]['content']);
 				array_push($time, $users[$i]['time']);
 			}
