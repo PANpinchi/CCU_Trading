@@ -1,5 +1,6 @@
 <?= $this->extend('templates\post_default') ?>
 <?= $this->section('content') ?>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -33,7 +34,16 @@
             <div style="height: 80px;"></div>
             <div align="center">
                 <!--訊息-->
-                <p>訊息</p>
+                <?php 
+                    for($i = 0; isset($from[$i]); $i++){
+                        if($from[$i] == $_SESSION['name']){
+                            echo '<p>'.$content[$i].'</p>';
+                        }
+                        else{
+                            echo '<p>_________'.$content[$i].'</p>';
+                        }
+                    }
+                ?>
             </div>
             <div class="footer" style="width:66.6%;">
                 <!--輸入-->
