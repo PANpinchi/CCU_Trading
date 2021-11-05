@@ -11,13 +11,23 @@ class WebData extends Migration
         $this->forge->addField([
             'id' => [
                 'type'           => 'INT',
-                'constraint'     => 5,
+                'constraint'     => 8,
                 'unsigned'       => TRUE,
                 'auto_increment' => TRUE
             ],
+            'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '200',
+                'null'       => TRUE
+            ],
+            'department' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '200',
+                'null'       => TRUE
+            ],
             'account' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '200',
                 'null'       => TRUE
             ],
             'password' => [

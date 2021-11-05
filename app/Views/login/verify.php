@@ -67,13 +67,12 @@
                 <br><br><br>
                 <p class="type0">中 正 大 學 買 賣 交 流</p>
                 <br><br><br><br>
-                <form name = "accounts" action = "/LoginController/forget_password" method="POST" style="border: 1px rgb(230, 215, 210) solid">
+                <form name = "accounts" action = "/LoginController/compare_verification_code" method="POST" style="border: 1px rgb(230, 215, 210) solid">
                     <br>
-                    <p class="type1">忘記密碼</p>
-                    <input id = "account" name = "account" type = "email" class="type2" style="height:35px; width:250px" placeholder = "帳號/電子郵件" required><br><br>
-                    <a class="btn btn-primary" role="button" href="/LoginController/login" style="font-weight: bold; margin-right: 30px"> 返回 </a>
-                    <button class="btn btn-primary" style="font-weight: bold;"> 找回密碼 </button><br><br>
-                    <p class="type4">※ 請使用學校電子郵件找回密碼</p>
+                    <p class="type1">驗證電子郵件</p>
+                    <input id = "verification_code" name = "verification_code" type = "text" class="type2" style="height:35px; width:250px; text-align: center;" placeholder = "請輸入驗證碼" autocomplete="off" required><br><br>
+                    <button class="btn btn-primary" style="font-weight: bold;"> 確認 </button><br><br>
+                    <p class="type4">※ 請至學校電子郵件查看驗證碼</p>
                 </form>
             </div>
             <div class="col-4"></div>

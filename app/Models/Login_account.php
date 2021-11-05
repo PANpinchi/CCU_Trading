@@ -15,6 +15,8 @@ class Login_account extends Model
     protected $useSoftDeletes       = false;
     protected $protectFields        = true;
     protected $allowedFields        = [
+        'name',
+        'department',
         'account',
         'password'
     ];

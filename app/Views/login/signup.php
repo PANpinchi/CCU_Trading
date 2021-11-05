@@ -58,6 +58,12 @@
             color : red;
         }
 
+        .type5{
+            font-weight: bold;
+            font-size: 1em;
+            color : rgb(100, 100, 100);
+        }
+
         </style>
         <title>中正大學買賣交流</title>
     </head>
@@ -69,10 +75,104 @@
             <div class="col-4" align="center">
                 <br><br><br>
                 <p class="type0">中 正 大 學 買 賣 交 流</p>
-                <br><br>
                 <form name = "accounts" action = "/LoginController/store_account" method="POST" style="border: 1px rgb(230, 215, 210) solid">
                     <br>
                     <p class="type1">註冊</p>
+                    <input id = "name" name = "name" type = "text" class="type2" style="height:35px; width:250px" placeholder = "姓名" required><br><br>
+                    <select id= "department" name = "department" class="type2" style="height:35px; width:250px" required>
+                        <option value="" disabled selected>請選擇科系</option>
+                        <optgroup label="文學院">
+                            <option value="中國文學系">中國文學系</option>
+                            <option value="中國文學研究所">中國文學研究所</option>
+                            <option value="外國語文學系">外國語文學系</option>
+                            <option value="外國語文學研究所">外國語文研究所</option>
+                            <option value="歷史學系">歷史學系</option>
+                            <option value="歷史研究所">歷史研究所</option>
+                            <option value="哲學系">哲學系</option>
+                            <option value="哲學研究所">哲學研究所</option>
+                            <option value="語言學研究所">語言學研究所</option>
+                            <option value="台灣文學與創意應用研究所">台灣文學與創意應用研究所</option>
+                            <option value="人文與社會科學研究中心">人文與社會科學研究中心</option>
+                        </optgroup>
+                        <optgroup label="社會科學院">
+                            <option value="社會福利學系">社會福利學系</option>
+                            <option value="社會福利研究所">社會福利研究所</option>
+                            <option value="心理學系">心理學系</option>
+                            <option value="心理研究所">心理研究所</option>
+                            <option value="勞工關係學系">勞工關係學系</option>
+                            <option value="勞工關係研究所">勞工關係研究所</option>
+                            <option value="政治學系">政治學系</option>
+                            <option value="政治研究所">政治研究所</option>
+                            <option value="傳播學系">傳播學系</option>
+                            <option value="傳播研究所">傳播研究所</option>
+                            <option value="戰略暨國際事務研究所">戰略暨國際事務研究所</option>
+                            <option value="認知科學博士學位學程">認知科學博士學位學程</option>
+                        </optgroup>
+                        <optgroup label="管理學院">
+                            <option value="經濟學系">經濟學系</option>
+                            <option value="經濟研究所">經濟研究所</option>
+                            <option value="財務金融學系">財務金融學系</option>
+                            <option value="財務金融研究所">財務金融研究所</option>
+                            <option value="企業管理學系">企業管理學系</option>
+                            <option value="企業管理研究所">企業管理研究所</option>
+                            <option value="會計與資訊科技學系">會計與資訊科技學系</option>
+                            <option value="會計與資訊科技研究所">會計與資訊科技研究所</option>
+                            <option value="資訊管理學系">資訊管理學系</option>
+                            <option value="資訊管理研究所">資訊管理研究所</option>
+                            <option value="高階主管管理碩士在職專班">高階主管管理碩士在職專班</option>
+                            <option value="國際財務金融管理碩士學位">國際財務金融管理碩士學位</option>
+                            <option value="金融科技碩士學位">金融科技碩士學位</option>
+                        </optgroup>
+                        <optgroup label="教育學院">
+                            <option value="成人及繼續教育學系">成人及繼續教育學系</option>
+                            <option value="成人及繼續教育研究所">成人及繼續教育研究所</option>
+                            <option value="教育學研究所">教育學研究所</option>
+                            <option value="犯罪防治學系">犯罪防治學系</option>
+                            <option value="犯罪防治研究所">犯罪防治研究所</option>
+                            <option value="運動競技學系">運動競技學系</option>
+                            <option value="運動競技研究所">運動競技研究所</option>
+                            <option value="師資培育中心">師資培育中心</option>
+                            <option value="教學專業發展數位學習碩士在職專班">教學專業發展數位學習碩士在職專班</option>
+                            <option value="教育領導與管理發展國際碩士學位學程">教育領導與管理發展國際碩士學位學程</option>
+                        </optgroup>
+                        <optgroup label="法學院">
+                            <option value="法律學系">法律學系</option>
+                            <option value="法律研究所">法律研究所</option>
+                            <option value="財經法律學系">財經法律學系</option>
+                            <option value="財經法律研究所">財經法律研究所</option>
+                            <option value="高階主管法律碩士在職專班">高階主管法律碩士在職專班</option>
+                        </optgroup>
+                        <optgroup label="理學院">
+                            <option value="數學系">數學系</option>
+                            <option value="數學研究所">數學研究所</option>
+                            <option value="地球與環境科學系">地球與環境科學系</option>
+                            <option value="地球與環境科學研究所">地球與環境科學研究所</option>
+                            <option value="物理學系">物理學系</option>
+                            <option value="物理研究所">物理研究所</option>
+                            <option value="化學暨生物化學系">化學暨生物化學系</option>
+                            <option value="化學暨生物化學研究所">化學暨生物化學研究所</option>
+                            <option value="生物醫學科學系">生物醫學科學系</option>
+                            <option value="生物醫學科學研究所">生物醫學科學研究所</option>
+                            <option value="跨領域科學國際博士學位學程">跨領域科學國際博士學位學程</option>
+                        </optgroup>
+                        <optgroup label="工學院">
+                            <option value="資訊工程學系">資訊工程學系</option>
+                            <option value="資訊工程研究所">資訊工程研究所</option>
+                            <option value="電機工程學系">電機工程學系</option>
+                            <option value="電機工程研究所">電機工程研究所</option>
+                            <option value="機械工程學系">機械工程學系</option>
+                            <option value="機械工程研究所">機械工程研究所</option>
+                            <option value="化學工程學系">化學工程學系</option>
+                            <option value="化學工程研究所">化學工程研究所</option>
+                            <option value="通訊工程學系">通訊工程學系</option>
+                            <option value="通訊工程研究所">通訊工程研究所</option>
+                            <option value="光機電整合工程研究所">光機電整合工程研究所</option>
+                            <option value="前瞻製造系統碩士學位學程">前瞻製造系統碩士學位學程</option>
+                            <option value="環境智能與智慧系統博士學位學程">環境智能與智慧系統博士學位學程</option>
+                            <option value="機械工程學系光機電整合工程組">機械工程學系光機電整合工程組</option>
+                        </optgroup>
+                    </select>
+                    <br><br>
                     <input id = "account" name = "account" type = "email" class="type2" style="height:35px; width:250px" placeholder = "帳號/電子郵件" required><br><br>
                     <input id = "password" name = "password" type = "password" class="type2" style="height:35px; width:250px" placeholder = "密碼" required><br><br>
                     <a class="btn btn-primary" role="button" href="/LoginController/login" style="font-weight: bold; margin-right: 30px"> 返回 </a>
