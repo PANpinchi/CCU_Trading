@@ -11,6 +11,14 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script>
+            window.onload = function(){
+                var scrollTop = window.pageYOffset|| document.documentElement.scrollTop || document.body.scrollTop;
+                window.pageYOffset = 999999999999999999999999999999;
+                document.documentElement.scrollTop = 999999999999999999999999999999;
+                document.body.scrollTop = 999999999999999999999999999999;
+            };
+        </script>
         <style>
             .footer{
                 position: fixed;
@@ -24,13 +32,47 @@
             }
 
             .speech-bubble-left {
+                position: relative;
                 background: #3db5ff;
                 border-radius: 1em;
             }
 
+            .speech-bubble-left:after {
+                content: '';
+                position: absolute;
+                left: 10px;
+                top: 60%;
+                width: 0;
+                height: 0;
+                border: 20px solid transparent;
+                border-right-color: #3db5ff;
+                border-left: 0;
+                border-bottom: 0;
+                margin-top: -10px;
+                margin-left: -20px;
+            }
+
             .speech-bubble-right {
+                position: relative;
+                z-index:8;
                 background: #3db5ff;
                 border-radius: 1em;
+            }
+
+            .speech-bubble-right:after {
+                content: '';
+                position: absolute;
+                z-index:-1;
+                right: 10px;
+                top: 60%;
+                width: 0;
+                height: 0;
+                border: 20px solid transparent;
+                border-left-color: #3db5ff;
+                border-right: 0;
+                border-bottom: 0;
+                margin-top: -10px;
+                margin-right: -20px;
             }
 
             input{
@@ -45,9 +87,9 @@
     </head>
 
     
-    <body >
+    <body>
         <div class="col-2"></div>
-        <div class="col-8" align="center" style="background-color: rgb(250, 250, 250)">
+        <div id="my" class="col-8" align="center" style="background-color: rgb(250, 250, 250);">
             <div style="height: 100px;"></div>
             <div>
                 <!--訊息-->
@@ -55,7 +97,7 @@
                     for($i = 1; isset($from[$i]); $i++){
                         if($from[$i] == $_SESSION['name']){
                             echo '
-                            <div align="right">
+                            <div align="right" style="margin-right: 5%">
                                 <div class="speech-bubble-right" style="width: fit-content;">
                                     <p class="type1">
                                         &nbsp&nbsp'.$content[$i].'&nbsp&nbsp
@@ -65,7 +107,7 @@
                         }
                         else{
                             echo '
-                            <div align="left">
+                            <div align="left" style="margin-left: 5%">
                                 <div class="speech-bubble-left" style="width: fit-content;">
                                     <p class="type1">
                                         &nbsp&nbsp'.$content[$i].'&nbsp&nbsp
@@ -77,7 +119,8 @@
                 ?>
             </div>
             <div style="height: 100px;"></div>
-            <div class="footer" style="width:66.6%; background-color: rgb(250, 250, 250);">
+
+            <div class="footer" style="width:66%; background-color: rgb(250, 250, 250); z-index:9;">
                 <div style="height: 20px;"></div>
                 <!--輸入-->
                 <form name = "messages" action="/ChatController/message" method="POST">

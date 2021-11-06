@@ -10,10 +10,14 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <style>
             html,body{
-                height: 100%; margin: 0; padding: 0;
+                height: 100%;
+                width: 99.6%;
+                margin: 0;
+                padding: 0;
             }
             .atop{
                 position: fixed;
+                z-index:10;
                 top: 0px;
                 width: 100%;
             }
