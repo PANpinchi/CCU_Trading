@@ -96,11 +96,14 @@ class ChatController extends BaseController
 	{
 		$model = new Message();
 
+		// 取得日期與時間
+		$time = date('Y/m/d H:i:s');
+
 		$data = [
 			'from' => $_SESSION['name'],
 			'to' => $_SESSION['to'],
 			'content' => $this->request->getVar('message'),
-			'time' => NULL
+			'time' => $time
 		];
 
 		$model->save($data);

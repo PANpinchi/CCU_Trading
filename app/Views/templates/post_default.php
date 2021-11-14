@@ -30,14 +30,14 @@
         <div class="atop">
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color:skyblue">
                 <div class="container-fluid" style="height:60px;">
-                    <a class="navbar-brand" href="#"><strong>中 正 大 學 買 賣 交 流</strong></a>
+                    <a class="navbar-brand" href="/PostController/post"><strong>中 正 大 學 買 賣 交 流</strong></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#"><strong>首頁</strong></a>
+                            <a class="nav-link active" aria-current="page" href="/PostController/post"><strong>首頁</strong></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#"><strong>我的帳號</strong></a>

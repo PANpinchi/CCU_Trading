@@ -25,10 +25,24 @@
                 bottom: 0px;
             }
 
+            .type0{
+                font: bold 15px sans-serif;
+            }
+
             .type1{
                 font: bold 20px sans-serif;
                 padding-top: 5px;
                 padding-bottom: 5px;
+            }
+
+            .type2{
+                font: normal 5px sans-serif;
+                padding-right: 6px;
+            }
+
+            .type3{
+                font: normal 5px sans-serif;
+                padding-left: 6px;
             }
 
             .speech-bubble-left {
@@ -94,11 +108,47 @@
             <div>
                 <!--訊息-->
                 <?php 
+                    $year = NULL;
+                    $month = NULL;
+                    $day = NULL;
+
                     for($i = 1; isset($from[$i]); $i++){
+                        /* 計算時間 */
+                        $hours = $time[$i][11] * 10 + $time[$i][12];
+                        $minutes = $time[$i][14] * 10 + $time[$i][15];
+                        $afternoon = 0;
+                        if($hours >= 12){
+                            $afternoon = 1;
+                            if($hours > 12){
+                                $hours -= 12;
+                            }
+                        }
+
+                        /* 計算日期 */
+                        $temp_year = $time[$i][0] * 1000 + $time[$i][1] * 100 + $time[$i][2] * 10 + $time[$i][3];
+                        $temp_month = $time[$i][5] * 10 + $time[$i][6];
+                        $temp_day = $time[$i][8] * 10 + $time[$i][9];
+
+                        if($temp_year != $year || $temp_month != $month || $temp_day != $day){
+                            $year = $temp_year;
+                            $month = $temp_month;
+                            $day = $temp_day;
+                            echo '<p class="type0">━━━ '.$year.' 年 '.$month.' 月 '.$day.' 日 ━━━</p>';
+                        }
+
                         if($from[$i] == $_SESSION['name']){
                             echo '
-                            <div align="right" style="margin-right: 5%">
-                                <div class="speech-bubble-right" style="width: fit-content;">
+                            <div align="right" style="margin-right: 5%;">
+                                <span class="type2">';
+                                    if($afternoon == 0){
+                                        echo '上午 '.$hours.':'.$minutes;
+                                    }
+                                    else{
+                                        echo '下午 '.$hours.':'.$minutes;
+                                    }
+                            echo '
+                                </span>
+                                <div class="speech-bubble-right" style="width: fit-content; max-width: 50%; min-width: 5%; text-align: center;">
                                     <p class="type1">
                                         &nbsp&nbsp'.$content[$i].'&nbsp&nbsp
                                     </p>
@@ -108,6 +158,15 @@
                         else{
                             echo '
                             <div align="left" style="margin-left: 5%">
+                                <span class="type3">';
+                                    if($afternoon == 0){
+                                        echo '上午 '.$hours.':'.$minutes;
+                                    }
+                                    else{
+                                        echo '下午 '.$hours.':'.$minutes;
+                                    }
+                            echo '
+                                </span>
                                 <div class="speech-bubble-left" style="width: fit-content;">
                                     <p class="type1">
                                         &nbsp&nbsp'.$content[$i].'&nbsp&nbsp

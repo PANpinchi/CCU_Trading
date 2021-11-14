@@ -417,6 +417,10 @@ class LoginController extends BaseController
 				return ;
 			}
 		}
+
+		echo '<script>alert("帳號尚未註冊，請先註冊！")</script>';
+		echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/login'>";
+		return ;
 	}
     
 }
