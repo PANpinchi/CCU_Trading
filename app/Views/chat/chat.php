@@ -123,6 +123,9 @@
                                 $hours -= 12;
                             }
                         }
+                        if($minutes < 10){
+                            $minutes = '0'.$minutes;
+                        }
 
                         /* 計算日期 */
                         $temp_year = $time[$i][0] * 1000 + $time[$i][1] * 100 + $time[$i][2] * 10 + $time[$i][3];
