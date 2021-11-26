@@ -8,20 +8,8 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <style>
-            html,body{
-                height: 100%;
-                width: 99.6%;
-                margin: 0;
-                padding: 0;
-            }
-            .atop{
-                position: fixed;
-                z-index:10;
-                top: 0px;
-                width: 100%;
-            }
-        </style>
+        <link rel="stylesheet" href="/style/templates.css">
+
         <title>中正大學買賣交流</title>
     </head>
 
@@ -47,6 +35,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#"><strong>購買紀錄</strong></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/PostController/create"><strong>新增商品</strong></a>
                         </li>
                     </ul>
                     <form class="d-flex">

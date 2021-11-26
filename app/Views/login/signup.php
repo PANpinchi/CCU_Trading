@@ -8,63 +8,8 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
         <link rel="stylesheet" href="/style/login.css">
-        <style>
-        body {
-            background-image: url("/img/login_img.jpg")
-        }
 
-        form{
-            width: 400px;
-            height: auto;
-            border: auto;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 10px 10px 10px 10px;
-            margin: auto;
-        }
-
-        a{
-            text-decoration:none;
-        }
-
-        .type0{
-            font-weight: bold;
-            font-size: 50px;
-            color : rgb(255, 255, 255);
-        }
-
-        .type1{
-            font-weight: bold;
-            font-size: 30px;
-            color : rgb(50, 50, 50);
-        }
-
-        .type2{
-            font-weight: bold;
-            font-size: 1em;
-            color : rgb(50, 50, 50);
-        }
-
-        .type3{
-            font-weight: bold;
-            font-size: 1em;
-            color : rgb(25, 25, 200);
-        }
-
-        .type4{
-            font-weight: bold;
-            font-size: 1em;
-            color : red;
-        }
-
-        .type5{
-            font-weight: bold;
-            font-size: 1em;
-            color : rgb(100, 100, 100);
-        }
-
-        </style>
         <title>中正大學買賣交流</title>
     </head>
 

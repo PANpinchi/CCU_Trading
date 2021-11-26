@@ -1,0 +1,52 @@
+body {
+    background-image: url("/img/login_img.jpg")
+}
+
+form{
+    width: 400px;
+    height: auto;
+    border: auto;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px 10px 10px 10px;
+    margin: auto;
+}
+
+a{
+    text-decoration:none;
+}
+
+.type0{
+    font-weight: bold;
+    font-size: 50px;
+    color : rgb(255, 255, 255);
+}
+
+.type1{
+    font-weight: bold;
+    font-size: 30px;
+    color : rgb(50, 50, 50);
+}
+
+.type2{
+    font-weight: bold;
+    font-size: 1em;
+    color : rgb(50, 50, 50);
+}
+
+.type3{
+    font-weight: bold;
+    font-size: 1em;
+    color : rgb(25, 25, 200);
+}
+
+.type4{
+    font-weight: bold;
+    font-size: 1em;
+    color : red;
+}
+
+.type5{
+    font-weight: bold;
+    font-size: 1em;
+    color : rgb(100, 100, 100);
+}
