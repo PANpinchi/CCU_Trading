@@ -1,8 +1,6 @@
 <?= $this->extend('templates\post_default') ?>
 <?= $this->section('content') ?>
 
-<?php session_start();?>
-
 <!doctype html>
 <html lang="en">
     <head>
@@ -18,13 +16,13 @@
 
         <title>中正大學買賣交流</title>
     </head>
-
     
     <body>
         <div class="col-2"></div>
         <div class="col-8" align="center">
-            <div style="height: 80px"></div>
+            <div style="height: 100px"></div>
             <p class="type0"> 新增商品 </p>
+            <hr>
             <span class="type1"> 商品名稱&nbsp:&nbsp</span> <input id="item" style="width: 250px" required><br><br>
             <span class="type1"> 商品價格&nbsp:&nbsp</span> <input id="money" style="width: 250px" required><br><br>
             <span class="type1"> 商品數量&nbsp:&nbsp</span> <input id="number" style="width: 250px" required><br><br>

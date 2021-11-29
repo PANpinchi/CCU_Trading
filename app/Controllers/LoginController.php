@@ -409,6 +409,8 @@ class LoginController extends BaseController
 
 			if($account == 0 && $password == 0){
 				$_SESSION['name'] = $users[$i]['name'];
+				$_SESSION['account'] = $users[$i]['account'];
+				$_SESSION['password'] = $users[$i]['password'];
 				return redirect('PostController/post');
 			}
 			else if($account == 0 && $password != 0){
