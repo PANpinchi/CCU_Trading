@@ -15,6 +15,11 @@ class Post extends Migration
                 'unsigned'       => TRUE,
                 'auto_increment' => TRUE
             ],
+            'seller' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '200',
+                'null'       => TRUE
+            ],
             'name' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '200',
@@ -53,6 +58,11 @@ class Post extends Migration
             'describe' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '500',
+                'null'       => TRUE
+            ],
+            'post_time' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '200',
                 'null'       => TRUE
             ],
         ]);

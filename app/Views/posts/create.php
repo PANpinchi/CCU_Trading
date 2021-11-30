@@ -21,7 +21,7 @@
         <div class="col-2"></div>
         <div class="col-8">
             <div style="height: 100px"></div>
-            <form name = "accounts" action = "/PostController/post_item" enctype="multipart/form-data" method="POST" style="border: 1px rgb(230, 215, 210) solid">
+            <form name = "accounts" action = "/PostController/post_item" enctype="multipart/form-data" method="POST">
                 <p class="type0"> 新增商品 </p>
                 <hr>
                 <span class="type1"> 商品名稱&nbsp:&nbsp</span> <input id="name" name="name" style="width: 250px" required><br><br>
@@ -330,10 +330,18 @@
                 </select>
                 <br><br>
                 <span class="type1"> 商品圖片&nbsp:&nbsp</span>
-                <img style="max-width: 50%; max-height: 50%"><br><br>
-                <input name="img" id="img" style="display: none;" type="file" accept=".jpg,.png" required>
-                <button id="capture" type="button" class="btn btn-secondary" onclick="img.click()">選擇檔案</button><br><br>
-                <br><br>
+                <img id="img1" name="img1" style="width: 200px; height: 200px; max-width: 200px; max-height: 200px;">
+                <img id="img2" name="img2" style="width: 200px; height: 200px; max-width: 200px; max-height: 200px;">
+                <img id="img3" name="img3" style="width: 200px; height: 200px; max-width: 200px; max-height: 200px;"><br><br>
+                <?php for($i=0;$i<27;$i++){echo '&nbsp';}?>
+                <input name="img01" id="img01" style="display: none;" type="file" accept=".jpg,.png" required>
+                <button id="capture" type="button" class="btn btn-secondary" onclick="img01.click()">新增照片1</button>
+                <?php for($i=0;$i<20;$i++){echo '&nbsp';}?>
+                <input name="img02" id="img02" style="display: none;" type="file" accept=".jpg,.png">
+                <button id="capture" type="button" class="btn btn-secondary" onclick="img02.click()">新增照片2</button>
+                <?php for($i=0;$i<20;$i++){echo '&nbsp';}?>
+                <input name="img03" id="img03" style="display: none;" type="file" accept=".jpg,.png">
+                <button id="capture" type="button" class="btn btn-secondary" onclick="img03.click()">新增照片3</button><br><br>
                 <p class="type1"> 商品描述&nbsp:&nbsp</p> <textarea id="describe" name="describe" cols="50" rows="10"></textarea><br><br>
                 <button class="btn btn-primary" style="font-weight: bold;"> 儲存並上架 </button><br><br>
             </form>
@@ -344,12 +352,34 @@
 
 <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 <script>
-    $('input').on('change', function(e){      
+    $('#img01').on('change', function(e){      
         const file = this.files[0];
         
         const fr = new FileReader();
         fr.onload = function (e) {
-            $('img').attr('src', e.target.result);
+            $('#img1').attr('src', e.target.result);
+        };
+        
+        // 使用 readAsDataURL 將圖片轉成 Base64
+        fr.readAsDataURL(file);
+    });
+    $('#img02').on('change', function(e){      
+        const file = this.files[0];
+        
+        const fr = new FileReader();
+        fr.onload = function (e) {
+            $('#img2').attr('src', e.target.result);
+        };
+        
+        // 使用 readAsDataURL 將圖片轉成 Base64
+        fr.readAsDataURL(file);
+    });
+    $('#img03').on('change', function(e){      
+        const file = this.files[0];
+        
+        const fr = new FileReader();
+        fr.onload = function (e) {
+            $('#img3').attr('src', e.target.result);
         };
         
         // 使用 readAsDataURL 將圖片轉成 Base64

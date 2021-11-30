@@ -21,9 +21,57 @@
     <body>
         <div class="col-2"></div>
         <div class="col-8" align="center">
-            <div style="height: 80px"></div>
+            <div style="height: 100px"></div>
             <!--<p id="name">陳俊騰</p>
             <button onclick="GetName()">私訊</button>-->
+
+            <?php
+                for($i = $count; $i >= 0; $i--){
+                    echo '<div class="border1">';
+                    echo '<div style="width: 400px;">';
+                    echo '<span class="type6" style="float: left; height: 30px; margin-top: 8px; margin-bottom: 5px;">'.$seller[$i].'</span>';
+                    echo '<span class="type5" style="float: right; height: 30px; margin-top: 11px; margin-bottom: 5px;">';
+                    if($post_time_type[$i] == 0){
+                        echo $post_time[$i].' day ago';
+                    }
+                    else if($post_time_type[$i] == 1){
+                        echo $post_time[$i].' seconds ago';
+                    }
+                    else if($post_time_type[$i] == 2){
+                        echo $post_time[$i].' minutes ago';
+                    }
+                    else if($post_time_type[$i] == 3){
+                        echo $post_time[$i].' hours ago';
+                    }
+                    echo '</span>';
+                    echo '</div>';
+                    $img = '';
+                    for($j = 0; isset($image[$i][$j]); $j++){
+                        if($image[$i][$j] == ':'){
+                            if($image[$i][$j+1] == ' '){
+                                continue;
+                            }
+                            else{
+                                for($k = $j+1; isset($image[$i][$k]); $k++){
+                                    if($image[$i][$k] != ' '){
+                                        $img[$k-($j+1)] = $image[$i][$k];
+                                    }
+                                    else{
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    echo '<img class="img1" src="/item_images/'.$img.'"><br><br>';
+                    echo '<div style="width: 400px; text-align: left;">';
+                    echo '<p class="type2">'.$name[$i].'</p>';
+                    echo '<span class="type3" style="float: left;">$'.$price[$i].'</span>';
+                    echo '<span class="type4" style="float: right;">數量：'.$number[$i].'</span>';
+                    echo '</div></div><br>';
+                }
+            ?>
         </div>
         <div class="col-2"></div>
     <body>

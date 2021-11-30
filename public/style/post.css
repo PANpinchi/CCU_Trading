@@ -1,3 +1,12 @@
+body{
+    background-color: rgb(245, 245, 245);
+}
+
+.img1{
+    width: 400px;
+    height: 400px;
+}
+
 .type0{
     font-weight: bold;
     font-size: 50px;
@@ -12,6 +21,35 @@
 
 .type2{
     font-weight: bold;
+    font-size: 25px;
+    color : rgb(50, 50, 50);
+}
+
+.type3{
+    font-weight: bold;
+    font-size: 25px;
+    color : rgb(255, 60, 60);
+}
+
+.type4{
+    margin-top: 10px;
+    font-size: 15px;
+    color : rgb(99, 99, 99);
+}
+
+.type5{
+    font-size: 15px;
+    color : rgb(99, 99, 99);
+}
+
+.type6{
+    font-weight: bold;
     font-size: 20px;
     color : rgb(50, 50, 50);
+}
+
+.border1{
+    width: 450px;
+    height: 575px;
+    background-color: rgb(255, 255, 255);
 }

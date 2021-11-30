@@ -15,6 +15,7 @@ class Post extends Model
     protected $useSoftDeletes       = false;
     protected $protectFields        = true;
     protected $allowedFields        = [
+        'seller',
         'name',
         'price',
         'number',
@@ -22,7 +23,8 @@ class Post extends Model
         'place',
         'type',
         'image',
-        'describe'
+        'describe',
+        'post_time'
     ];
 
     // Dates
