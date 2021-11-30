@@ -23,17 +23,20 @@
             <div style="height: 100px"></div>
             <p class="type0">個人資料</p>
             <hr>
-            <p class="type2">姓名&nbsp:&nbsp<?php echo $name; ?></p>
-            <p class="type2">暱稱&nbsp:&nbsp<?php echo $name2; ?></p>
-            <p class="type2">系所&nbsp:&nbsp<?php echo $department; ?></p>
-            <p class="type2">使用者帳號&nbsp:&nbsp<?php echo $account; ?></p>
-            <p class="type2">手機號碼&nbsp:&nbsp<?php echo $phone; ?></p>
-            <p class="type2">密碼&nbsp:&nbsp<?php echo $password; ?></p>
-            <p class="type2">性別&nbsp:&nbsp<?php echo $sex; ?></p>
-            <p class="type2">生日&nbsp:&nbsp<?php echo $birthday; ?></p>
+            <span class="type2">姓名&nbsp:&nbsp<?php echo $name; ?></span><br>
+            <span class="type2">使用者帳號&nbsp:&nbsp<?php echo $name2; ?></span><br>
+            <span class="type2">系所&nbsp:&nbsp<?php echo $department; ?></span><br>
+            <span class="type2">Email&nbsp:&nbsp<?php echo $account; ?></span><br>
+            <span class="type2">密碼&nbsp:&nbsp<?php echo $password; ?></span><br>
+            <span class="type2">手機號碼&nbsp:&nbsp<?php echo $phone; ?></span><br>
+            <span class="type2">性別&nbsp:&nbsp<?php echo $sex; ?>性</span><br>
+            <span class="type2">生日&nbsp:&nbsp<?php echo $birthday; ?></span><br>
             <div align="center">
                 <a href="#" type="button" class="btn btn-secondary" style="font-weight: bold;"> 修改個人資料 </a>
-                &nbsp&nbsp&nbsp&nbsp&nbsp
+            </div>
+            <p class="type0">個人賣場</p>
+            <hr>
+            <div align="center">
                 <a href="/LoginController/logout" type="button" class="btn btn-primary" style="font-weight: bold;"> 登出 </a>
             </div>
         </div>
