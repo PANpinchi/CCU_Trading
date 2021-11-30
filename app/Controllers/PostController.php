@@ -13,6 +13,9 @@ class PostController extends BaseController
     /* 商品頁面 */
 	public function post()
 	{
+		$model = new Post();
+		$users = $model->findAll(); //取得資料
+		
         return view('posts/post');
 	}
 
