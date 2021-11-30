@@ -28,7 +28,7 @@
                             <a class="nav-link active" aria-current="page" href="/PostController/post"><strong>首頁</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/PostController/account"><strong>我的帳號</strong></a>
+                            <a class="nav-link active" href="/PostController/myaccount"><strong>我的帳號</strong></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#"><strong>聊天訊息</strong></a>

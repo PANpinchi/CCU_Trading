@@ -1,5 +1,7 @@
 body {
-    background-image: url("/img/login_img.jpg")
+    background-image: url("/img/login_img.jpg");
+    min-width: 1530px;
+    background-repeat: no-repeat;
 }
 
 form{
@@ -49,4 +51,10 @@ a{
     font-weight: bold;
     font-size: 1em;
     color : rgb(100, 100, 100);
+}
+
+.type6{
+    font-weight: bold;
+    font-size: 1.2em;
+    color : rgb(50, 50, 50);
 }

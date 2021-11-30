@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class WebData extends Migration
+class Post extends Migration
 {
     public function up()
     {
@@ -20,48 +20,48 @@ class WebData extends Migration
                 'constraint' => '200',
                 'null'       => TRUE
             ],
-            'name2' => [
+            'price' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '200',
                 'null'       => TRUE
             ],
-            'department' => [
+            'number' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '200',
                 'null'       => TRUE
             ],
-            'account' => [
+            'time' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '200',
                 'null'       => TRUE
             ],
-            'password' => [
+            'place' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '200',
                 'null'       => TRUE
             ],
-            'phone' => [
+            'type' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '200',
                 'null'       => TRUE
             ],
-            'birthday' => [
+            'image' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '200',
                 'null'       => TRUE
             ],
-            'sex' => [
+            'describe' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '200',
+                'constraint' => '500',
                 'null'       => TRUE
             ],
         ]);
         $this->forge->addKey('id', True);
-        $this->forge->createTable('login_account');
+        $this->forge->createTable('post_items');
     }
 
     public function down()
     {
-        $this->forge->dropTable('login_account');
+        $this->forge->dropTable('post_items');
     }
 }

@@ -16,14 +16,16 @@
     
     <body>
         <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4" align="center">
+            <div class="col-2"></div>
+            <div class="col-8" align="center">
                 <br><br><br>
                 <p class="type0">中 正 大 學 買 賣 交 流</p>
-                <form name = "accounts" action = "/LoginController/store_account" method="POST" style="border: 1px rgb(230, 215, 210) solid">
+                <form name = "accounts" action = "/LoginController/store_account" method="POST" style="width: 800px; border: 1px rgb(230, 215, 210) solid;">
                     <br>
                     <p class="type1">註冊</p>
-                    <input id = "name" name = "name" type = "text" class="type2" style="height:35px; width:250px" placeholder = "姓名" required><br><br>
+                    <input id = "name" name = "name" type = "text" class="type2" style="height:35px; width:250px" placeholder = "姓名" required>
+                    <input id = "name2" name = "name2" type = "text" class="type2" style="height:35px; width:250px" placeholder = "暱稱" required>
+                    <br><br>
                     <select id= "department" name = "department" class="type2" style="height:35px; width:250px" required>
                         <option value="" disabled selected>請選擇科系</option>
                         <optgroup label="文學院">
@@ -117,9 +119,18 @@
                             <option value="機械工程學系光機電整合工程組">機械工程學系光機電整合工程組</option>
                         </optgroup>
                     </select>
+                    <input id = "phone" name = "phone" type = "text" class="type2" style="height:35px; width:250px" placeholder = "手機號碼" required>
                     <br><br>
-                    <input id = "account" name = "account" type = "email" class="type2" style="height:35px; width:250px" placeholder = "帳號/電子郵件" required><br><br>
-                    <input id = "password" name = "password" type = "password" class="type2" style="height:35px; width:250px" placeholder = "密碼" required><br><br>
+                    <input id = "account" name = "account" type = "email" class="type2" style="height:35px; width:250px" placeholder = "帳號/電子郵件" required>
+                    <input id = "birthday" name = "birthday" type = "text" class="type2" style="height:35px; width:250px" placeholder = "生日" onfocus="(this.type = 'date')" required>
+                    <br><br>
+                    <input id = "password" name = "password" type = "password" class="type2" style="height:35px; width:250px" placeholder = "密碼" required>
+                    <span style="height:35px; width:250px; display:inline-block; text-align:left;">
+                        <span class="type6">&nbsp性別&nbsp&nbsp:&nbsp&nbsp&nbsp</span>
+                        <input id = "sex" name = "sex" type = "radio" style="height:15px; width:15px;" value="男" required><span class="type6">&nbsp&nbsp男&nbsp&nbsp&nbsp</span>
+                        <input id = "sex" name = "sex" type = "radio" style="height:15px; width:15px;" value="女" required><span class="type6">&nbsp&nbsp女&nbsp&nbsp</span>
+                    </span>
+                    <br><br>
                     <a class="btn btn-primary" role="button" href="/LoginController/login" style="font-weight: bold; margin-right: 30px"> 返回 </a>
                     <button class="btn btn-primary" style="font-weight: bold;"> 註冊 </button><br><br>
                     <input type="checkbox" value="1" required>我已閱讀並同意本<a href="#" type="button" data-bs-toggle="modal" data-bs-target="#standard">網站規範</a><br><br>
@@ -127,7 +138,7 @@
                     <p class="type4">※ 請使用學校電子郵件註冊</p>
                 </form>
             </div>
-            <div class="col-4"></div>
+            <div class="col-2"></div>
         </div>
 
         <div class="modal fade" id="standard">

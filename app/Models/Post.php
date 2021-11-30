@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Login_account extends Model
+class Post extends Model
 {
     protected $DBGroup              = 'default';
-    protected $table                = 'login_account';
+    protected $table                = 'post_items';
     protected $primaryKey           = 'id';
     protected $useAutoIncrement     = true;
     protected $insertID             = 0;
@@ -16,13 +16,13 @@ class Login_account extends Model
     protected $protectFields        = true;
     protected $allowedFields        = [
         'name',
-        'name2',
-        'department',
-        'account',
-        'password',
-        'phone',
-        'birthday',
-        'sex'
+        'price',
+        'number',
+        'time',
+        'place',
+        'type',
+        'image',
+        'describe'
     ];
 
     // Dates

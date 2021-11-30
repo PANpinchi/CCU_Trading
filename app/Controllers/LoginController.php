@@ -232,9 +232,13 @@ class LoginController extends BaseController
 
 		$data = [
 			'name' => $this->request->getVar('name'),
+			'name2' => $this->request->getVar('name2'),
 			'department' => $this->request->getVar('department'),
 			'account' => $this->request->getVar('account'),
-			'password' => $this->request->getVar('password')
+			'password' => $this->request->getVar('password'),
+			'phone' => $this->request->getVar('phone'),
+        	'birthday' => $this->request->getVar('birthday'),
+        	'sex' => $this->request->getVar('sex')
 		];
 
 		/* 檢查是否使用學校信箱註冊 */
@@ -276,9 +280,13 @@ class LoginController extends BaseController
 
 		/* 紀錄註冊資料 */
 		$_SESSION['name'] = $data['name'];
+		$_SESSION['name2'] = $data['name2'];
 		$_SESSION['department'] = $data['department'];
 		$_SESSION['account'] = $data['account'];
 		$_SESSION['password'] = $data['password'];
+		$_SESSION['phone'] = $data['phone'];
+		$_SESSION['birthday'] = $data['birthday'];
+		$_SESSION['sex'] = $data['sex'];
 
 		/* 創建驗證碼 */
 		$verify = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -349,15 +357,23 @@ class LoginController extends BaseController
 		else{
 			$data = [
 				'name' => $_SESSION['name'],
+				'name2' => $_SESSION['name2'],
 				'department' => $_SESSION['department'],
 				'account' => $_SESSION['account'],
-				'password' => $_SESSION['password']
+				'password' => $_SESSION['password'],
+				'phone' => $_SESSION['phone'],
+        		'birthday' => $_SESSION['birthday'],
+        		'sex' => $_SESSION['sex']
 			];
 			unset($_SESSION['code']);
 			unset($_SESSION['name']);
+			unset($_SESSION['name2']);
 			unset($_SESSION['department']);
 			unset($_SESSION['account']);
 			unset($_SESSION['password']);
+			unset($_SESSION['phone']);
+			unset($_SESSION['birthday']);
+			unset($_SESSION['sex']);
 			$model->save($data);
 			echo '<script>alert("註冊成功！")</script>';
 			echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/login'>";
@@ -409,8 +425,12 @@ class LoginController extends BaseController
 
 			if($account == 0 && $password == 0){
 				$_SESSION['name'] = $users[$i]['name'];
+				$_SESSION['name2'] = $users[$i]['name2'];
 				$_SESSION['account'] = $users[$i]['account'];
 				$_SESSION['password'] = $users[$i]['password'];
+				$_SESSION['phone'] = $users[$i]['phone'];
+				$_SESSION['birthday'] = $users[$i]['birthday'];
+				$_SESSION['sex'] = $users[$i]['sex'];
 				return redirect('PostController/post');
 			}
 			else if($account == 0 && $password != 0){
@@ -424,5 +444,13 @@ class LoginController extends BaseController
 		echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/login'>";
 		return ;
 	}
-    
+
+	/* 登出 */
+    public function logout()
+	{
+		unset($_SESSION['name']);
+		unset($_SESSION['account']);
+		unset($_SESSION['password']);
+		return redirect('LoginController/login');
+	}
 }
