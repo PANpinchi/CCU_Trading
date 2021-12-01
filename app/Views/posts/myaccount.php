@@ -28,7 +28,15 @@
             <span class="type2">系所&nbsp:&nbsp<?php echo $department; ?></span><br>
             <span class="type2">Email&nbsp:&nbsp<?php echo $account; ?></span><br>
             <span class="type2">密碼&nbsp:&nbsp<?php echo $password; ?></span><br>
-            <span class="type2">手機號碼&nbsp:&nbsp<?php echo $phone; ?></span><br>
+            <span class="type2">手機號碼&nbsp:&nbsp
+                <?php 
+                    echo $phone[0].$phone[1];
+                    for($i = 2; isset($phone[$i+2]); $i++){
+                        echo '*';
+                    }
+                    echo $phone[$i].$phone[$i+1];
+                ?>
+            </span><br>
             <span class="type2">性別&nbsp:&nbsp<?php echo $sex; ?>性</span><br>
             <span class="type2">生日&nbsp:&nbsp<?php echo $birthday; ?></span><br>
             <div align="center">
@@ -36,8 +44,52 @@
             </div>
             <p class="type0">個人賣場</p>
             <hr>
+            <table width="100%" style="table-layout:fixed;" cellspacing="50" align="center">
+                <?php
+                    for($j = 0; $j < $count; $j++){
+                        if($j % 3 == 0){
+                            echo '<br><tr>';
+                        }
+                        echo '<td style="background-color: rgb(255, 255, 255); border: 10px solid rgb(245, 245, 245)">';
+                        echo '<a href="/PostController/item/'.$post[$j]['id'].'">';
+                        echo '<div style="height: 10px"></div>';
+                        echo '<div align="center" style="height: 430px;">';
+                        $img = '';
+                        for($k = 0; isset($post[$j]['image'][$k]); $k++){
+                            if($post[$j]['image'][$k] == ':'){
+                                if($post[$j]['image'][$k+1] == ' '){
+                                    continue;
+                                }
+                                else{
+                                    for($l = $k+1; isset($post[$j]['image'][$l]); $l++){
+                                        if($post[$j]['image'][$l] != ' '){
+                                            $img[$l-($k+1)] = $post[$j]['image'][$l];
+                                        }
+                                        else{
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        echo '<img class="img2" src="/item_images/'.$img.'"><br><br>';
+                        echo '<p class="type2" style="text-align: left; margin-left: 15px;">【'.$post[$j]['way'].'】 '.$post[$j]['name'].'</p>';
+                        echo '<span class="type3" style="float: left; margin-left: 15px;">$'.$post[$j]['price'].'</span>';
+                        echo '<span class="type4" style="float: right; margin-right: 15px;">數量：'.$post[$j]['number'].'</span>';
+                        echo '</div></a></td>';
+                    }
+
+                    while($j % 3 != 0){
+                        echo '<td> </td>';
+                        $j++;
+                    }
+                ?>
+            </table>
             <div align="center">
+                <br>
                 <a href="/LoginController/logout" type="button" class="btn btn-primary" style="font-weight: bold;"> 登出 </a>
+                <br><br>
             </div>
         </div>
         <div class="col-2"></div>

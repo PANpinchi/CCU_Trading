@@ -111,7 +111,9 @@ class PostController extends BaseController
 	public function myaccount()
 	{
 		$model = new Login_account();
+		$model2 = new Post();
 		$users = $model->findAll(); //取得資料
+		$posts = $model2->findAll();
 
 		/* 尋找帳號 */
 		for($i = 0; isset($users[$i]); $i++)
@@ -134,6 +136,14 @@ class PostController extends BaseController
 				break;
 			}
 		}
+
+		for($i = 0, $j = 0; isset($posts[$i]); $i++){
+			if($posts[$i]['seller_account'] == $_SESSION['account']){
+				$data['post'][$j++] = $posts[$i];
+			}
+		}
+
+		$data['count'] = $j;
         return view('posts/myaccount', $data);
 	}
 
