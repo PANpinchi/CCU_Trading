@@ -16,6 +16,8 @@ class Post extends Model
     protected $protectFields        = true;
     protected $allowedFields        = [
         'seller',
+        'seller_account',
+        'way',
         'name',
         'price',
         'number',

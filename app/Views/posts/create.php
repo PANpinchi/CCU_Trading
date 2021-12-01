@@ -347,7 +347,7 @@
                 <?php for($i=0;$i<23;$i++){echo '&nbsp';}?>
                 <input name="img03" id="img03" style="display: none;" type="file" accept=".jpg,.png">
                 <button name="capture03" id="capture03" style="display: none;" type="button" class="btn btn-secondary" onclick="img03.click()">新增照片</button><br><br>
-                <p class="type1"> 商品描述&nbsp:&nbsp</p> <textarea id="describe" name="describe" placeholder="商品詳細內容、相關網頁等..." cols="100" rows="10" style="resize: none;"></textarea><br><br>
+                <p class="type1"> 商品描述&nbsp:&nbsp</p> <textarea id="describe" name="describe" placeholder="商品詳細內容、相關網頁等..." cols="100" rows="10" style="resize: none;" required></textarea><br><br>
                 <button class="btn btn-primary" style="font-weight: bold;"> 儲存並上架 </button><br><br>
             </form>
         </div>

@@ -20,6 +20,16 @@ class Post extends Migration
                 'constraint' => '200',
                 'null'       => TRUE
             ],
+            'seller_account' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '200',
+                'null'       => TRUE
+            ],
+            'way' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '5',
+                'null'       => TRUE
+            ],
             'name' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '200',
