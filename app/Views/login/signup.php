@@ -124,7 +124,7 @@
                     <input id = "account" name = "account" type = "email" class="type2" style="height:35px; width:250px" placeholder = "帳號/電子郵件" required>
                     <input id = "birthday" name = "birthday" type = "text" class="type2" style="height:35px; width:250px" placeholder = "生日" onfocus="(this.type = 'date')" required>
                     <br><br>
-                    <input id = "password" name = "password" type = "password" class="type2" style="height:35px; width:250px" placeholder = "密碼" required>
+                    <input id = "password" name = "password" type = "password" class="type2" style="height:35px; width:250px" placeholder = "密碼長度限制6至15位" required>
                     <span style="height:35px; width:250px; display:inline-block; text-align:left;">
                         <span class="type6">&nbsp性別&nbsp&nbsp:&nbsp&nbsp&nbsp</span>
                         <input id = "sex" name = "sex" type = "radio" style="height:15px; width:15px;" value="男" required><span class="type6">&nbsp&nbsp男&nbsp&nbsp&nbsp</span>

@@ -36,7 +36,7 @@
                     $month = NULL;
                     $day = NULL;
 
-                    for($i = 1; isset($from[$i]); $i++){
+                    for($i = 2; isset($from[$i]); $i++){
                         /* 計算時間 */
                         $hours = $time[$i][11] * 10 + $time[$i][12];
                         $minutes = $time[$i][14] * 10 + $time[$i][15];
@@ -46,6 +46,9 @@
                             if($hours > 12){
                                 $hours -= 12;
                             }
+                        }
+                        else if($hours == 0){
+                            $hours = 12;
                         }
                         if($minutes < 10){
                             $minutes = '0'.$minutes;

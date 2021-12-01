@@ -82,8 +82,8 @@ class PostController extends BaseController
 		/* 處理時間 */
 		$diff_day = abs(strtotime($time) - strtotime($data['post']['post_time'])) / 86400;
 		if($diff_day >= 1){
-			$data['post_time'][$i] = $diff_day;
-			$data['post_time_type'][$i] = 0; // 天
+			$data['post']['post_time'] = $diff_day;
+			$data['post_time_type'] = 0; // 天
 		}
 		else{
 			$diff_time = abs(strtotime($time) - strtotime($data['post']['post_time']));

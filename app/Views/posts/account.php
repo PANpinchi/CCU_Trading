@@ -89,7 +89,11 @@
             </table>
             <div align="center">
                 <br>
-                <a href="#" type="button" class="btn btn-primary" style="font-weight: bold;"> 私訊賣家 </a>
+                <?php
+                    if($user['name'] != $_SESSION['name']){
+                        echo '<a href="#" type="button" class="btn btn-primary" style="font-weight: bold;"> 私訊賣家 </a>';
+                    }
+                ?>
                 <br><br>
             </div>
         </div>

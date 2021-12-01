@@ -17,6 +17,7 @@ class ChatController extends BaseController
 	{
 		$model = new Message();
 		$users = $model->findAll(); //取得資料
+
 		if(isset($_GET['value'])){
 			$_SESSION['to'] = $_GET['value'];
 		}
@@ -25,7 +26,7 @@ class ChatController extends BaseController
 		$check = 0;
 		for($i = 0; isset($users[$i]); $i++)
 		{
-			$cmp_from = strcmp($_SESSION['name'], $users[$i]['from']);
+			$cmp_from = strcmp($_SESSION['account'], $users[$i]['from']);
 			$cmp_to = strcmp($_SESSION['to'], $users[$i]['to']);
 
 			if($cmp_from == 0 && $cmp_to == 0){
@@ -33,7 +34,7 @@ class ChatController extends BaseController
 				break;
 			}
 
-			$cmp_from = strcmp($_SESSION['name'], $users[$i]['to']);
+			$cmp_from = strcmp($_SESSION['account'], $users[$i]['to']);
 			$cmp_to = strcmp($_SESSION['to'], $users[$i]['from']);
 
 			if($cmp_from == 0 && $cmp_to == 0){
@@ -45,7 +46,7 @@ class ChatController extends BaseController
 		/* 若無則創建空白訊息 */
 		if($check == 0){
 			$data = [
-				'from' => $_SESSION['name'],
+				'from' => $_SESSION['account'],
 				'to' => $_SESSION['to'],
 			];
 			$model->save($data);
@@ -60,7 +61,7 @@ class ChatController extends BaseController
 		/* 顯示聊天紀錄 */
 		for($i = 0; isset($users[$i]); $i++)
 		{
-			$cmp_from = strcmp($_SESSION['name'], $users[$i]['from']);
+			$cmp_from = strcmp($_SESSION['account'], $users[$i]['from']);
 			$cmp_to = strcmp($_SESSION['to'], $users[$i]['to']);
 
 			if($cmp_from == 0 && $cmp_to == 0){
@@ -70,7 +71,7 @@ class ChatController extends BaseController
 				array_push($time, $users[$i]['time']);
 			}
 
-			$cmp_from = strcmp($_SESSION['name'], $users[$i]['to']);
+			$cmp_from = strcmp($_SESSION['account'], $users[$i]['to']);
 			$cmp_to = strcmp($_SESSION['to'], $users[$i]['from']);
 
 			if($cmp_from == 0 && $cmp_to == 0){
@@ -87,7 +88,7 @@ class ChatController extends BaseController
 			'content' => $content,
 			'time' => $time
 		];
-        
+
 		return view('chat/chat', $data);
 	}
 
@@ -100,7 +101,7 @@ class ChatController extends BaseController
 		$time = date('Y/m/d H:i:s');
 
 		$data = [
-			'from' => $_SESSION['name'],
+			'from' => $_SESSION['account'],
 			'to' => $_SESSION['to'],
 			'content' => $this->request->getVar('message'),
 			'time' => $time

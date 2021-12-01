@@ -17,6 +17,11 @@ a{
     height: 300px;
 }
 
+.img3{
+    width: 80px;
+    height: 80px;
+}
+
 .type0{
     font-weight: bold;
     font-size: 50px;
@@ -53,6 +58,12 @@ a{
 }
 
 .type6{
+    font-weight: bold;
+    font-size: 20px;
+    color : rgb(50, 50, 50);
+}
+
+.type7{
     font-weight: bold;
     font-size: 20px;
     color : rgb(50, 50, 50);

@@ -22,7 +22,7 @@
                 <form name = "accounts" action = "/LoginController/change_password" method="POST" style="border: 1px rgb(230, 215, 210) solid">
                     <br>
                     <p class="type1">設定新密碼</p>
-                    <input id = "password" name = "password" type = "password" class="type2" style="height:35px; width:250px" placeholder = "請輸入新密碼" required><br><br>
+                    <input id = "password" name = "password" type = "password" class="type2" style="height:35px; width:250px" placeholder = "請輸入新密碼(長度限制6至15位)" required><br><br>
                     <input id = "check" name = "check" type = "password" class="type2" style="height:35px; width:250px" placeholder = "確認新密碼" required><br><br>
                     <a class="btn btn-primary" role="button" href="/LoginController/login" style="font-weight: bold; margin-right: 30px"> 返回 </a>
                     <button class="btn btn-primary" style="font-weight: bold;"> 確認 </button><br><br>

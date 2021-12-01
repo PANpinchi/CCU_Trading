@@ -27,7 +27,15 @@
             <span class="type2">使用者帳號&nbsp:&nbsp<?php echo $name2; ?></span><br>
             <span class="type2">系所&nbsp:&nbsp<?php echo $department; ?></span><br>
             <span class="type2">Email&nbsp:&nbsp<?php echo $account; ?></span><br>
-            <span class="type2">密碼&nbsp:&nbsp<?php echo $password; ?></span><br>
+            <span class="type2">密碼&nbsp:&nbsp
+                <?php 
+                    echo $password[0].$password[1];
+                    for($i = 2; isset($password[$i+2]); $i++){
+                        echo '*';
+                    }
+                    echo $password[$i].$password[$i+1];
+                ?>
+            </span><br>
             <span class="type2">手機號碼&nbsp:&nbsp
                 <?php 
                     echo $phone[0].$phone[1];

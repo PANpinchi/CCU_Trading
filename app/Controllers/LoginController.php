@@ -197,6 +197,19 @@ class LoginController extends BaseController
 			return ;
 		}
 
+		/* 檢查密碼長度 */
+		$password_len = strlen($pass1);
+		if($password_len < 6){
+			echo '<script>alert("密碼太短，請重新註冊！")</script>';
+			echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/signup'>";
+			return ;
+		}
+		else if($password_len > 15){
+			echo '<script>alert("密碼太長，請重新註冊！")</script>';
+			echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/signup'>";
+			return ;
+		}
+
 		/* 匹配帳號 */
 		$check = 0;
 		for($i = 0; isset($users[$i]); $i++)
@@ -276,6 +289,19 @@ class LoginController extends BaseController
 				echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/login'>";
 				return ;
 			}
+		}
+
+		/* 檢查密碼長度 */
+		$password_len = strlen($data['password']);
+		if($password_len < 6){
+			echo '<script>alert("密碼太短，請重新註冊！")</script>';
+			echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/signup'>";
+			return ;
+		}
+		else if($password_len > 15){
+			echo '<script>alert("密碼太長，請重新註冊！")</script>';
+			echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/signup'>";
+			return ;
 		}
 
 		/* 紀錄註冊資料 */
