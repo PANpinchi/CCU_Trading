@@ -44,7 +44,7 @@ a{
 
 .type1{
     font-weight: bold;
-    font-size: 1em;
+    font-size: 1.3em;
     color : rgb(50, 50, 50);
 }
 
@@ -83,8 +83,65 @@ a{
     color : rgb(50, 50, 50);
 }
 
+.type8{
+    font-weight: bold;
+    font-size: 1.2em;
+    color : rgb(50, 50, 50);
+}
+
 .border1{
     width: 450px;
     height: 575px;
     background-color: rgb(255, 255, 255);
+}
+
+.cart a{
+	text-decoration: none;
+	color: #000;
+}
+
+.cart>li{
+    list-style: none;
+    width: 20%;
+    display: inline-block;
+    margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+.cart>li>a{
+	display: block;
+	border: 1px solid #000;
+	padding: 5px;
+}
+
+.cart>li>ul{
+    position: fixed;
+    width: 202px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #000;
+	margin-top: 20px;
+}
+
+.cart>li>ul>li{
+	list-style: none;
+    margin-left: -32px;
+}
+
+.cart>li>ul>li>a{
+	display: block;
+    padding: 5px;
+    padding-right: 15px;
+}
+
+.cart>li>a:hover, .cart>li>a.active{
+	background-color: orange;
+	color: #fff;
+}
+
+.cart>li>ul>li>a:hover, .cart>li>ul>li>a.active{
+	background-color: rgb(230, 230, 230);
+}
+
+.cart ul{
+	display: none;
 }

@@ -34,7 +34,7 @@
                             <a class="nav-link active" href="/ChatController/chat"><strong>聊天訊息</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/PostController/create"><strong>新增商品</strong></a>
+                            <a class="nav-link active" href="/PostController/create_type"><strong>新增商品</strong></a>
                         </li>
                     </ul>
                     <form class="d-flex">

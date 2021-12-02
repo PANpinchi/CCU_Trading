@@ -79,7 +79,12 @@
                     }
                     echo '<img class="img1" src="/item_images/'.$img.'"><br><br>';
                     echo '<p class="type2">【'.$way[$i].'】 '.$name[$i].'</p>';
-                    echo '<span class="type3" style="float: left;">$'.$price[$i].'</span>';
+                    if($number[$i] == 0){
+                        echo '<span class="type3" style="float: left;"> 已售出 </span>';
+                    }
+                    else{
+                        echo '<span class="type3" style="float: left;">$'.$price[$i].'</span>';
+                    }
                     echo '<span class="type4" style="float: right;">數量：'.$number[$i].'</span>';
                     echo '</div></a></div><br>';
                 }

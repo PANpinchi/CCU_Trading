@@ -90,7 +90,12 @@
                 echo '<td colspan="8"><span class="type2">【'.$post['way'].'】 '.$post['name'].'</span></td>';
                 echo '</tr>';
                 echo '<tr>';
-                echo '<td colspan="8"><span class="type3">&nbsp$'.$post['price'].' </span>';
+                if($post['number'] == 0){
+                    echo '<td colspan="8"><span class="type3">&nbsp已售出&nbsp</span>';
+                }
+                else{
+                    echo '<td colspan="8"><span class="type3">&nbsp$'.$post['price'].'&nbsp</span>';
+                }
                 echo '<span class="type4">&nbsp&nbsp|&nbsp&nbsp數量：'.$post['number'].'</span></td>';
                 echo '</tr>';
                 echo '<tr>';
@@ -140,11 +145,20 @@
                 echo '</table>';
                 
             if($post['seller'] != $_SESSION['name2']){
-                echo '
-                <br>
-                <a href="/ChatController/chat?value='.$post['seller_account'].'" type="button" class="btn btn-success" style="font-weight: bold;"> 💲 我想排看 </a>
-                <br><br>
-                ';
+                if($post['number'] == 0){
+                    echo '
+                    <br>
+                    <a href="/ChatController/chat?value='.$post['seller_account'].'" type="button" class="btn btn-success" style="font-weight: bold;"> 私訊賣家 </a>
+                    <br><br>
+                    ';
+                }
+                else{
+                    echo '
+                    <br>
+                    <a href="/ChatController/chat?value='.$post['seller_account'].'" type="button" class="btn btn-success" style="font-weight: bold;"> 💲 我想排看 </a>
+                    <br><br>
+                    ';
+                }
             }
             else{
                 echo '

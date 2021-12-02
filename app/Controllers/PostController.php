@@ -74,10 +74,17 @@ class PostController extends BaseController
         return view('posts/post', $data);
 	}
 
-	/* 發文頁面 */
-	public function create()
+	/* 發文頁面-商品類型 */
+	public function create_type()
 	{
-        return view('posts/create');
+        return view('posts/create_type');
+	}
+
+	/* 發文頁面 */
+	public function create($type)
+	{
+		$data['type'] = $type;
+        return view('posts/create', $data);
 	}
 
 	/* 修改商品資料頁面 */
@@ -88,6 +95,36 @@ class PostController extends BaseController
 			'post' => $model->find($id)
 		];
 
+		/* 找圖片 */
+		$data['img'][0] = '?';
+		$data['img'][1] = '?';
+		$data['img'][2] = '?';
+		$t = 0;
+		$count = 0;
+		for($j = 0; isset($data['post']['image'][$j]); $j++){
+			if($data['post']['image'][$j] == ':'){
+				if($data['post']['image'][$j+1] == ' '){
+					continue;
+				}
+				else{
+					for($k = $j+1; isset($data['post']['image'][$k]); $k++){
+						if($data['post']['image'][$k] != ' '){
+							$data['img'][$t][$k-($j+1)] = $data['post']['image'][$k];
+						}
+						else{
+							$t++;
+							$count++;
+							break;
+						}
+					}
+
+					if(!isset($data['post']['image'][$k])){
+						$count++;
+					}
+				}
+			}
+		}
+		
         return view('posts/modify_item', $data);
 	}
 

@@ -20,11 +20,12 @@ class ChatController extends BaseController
 		$model2 = new Login_account();
 		$users = $model->findAll(); //取得資料
 		$accounts = $model2->findAll(); //取得資料
+		$display = 0;
 
 		$_SESSION['to'] = ' ';
 		if(isset($_GET['value'])){
+			$display = 1;
 			$_SESSION['to'] = $_GET['value'];
-		
 
 			/* 檢查是否曾有聊天紀錄 */
 			$check = 0;
@@ -146,7 +147,8 @@ class ChatController extends BaseController
 			'chat_people' => $chat_people,
 			'chat_name' => $chat_name,
 			'chat_header' => $chat_header,
-			'count' => $count
+			'count' => $count,
+			'display' => $display
 		];
 
 		return view('chat/chat', $data);

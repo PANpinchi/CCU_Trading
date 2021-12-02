@@ -133,7 +133,7 @@
                 <div style="height: 20px;"></div>
                 <!--輸入-->
                 <?php
-                if($count != 0){
+                if($display){
                     echo '
                     <form name = "messages" action="/ChatController/message" method="POST">
                         <input name = "message" id = "message" type="text" placeholder="輸入文字" autocomplete="off"></input>
