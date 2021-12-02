@@ -56,56 +56,22 @@
                 <?php echo '<span class="type1"> 商品類別&nbsp:&nbsp '.$post['type'].'</span>';?>
                 <br><br>
                 <span class="type1"> 商品圖片&nbsp:&nbsp</span>
-                <input name="img01" id="img01" style="display: none;" type="file" accept=".jpg,.png" required>
-                <button name="capture01" id="capture01" type="button" style="border: none; background-color: rgb(245, 245, 245);" onclick="img01.click()">
-                    <?php 
-                    if($img[0][0] != '?'){
-                        echo '<img id="img1" name="img1" src="/item_images/'.$img[0].'" style="width: 200px; height: 200px; max-width: 200px; max-height: 200px;">';
-                    }
-                    else{
-                        echo '<img id="img1" name="img1" src="/img/upload_img.png" style="width: 200px; height: 200px; max-width: 200px; max-height: 200px;">';
-                    }
-                    ?>
-                </button>
-                <input name="img02" id="img02" style="display: none;" type="file" accept=".jpg,.png">
-                <button name="capture02" id="capture02" style="display: inline-block; border: none; background-color: rgb(245, 245, 245);" type="button" onclick="img02.click()">
-                    <?php 
-                    if($img[1][0] != '?'){
-                        echo '<img id="img2" name="img2" src="/item_images/'.$img[1].'" style="width: 200px; height: 200px; max-width: 200px; max-height: 200px;">';
-                    }
-                    else{
-                        echo '<img id="img2" name="img2" src="/img/upload_img.png" style="width: 200px; height: 200px; max-width: 200px; max-height: 200px;">';
-                    }
-                    ?>
-                    </button>
-                <input name="img03" id="img03" style="display: none;" type="file" accept=".jpg,.png">
                 <?php 
-                if($img[1][0] != '?'){
-                    echo '<button name="capture03" id="capture03" style="display: inline-block; border: none; background-color: rgb(245, 245, 245);" type="button" onclick="img03.click()">';
-                    if($img[2][0] != '?'){
-                        echo '
-                            <img id="img3" name="img3" src="/item_images/'.$img[2].'" style="width: 200px; height: 200px; max-width: 200px; max-height: 200px;">
-                        </button>
-                        ';
-                    }
-                    else{
-                        echo '
-                            <img id="img3" name="img3" src="/img/upload_img.png" style="max-width: 200px; max-height: 200px;">
-                        </button>
-                        ';
-                    }
+                if($img[0][0] != '?'){
+                    echo '<img id="img1" name="img1" src="/item_images/'.$img[0].'" style="width: 200px; height: 200px; max-width: 200px; max-height: 200px;">&nbsp&nbsp&nbsp&nbsp';
                 }
-                else{
-                    echo '
-                    <button name="capture03" id="capture03" style="display: none; border: none; background-color: rgb(245, 245, 245);" type="button" onclick="img03.click()">
-                        <img id="img3" name="img3" style="max-width: 200px; max-height: 200px;">
-                    </button>
-                    ';
+                if($img[1][0] != '?'){
+                    echo '<img id="img2" name="img2" src="/item_images/'.$img[1].'" style="width: 200px; height: 200px; max-width: 200px; max-height: 200px;">&nbsp&nbsp&nbsp&nbsp';
+                }
+                if($img[2][0] != '?'){
+                    echo '<img id="img3" name="img3" src="/item_images/'.$img[2].'" style="width: 200px; height: 200px; max-width: 200px; max-height: 200px;">';
                 }
                 ?>
                 <br><br>
                 <?php echo '<p class="type1"> 商品描述&nbsp:&nbsp</p> <textarea id="describe" name="describe" value="'.$post['describe'].'" required></textarea><br><br>'?>
-                <button class="btn btn-primary" style="font-weight: bold;"> 儲存修改 </button><br><br>
+                <div style="text-align:center">
+                    <button class="btn btn-primary" style="font-weight: bold;"> 儲存修改 </button><br><br><br>
+                <div>
             </form>
         </div>
         <div class="col-2"></div>
@@ -116,48 +82,6 @@
     var editor = CKEDITOR.replace( 'describe' );
     var value = $('#describe').attr('value');
     editor.setData(value);
-
-    $('#img01').on('change', function(e){      
-        const file = this.files[0];
-        
-        const fr = new FileReader();
-        fr.onload = function (e) {
-            $('#img1').attr('src', e.target.result);
-            $('#img2').attr('src', '/img/upload_img.png');
-            $('#img2').css('width', '200px');
-            $('#img2').css('height', '200px');
-            $("#capture02").css('display','inline-block');
-        };
-        
-        // 使用 readAsDataURL 將圖片轉成 Base64
-        fr.readAsDataURL(file);
-    });
-    $('#img02').on('change', function(e){      
-        const file = this.files[0];
-        
-        const fr = new FileReader();
-        fr.onload = function (e) {
-            $('#img2').attr('src', e.target.result);
-            $('#img3').attr('src', '/img/upload_img.png');
-            $('#img3').css('width', '200px');
-            $('#img3').css('height', '200px');
-            $("#capture03").css('display','inline-block');
-        };
-        
-        // 使用 readAsDataURL 將圖片轉成 Base64
-        fr.readAsDataURL(file);
-    });
-    $('#img03').on('change', function(e){      
-        const file = this.files[0];
-        
-        const fr = new FileReader();
-        fr.onload = function (e) {
-            $('#img3').attr('src', e.target.result);
-        };
-        
-        // 使用 readAsDataURL 將圖片轉成 Base64
-        fr.readAsDataURL(file);
-    });
 </script>
 
 <?= $this->endSection() ?>

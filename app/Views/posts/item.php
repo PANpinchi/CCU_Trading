@@ -163,6 +163,7 @@
             else{
                 echo '
                 <br>
+                <a href="/PostController/delete_item/'.$post['id'].'" type="button" class="btn btn-danger" style="font-weight: bold;"> 🗑️ 刪除此商品 </a>
                 <a href="/PostController/modify_item/'.$post['id'].'" type="button" class="btn btn-secondary" style="font-weight: bold;"> 🛠️ 修改商品資料 </a>
                 <br><br>
                 ';

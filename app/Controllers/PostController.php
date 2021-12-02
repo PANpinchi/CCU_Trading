@@ -242,7 +242,7 @@ class PostController extends BaseController
 	}
 
 	/* 發布商品 */
-	public function post_item()
+	public function post_item($type)
 	{
 		$model = new Post();
 		$users = $model->findAll(); //取得資料
@@ -283,7 +283,7 @@ class PostController extends BaseController
 			'number' => $this->request->getVar('number'),
 			'time' => $this->request->getVar('time'),
 			'place' => $this->request->getVar('place'),
-			'type' => $this->request->getVar('type'),
+			'type' => $type,
 			'image' => $ServerFilename,
 			'describe' => $this->request->getVar('describe'),
 			'post_time' => $time
@@ -293,72 +293,55 @@ class PostController extends BaseController
         echo "<meta http-equiv='Refresh' content='0 ;URL=/PostController/post'>";
 	}
 
+	/* 刪除商品資料 */
+	public function delete_item($id)
+	{
+		$model = new Post();
+		$post = $model->find($id); //取得資料
+
+		/* 找圖片名稱 */
+		$img[0] = '?';
+		$img[1] = '?';
+		$img[2] = '?';
+		$t = 0;
+		for($j = 0; isset($post['image'][$j]); $j++){
+			if($post['image'][$j] == ':'){
+				if($post['image'][$j+1] == ' '){
+					continue;
+				}
+				else{
+					for($k = $j+1; isset($post['image'][$k]); $k++){
+						if($post['image'][$k] != ' '){
+							$img[$t][$k-($j+1)] = $post['image'][$k];
+						}
+						else{
+							$t++;
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		if($img[0][0] != '?'){
+			unlink('./item_images/'.$img[0]);
+		}
+		if($img[1][0] != '?'){
+			unlink('./item_images/'.$img[1]);
+		}
+		if($img[2][0] != '?'){
+			unlink('./item_images/'.$img[2]);
+		}
+		
+		$model->where('id', $id)->delete();
+        echo "<meta http-equiv='Refresh' content='0 ;URL=/PostController/post'>";
+	}
+
 	/* 修改商品資料 */
 	public function modify($id)
 	{
 		$model = new Post();
 		$users = $model->find($id); //取得資料
-
-		/* 找圖片 */
-		$img[0] = '';
-		$img[1] = '';
-		$img[2] = '';
-		$t = 0;
-		$count = 0;
-		for($j = 0; isset($users['image'][$j]); $j++){
-			if($users['image'][$j] == ':'){
-				if($users['image'][$j+1] == ' '){
-					continue;
-				}
-				else{
-					for($k = $j+1; isset($users['image'][$k]); $k++){
-						if($users['image'][$k] != ' '){
-							$img[$t][$k-($j+1)] = $users['image'][$k];
-						}
-						else{
-							$t++;
-							$count++;
-							break;
-						}
-					}
-
-					if(!isset($users['image'][$k])){
-						$count++;
-					}
-				}
-			}
-		}
-
-		/* 刪除照片 */
-		for($i = 0; $i < $count; $i++){
-			if(file_exists($img[$i])){
-				unlink($img[$i]);
-			}
-		}
-
-		$ServerFilename1 = ' ';
-		if(is_uploaded_file($_FILES['img01']['tmp_name'])){
-			$File_Extension = explode(".", $_FILES['img01']['name']);
-			$File_Extension = $File_Extension[count($File_Extension)-1];
-			$ServerFilename1 = date("YmdHis")."_1.".$File_Extension;
-			move_uploaded_file($_FILES['img01']['tmp_name'], 'item_images/'.$ServerFilename1);
-		}
-		$ServerFilename2 = ' ';
-		if(is_uploaded_file($_FILES['img02']['tmp_name'])){
-			$File_Extension = explode(".", $_FILES['img02']['name']);
-			$File_Extension = $File_Extension[count($File_Extension)-1];
-			$ServerFilename2 = date("YmdHis")."_2.".$File_Extension;
-			move_uploaded_file($_FILES['img02']['tmp_name'], 'item_images/'.$ServerFilename2);
-		}
-		$ServerFilename3 = ' ';
-		if(is_uploaded_file($_FILES['img03']['tmp_name'])){
-			$File_Extension = explode(".", $_FILES['img03']['name']);
-			$File_Extension = $File_Extension[count($File_Extension)-1];
-			$ServerFilename3 = date("YmdHis")."_3.".$File_Extension;
-			move_uploaded_file($_FILES['img03']['tmp_name'], 'item_images/'.$ServerFilename3);
-		}
-
-		$ServerFilename = 'a:'.$ServerFilename1.' b:'.$ServerFilename2.' c:'.$ServerFilename3;
 
 		// 取得日期與時間
 		$time = date('Y/m/d H:i:s');
@@ -373,8 +356,6 @@ class PostController extends BaseController
 			'number' => $this->request->getVar('number'),
 			'time' => $this->request->getVar('time'),
 			'place' => $this->request->getVar('place'),
-			'type' => $this->request->getVar('type'),
-			'image' => $ServerFilename,
 			'describe' => $this->request->getVar('describe'),
 		];
 

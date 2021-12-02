@@ -23,7 +23,7 @@
         <div class="col-2"></div>
         <div class="col-8" style="background-color: rgb(255, 255, 255)">
             <div style="height: 100px"></div>
-            <form name = "accounts" action = "/PostController/post_item" enctype="multipart/form-data" method="POST">
+            <?php echo '<form name = "accounts" action = "/PostController/post_item/'.$type.'" enctype="multipart/form-data" method="POST">'?>
                 <p class="type0"> 新增商品 </p>
                 <hr>
                 <span class="type1"> 商品需求&nbsp:&nbsp</span>
