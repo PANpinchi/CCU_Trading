@@ -16,33 +16,44 @@ class PostController extends BaseController
     /* 全部商品頁面 */
 	public function post()
 	{
-		$model = new Post();
-		$users = $model->findAll(); //取得資料
+		$model1 = new Login_account();
+		$model2 = new Post();
+		
+		$users = $model1->findAll(); //取得資料
+		$posts = $model2->findAll();
+
 		$time = date('Y/m/d H:i:s'); // 取得日期與時間
 
-		for($i = 0; isset($users[$i]); $i++)
+		for($i = 0; isset($posts[$i]); $i++)
 		{
-			$data['id'][$i] = $users[$i]['id'];
-			$data['seller'][$i] = $users[$i]['seller'];
-			$data['seller_account'][$i] = $users[$i]['seller_account'];
-			$data['way'][$i] = $users[$i]['way'];
-			$data['name'][$i] = $users[$i]['name'];
-			$data['price'][$i] = $users[$i]['price'];
-			$data['number'][$i] = $users[$i]['number'];
-			$data['time'][$i] = $users[$i]['time'];
-			$data['place'][$i] = $users[$i]['place'];
-			$data['type'][$i] = $users[$i]['type'];
-			$data['image'][$i] = $users[$i]['image'];
-			$data['describe'][$i] = $users[$i]['describe'];
+			$data['id'][$i] = $posts[$i]['id'];
+			$data['seller'][$i] = $posts[$i]['seller'];
+			$data['seller_account'][$i] = $posts[$i]['seller_account'];
+			$data['way'][$i] = $posts[$i]['way'];
+			$data['name'][$i] = $posts[$i]['name'];
+			$data['price'][$i] = $posts[$i]['price'];
+			$data['number'][$i] = $posts[$i]['number'];
+			$data['time'][$i] = $posts[$i]['time'];
+			$data['place'][$i] = $posts[$i]['place'];
+			$data['type'][$i] = $posts[$i]['type'];
+			$data['image'][$i] = $posts[$i]['image'];
+			$data['describe'][$i] = $posts[$i]['describe'];
+
+			for($j = 0; isset($users[$j]); $j++){
+				if($users[$j]['account'] == $posts[$i]['seller_account']){
+					$data['header'][$i] = $users[$j]['header'];
+					break;
+				}
+			}
 
 			/* 處理時間 */
-			$diff_day = abs(strtotime($time) - strtotime($users[$i]['post_time'])) / 86400;
+			$diff_day = abs(strtotime($time) - strtotime($posts[$i]['post_time'])) / 86400;
 			if($diff_day >= 1){
 				$data['post_time'][$i] = $diff_day;
 				$data['post_time_type'][$i] = 0; // 天
 			}
 			else{
-				$diff_time = abs(strtotime($time) - strtotime($users[$i]['post_time']));
+				$diff_time = abs(strtotime($time) - strtotime($posts[$i]['post_time']));
 				if ($diff_time < 60) {
 					$data['post_time'][$i] = $diff_time;
 					$data['post_time_type'][$i] = 1; // 秒
@@ -69,15 +80,35 @@ class PostController extends BaseController
         return view('posts/create');
 	}
 
-	/* 特定商品頁面 */
-	public function item($id)
+	/* 修改商品資料頁面 */
+	public function modify_item($id)
 	{
 		$model = new Post();
-		$time = date('Y/m/d H:i:s'); // 取得日期與時間
-
 		$data = [
 			'post' => $model->find($id)
 		];
+
+        return view('posts/modify_item', $data);
+	}
+
+	/* 特定商品頁面 */
+	public function item($id)
+	{
+		$model1 = new Login_account();
+		$model2 = new Post();
+
+		$time = date('Y/m/d H:i:s'); // 取得日期與時間
+
+		$users = $model1->findAll();
+		$data = [
+			'post' => $model2->find($id)
+		];
+
+		for($i = 0; isset($users[$i]); $i++){
+			if($data['post']['seller_account'] == $users[$i]['account']){
+				$data['header'] = $users[$i]['header'];
+			}
+		}
 
 		/* 處理時間 */
 		$diff_day = abs(strtotime($time) - strtotime($data['post']['post_time'])) / 86400;
@@ -131,7 +162,8 @@ class PostController extends BaseController
 					'password' => $users[$i]['password'],
 					'phone' => $users[$i]['phone'],
 					'birthday' => $users[$i]['birthday'],
-					'sex' => $users[$i]['sex']
+					'sex' => $users[$i]['sex'],
+					'header' => $_SESSION['header']
 				];
 				break;
 			}
@@ -222,5 +254,121 @@ class PostController extends BaseController
 
 		$model->save($data);
         echo "<meta http-equiv='Refresh' content='0 ;URL=/PostController/post'>";
+	}
+
+	/* 修改商品資料 */
+	public function modify($id)
+	{
+		$model = new Post();
+		$users = $model->find($id); //取得資料
+
+		/* 找圖片 */
+		$img[0] = '';
+		$img[1] = '';
+		$img[2] = '';
+		$t = 0;
+		$count = 0;
+		for($j = 0; isset($users['image'][$j]); $j++){
+			if($users['image'][$j] == ':'){
+				if($users['image'][$j+1] == ' '){
+					continue;
+				}
+				else{
+					for($k = $j+1; isset($users['image'][$k]); $k++){
+						if($users['image'][$k] != ' '){
+							$img[$t][$k-($j+1)] = $users['image'][$k];
+						}
+						else{
+							$t++;
+							$count++;
+							break;
+						}
+					}
+
+					if(!isset($users['image'][$k])){
+						$count++;
+					}
+				}
+			}
+		}
+
+		/* 刪除照片 */
+		for($i = 0; $i < $count; $i++){
+			if(file_exists($img[$i])){
+				unlink($img[$i]);
+			}
+		}
+
+		$ServerFilename1 = ' ';
+		if(is_uploaded_file($_FILES['img01']['tmp_name'])){
+			$File_Extension = explode(".", $_FILES['img01']['name']);
+			$File_Extension = $File_Extension[count($File_Extension)-1];
+			$ServerFilename1 = date("YmdHis")."_1.".$File_Extension;
+			move_uploaded_file($_FILES['img01']['tmp_name'], 'item_images/'.$ServerFilename1);
+		}
+		$ServerFilename2 = ' ';
+		if(is_uploaded_file($_FILES['img02']['tmp_name'])){
+			$File_Extension = explode(".", $_FILES['img02']['name']);
+			$File_Extension = $File_Extension[count($File_Extension)-1];
+			$ServerFilename2 = date("YmdHis")."_2.".$File_Extension;
+			move_uploaded_file($_FILES['img02']['tmp_name'], 'item_images/'.$ServerFilename2);
+		}
+		$ServerFilename3 = ' ';
+		if(is_uploaded_file($_FILES['img03']['tmp_name'])){
+			$File_Extension = explode(".", $_FILES['img03']['name']);
+			$File_Extension = $File_Extension[count($File_Extension)-1];
+			$ServerFilename3 = date("YmdHis")."_3.".$File_Extension;
+			move_uploaded_file($_FILES['img03']['tmp_name'], 'item_images/'.$ServerFilename3);
+		}
+
+		$ServerFilename = 'a:'.$ServerFilename1.' b:'.$ServerFilename2.' c:'.$ServerFilename3;
+
+		// 取得日期與時間
+		$time = date('Y/m/d H:i:s');
+
+		$data = [
+			'id' => $id,
+			'seller' => $_SESSION['name2'],
+			'seller_account' => $_SESSION['account'],
+			'way' => $this->request->getVar('way'),
+			'name' => $this->request->getVar('name'),
+			'price' => $this->request->getVar('price'),
+			'number' => $this->request->getVar('number'),
+			'time' => $this->request->getVar('time'),
+			'place' => $this->request->getVar('place'),
+			'type' => $this->request->getVar('type'),
+			'image' => $ServerFilename,
+			'describe' => $this->request->getVar('describe'),
+		];
+
+		$model->save($data);
+        echo "<meta http-equiv='Refresh' content='0 ;URL=/PostController/post'>";
+	}
+
+	/* 修改使用者頭貼 */
+	public function change_header()
+	{
+		$model = new Login_account();
+		$users = $model->findAll();
+
+		$ServerFilename = ' ';
+		if(is_uploaded_file($_FILES['header']['tmp_name'])){
+			$File_Extension = explode(".", $_FILES['header']['name']);
+			$File_Extension = $File_Extension[count($File_Extension)-1];
+			$ServerFilename = date("YmdHis").$File_Extension;
+			move_uploaded_file($_FILES['header']['tmp_name'], 'header/'.$ServerFilename);
+		}
+
+		$_SESSION['header'] = $ServerFilename;
+
+		$data = [
+			'header' => $ServerFilename
+		];
+
+		$model->update($_SESSION['id'], $data);
+
+		echo '<script>alert("修改成功！")</script>';
+		echo "<meta http-equiv='Refresh' content='0 ;URL=/PostController/myaccount'>";
+		return ;
 	}
 }

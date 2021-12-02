@@ -55,6 +55,11 @@ class WebData extends Migration
                 'constraint' => '200',
                 'null'       => TRUE
             ],
+            'header' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '200',
+                'null'       => TRUE
+            ]
         ]);
         $this->forge->addKey('id', True);
         $this->forge->createTable('login_account');

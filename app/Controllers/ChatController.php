@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Message;
+use App\Models\Login_account;
 
 session_start();
 
@@ -16,40 +17,95 @@ class ChatController extends BaseController
 	public function chat()
 	{
 		$model = new Message();
+		$model2 = new Login_account();
 		$users = $model->findAll(); //取得資料
+		$accounts = $model2->findAll(); //取得資料
 
+		$_SESSION['to'] = ' ';
 		if(isset($_GET['value'])){
 			$_SESSION['to'] = $_GET['value'];
+		
+
+			/* 檢查是否曾有聊天紀錄 */
+			$check = 0;
+			for($i = 0; isset($users[$i]); $i++)
+			{
+				$cmp_from = strcmp($_SESSION['account'], $users[$i]['from']);
+				$cmp_to = strcmp($_SESSION['to'], $users[$i]['to']);
+
+				if($cmp_from == 0 && $cmp_to == 0){
+					$check = 1;
+					break;
+				}
+
+				$cmp_from = strcmp($_SESSION['account'], $users[$i]['to']);
+				$cmp_to = strcmp($_SESSION['to'], $users[$i]['from']);
+
+				if($cmp_from == 0 && $cmp_to == 0){
+					$check = 1;
+					break;
+				}
+			}
+
+			/* 若無則創建空白訊息 */
+			if($check == 0){
+				$data = [
+					'from' => $_SESSION['account'],
+					'to' => $_SESSION['to'],
+				];
+				$model->save($data);
+			}
 		}
 
-		/* 檢查是否曾有聊天紀錄 */
-		$check = 0;
-		for($i = 0; isset($users[$i]); $i++)
+		$model = new Message();
+		$users = $model->findAll(); //取得資料
+
+		/* 計算聊過天的人數 */
+		$count = 0;
+		$chat_people = array();
+		for($i = 0; isset($users[$i]); $i++){}
+		$i--;
+		while($i >= 0)
 		{
-			$cmp_from = strcmp($_SESSION['account'], $users[$i]['from']);
-			$cmp_to = strcmp($_SESSION['to'], $users[$i]['to']);
-
-			if($cmp_from == 0 && $cmp_to == 0){
-				$check = 1;
-				break;
+			$check = 0;
+			if($users[$i]['from'] == $_SESSION['account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $users[$i]['to']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $users[$i]['to']);
+					$count++;
+				}
 			}
-
-			$cmp_from = strcmp($_SESSION['account'], $users[$i]['to']);
-			$cmp_to = strcmp($_SESSION['to'], $users[$i]['from']);
-
-			if($cmp_from == 0 && $cmp_to == 0){
-				$check = 1;
-				break;
+			else if($users[$i]['to'] == $_SESSION['account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $users[$i]['from']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $users[$i]['from']);
+					$count++;
+				}
 			}
+			$i--;
 		}
 
-		/* 若無則創建空白訊息 */
-		if($check == 0){
-			$data = [
-				'from' => $_SESSION['account'],
-				'to' => $_SESSION['to'],
-			];
-			$model->save($data);
+		/* 聊過天的帳號轉換名稱 */
+		$chat_name = array();
+		$chat_header = array();
+		for($i = 0; isset($chat_people[$i]); $i++){
+			for($j = 0; isset($accounts[$j]); $j++){
+				if($accounts[$j]['account'] == $chat_people[$i]){
+					array_push($chat_name, $accounts[$j]['name2']);
+					array_push($chat_header, $accounts[$j]['header']);
+					break;
+				}
+			}
 		}
 
 		/* 準備資料 */
@@ -86,7 +142,11 @@ class ChatController extends BaseController
 			'from' => $from,
 			'to' => $to,
 			'content' => $content,
-			'time' => $time
+			'time' => $time,
+			'chat_people' => $chat_people,
+			'chat_name' => $chat_name,
+			'chat_header' => $chat_header,
+			'count' => $count
 		];
 
 		return view('chat/chat', $data);
@@ -108,7 +168,6 @@ class ChatController extends BaseController
 		];
 
 		$model->save($data);
-        return redirect('ChatController/chat');
+		echo "<meta http-equiv='Refresh' content='0 ;URL=/ChatController/chat?value=".$_SESSION['to']."'>";
 	}
-	
 }

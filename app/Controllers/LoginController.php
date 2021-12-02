@@ -450,6 +450,7 @@ class LoginController extends BaseController
 			$password = strcmp($data['password'], $users[$i]['password']);
 
 			if($account == 0 && $password == 0){
+				$_SESSION['id'] = $users[$i]['id'];
 				$_SESSION['name'] = $users[$i]['name'];
 				$_SESSION['name2'] = $users[$i]['name2'];
 				$_SESSION['account'] = $users[$i]['account'];
@@ -457,6 +458,7 @@ class LoginController extends BaseController
 				$_SESSION['phone'] = $users[$i]['phone'];
 				$_SESSION['birthday'] = $users[$i]['birthday'];
 				$_SESSION['sex'] = $users[$i]['sex'];
+				$_SESSION['header'] = $users[$i]['header'];
 				return redirect('PostController/post');
 			}
 			else if($account == 0 && $password != 0){
@@ -474,9 +476,16 @@ class LoginController extends BaseController
 	/* 登出 */
     public function logout()
 	{
+		unset($_SESSION['id']);
 		unset($_SESSION['name']);
+		unset($_SESSION['name2']);
 		unset($_SESSION['account']);
 		unset($_SESSION['password']);
+		unset($_SESSION['phone']);
+		unset($_SESSION['birthday']);
+		unset($_SESSION['sex']);
+		unset($_SESSION['header']);
+		unset($_SESSION);
 		return redirect('LoginController/login');
 	}
 }

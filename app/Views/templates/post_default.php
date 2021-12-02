@@ -31,10 +31,7 @@
                             <a class="nav-link active" href="/PostController/myaccount"><strong>我的帳號</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#"><strong>聊天訊息</strong></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#"><strong>購買紀錄</strong></a>
+                            <a class="nav-link active" href="/ChatController/chat"><strong>聊天訊息</strong></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="/PostController/create"><strong>新增商品</strong></a>

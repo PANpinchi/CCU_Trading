@@ -1,3 +1,23 @@
+body{
+    min-width: 1524px;
+}
+
+a{
+    color : rgb(50, 50, 50);
+    text-decoration: none;
+}
+
+.touch:hover{
+    background-color : rgb(199, 199, 199);
+}
+
+.user{
+    border:  3px solid rgb(150, 255, 63);
+	width: 50px;
+	height: 50px;
+    border-radius: 50%;
+}
+
 .footer{
     position: fixed;
     bottom: 0px;
@@ -21,6 +41,18 @@
 .type3{
     font: normal 5px sans-serif;
     padding-left: 6px;
+}
+
+.type4{
+    font-weight: bold;
+    font-size: 20px;
+    color : rgb(50, 50, 50);
+}
+
+.type5{
+    font-weight: bold;
+    font-size: 30px;
+    color : rgb(50, 50, 50);
 }
 
 .speech-bubble-left {

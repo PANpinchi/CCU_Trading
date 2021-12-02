@@ -23,6 +23,17 @@
             <div style="height: 100px"></div>
             <p class="type0">賣家資料</p>
             <hr>
+            <div style="text-align: center;">
+                <?php 
+                if(isset($user['header'])){
+                    echo'<img id="img1" name="img1" class="user" src="/header/'.$user['header'].'">';
+                }
+                else{
+                    echo'<img id="img1" name="img1" class="user" src="/header/user.jpg">';
+                }
+                ?>
+            </div>
+            <br>
             <table style="width: 100%">
                 <tr>
                     <td class="type2">姓名&nbsp:&nbsp<?php echo $user['name']; ?></td>
@@ -88,13 +99,13 @@
                 ?>
             </table>
             <div align="center">
-                <br>
+                <br><br>
                 <?php
                     if($user['name'] != $_SESSION['name']){
-                        echo '<a href="#" type="button" class="btn btn-primary" style="font-weight: bold;"> 私訊賣家 </a>';
+                        echo '<a href="/ChatController/chat?value='.$user['account'].'" type="button" class="btn btn-primary" style="font-weight: bold;"> 私訊賣家 </a>';
                     }
                 ?>
-                <br><br>
+                <br><br><br>
             </div>
         </div>
         <div class="col-2"></div>

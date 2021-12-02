@@ -24,10 +24,30 @@
         <title>中正大學買賣交流</title>
     </head>
 
-    
     <body>
-        <div class="col-2"></div>
-        <div id="my" class="col-8" align="center" style="background-color: rgb(250, 250, 250);">
+        <div class="col-2" style="min-width: 258px;">
+            <div style="height: 90px;"> </div>
+            <div style="height: 60px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
+                <p class="type5">✉ Message</p>
+            </div>
+            <?php
+            for($i = 0; isset($chat_name[$i]); $i++){
+                echo '
+                <a href="/ChatController/chat?value='.$chat_people[$i].'">
+                    <div class="type4 touch" style="height:90px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
+                    <div style="height: 22px;"></div>';
+                    if(isset($chat_header[$i])){
+                        echo '<img class="user" src="/header/'.$chat_header[$i].'">';
+                    }
+                    else{
+                        echo '<img class="user" src="/header/user.jpg">';
+                    }
+                    echo '&nbsp'.$chat_name[$i].'<br></div>
+                </a>';
+            }
+            ?>
+        </div>
+        <div id="my" class="col-8" align="center" style="background-color: rgb(250, 250, 250); min-width: 1032px;">
             <div style="height: 100px;"></div>
             <div>
                 <!--訊息-->
@@ -36,7 +56,7 @@
                     $month = NULL;
                     $day = NULL;
 
-                    for($i = 2; isset($from[$i]); $i++){
+                    for($i = 1; isset($from[$i]); $i++){
                         /* 計算時間 */
                         $hours = $time[$i][11] * 10 + $time[$i][12];
                         $minutes = $time[$i][14] * 10 + $time[$i][15];
@@ -66,7 +86,7 @@
                             echo '<p class="type0">━━━ '.$year.' 年 '.$month.' 月 '.$day.' 日 ━━━</p>';
                         }
 
-                        if($from[$i] == $_SESSION['name']){
+                        if($from[$i] == $_SESSION['account']){
                             echo '
                             <div align="right" style="margin-right: 5%;">
                                 <span class="type2">';
@@ -108,14 +128,19 @@
                 ?>
             </div>
             <div style="height: 100px;"></div>
-
+            
             <div class="footer" style="width:66%; background-color: rgb(250, 250, 250); z-index:9;">
                 <div style="height: 20px;"></div>
                 <!--輸入-->
-                <form name = "messages" action="/ChatController/message" method="POST">
-                    <input name = "message" id = "message" type="text" placeholder="輸入文字" autocomplete="off"></input>
-                    <button class="btn btn-primary" type="submit" style="height:40px;">發送</button>
-                </form>
+                <?php
+                if($count != 0){
+                    echo '
+                    <form name = "messages" action="/ChatController/message" method="POST">
+                        <input name = "message" id = "message" type="text" placeholder="輸入文字" autocomplete="off"></input>
+                        <button class="btn btn-primary" type="submit" style="height:40px;">發送</button>
+                    </form>';
+                }
+                ?>
                 <div style="height: 20px;"></div>
             </div>
         </div>

@@ -22,7 +22,8 @@ class Login_account extends Model
         'password',
         'phone',
         'birthday',
-        'sex'
+        'sex',
+        'header'
     ];
 
     // Dates

@@ -29,9 +29,29 @@
                 <table width="100%" style="table-layout:fixed; text-align: left">
                 <tr>
                 <td></td>
-                <td colspan="4"><a href="/PostController/account/'.$post['seller_account'].'"><span class="type2">'.$post['seller'].'</span></a></td>
-                </tr>
-                <tr>';
+                <td colspan="4" style="vertical-align:middle;">';
+                if(isset($header)){
+                    echo '
+                    <a href="/PostController/account/'.$post['seller_account'].'" style="height: 53px; width: 198px;">
+                        <img class="user2" src="/header/'.$header.'">
+                        <span class="type2"> '.$post['seller'].'</span>
+                    </a>
+                    <div style="height: 10px"></div>
+                    </td>
+                    </tr>
+                    <tr>';
+                }
+                else{
+                    echo '
+                    <a href="/PostController/account/'.$post['seller_account'].'">
+                        <img class="user2" src="/header/user.jpg">
+                        <span class="type2"> '.$post['seller'].'</span>
+                    </a>
+                    <div style="height: 10px"></div>
+                    </td>
+                    </tr>
+                    <tr>';
+                }
                 $img[0] = '';
                 $img[1] = '';
                 $img[2] = '';
@@ -52,6 +72,10 @@
                                     $count++;
                                     break;
                                 }
+                            }
+
+                            if(!isset($post['image'][$k])){
+                                $count++;
                             }
                         }
                     }
@@ -114,11 +138,21 @@
                     echo '</tr>';
                 }
                 echo '</table>';
-            
-            echo '<br>
-            <a href="/ChatController/chat?value='.$post['seller_account'].'" type="button" class="btn btn-success" style="font-weight: bold;"> 💲 我想排看 </a>
-            <br><br>
-            ';
+                
+            if($post['seller'] != $_SESSION['name2']){
+                echo '
+                <br>
+                <a href="/ChatController/chat?value='.$post['seller_account'].'" type="button" class="btn btn-success" style="font-weight: bold;"> 💲 我想排看 </a>
+                <br><br>
+                ';
+            }
+            else{
+                echo '
+                <br>
+                <a href="/PostController/modify_item/'.$post['id'].'" type="button" class="btn btn-secondary" style="font-weight: bold;"> 🛠️ 修改商品資料 </a>
+                <br><br>
+                ';
+            }
             ?>
             </div><br>
         </div>

@@ -22,14 +22,26 @@
         <div class="col-2"></div>
         <div class="col-8" align="center">
             <div style="height: 100px"></div>
-            <!--<p id="name">陳俊騰</p>
-            <button onclick="GetName()">私訊</button>-->
-
             <?php
                 for($i = $count; $i >= 0; $i--){
                     echo '<div class="border1">';
                     echo '<div style="height: 45px; width: 400px; text-align: left;">';
-                    echo '<a href="/PostController/account/'.$seller_account[$i].'"><span class="type6" style="float: left; height: 30px; margin-top: 8px; margin-bottom: 5px;">'.$seller[$i].'</span></a">';
+                    echo '<div style="height: 10px;"></div>';
+                    if(isset($header[$i])){
+                        echo '
+                        <a href="/PostController/account/'.$seller_account[$i].'">
+                            <img class="user2" src="/header/'.$header[$i].'">
+                            <span class="type6" style="height: 50px;"> '.$seller[$i].'</span>
+                        </a>';
+                    }
+                    else{
+                        echo '
+                        <a href="/PostController/account/'.$seller_account[$i].'">
+                            <img class="user2" src="/header/user.jpg">
+                            <span class="type6" style="height: 50px;"> '.$seller[$i].'</span>
+                        </a>';
+                    }
+
                     echo '<span class="type5" style="float: right; height: 30px; margin-top: 11px; margin-bottom: 5px;">';
                     if($post_time_type[$i] == 0){
                         echo $post_time[$i].' day ago';
@@ -76,12 +88,5 @@
         <div class="col-2"></div>
     <body>
 </html>
-
-<script>
-    function GetName() {
-        var name = document.getElementById("name").innerText;
-        window.location.href="/ChatController/chat?value="+name; 
-    }
-</script>
 
 <?= $this->endSection() ?>
