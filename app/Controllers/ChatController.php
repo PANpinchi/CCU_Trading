@@ -16,6 +16,10 @@ class ChatController extends BaseController
 	/* 聊天頁面 */
 	public function chat()
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
 		$model = new Message();
 		$model2 = new Login_account();
 		$users = $model->findAll(); //取得資料
@@ -157,6 +161,10 @@ class ChatController extends BaseController
 	/* 接收訊息 */
 	public function message()
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+		
 		$model = new Message();
 
 		// 取得日期與時間

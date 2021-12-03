@@ -16,6 +16,10 @@ class PostController extends BaseController
     /* 全部商品頁面 */
 	public function post()
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
 		$model1 = new Login_account();
 		$model2 = new Post();
 		
@@ -77,12 +81,20 @@ class PostController extends BaseController
 	/* 發文頁面-商品類型 */
 	public function create_type()
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
         return view('posts/create_type');
 	}
 
 	/* 發文頁面 */
 	public function create($type)
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
 		$data['type'] = $type;
         return view('posts/create', $data);
 	}
@@ -90,6 +102,10 @@ class PostController extends BaseController
 	/* 修改商品資料頁面 */
 	public function modify_item($id)
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
 		$model = new Post();
 		$data = [
 			'post' => $model->find($id)
@@ -131,6 +147,10 @@ class PostController extends BaseController
 	/* 特定商品頁面 */
 	public function item($id)
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
 		$model1 = new Login_account();
 		$model2 = new Post();
 
@@ -178,6 +198,10 @@ class PostController extends BaseController
 	/* 我的帳號頁面 */
 	public function myaccount()
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
 		$model = new Login_account();
 		$model2 = new Post();
 		$users = $model->findAll(); //取得資料
@@ -219,6 +243,10 @@ class PostController extends BaseController
 	/* 帳號頁面 */
 	public function account($seller_account)
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
 		$model1 = new Login_account();
 		$model2 = new Post();
 
@@ -244,6 +272,10 @@ class PostController extends BaseController
 	/* 發布商品 */
 	public function post_item($type)
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
 		$model = new Post();
 		$users = $model->findAll(); //取得資料
 
@@ -296,6 +328,10 @@ class PostController extends BaseController
 	/* 刪除商品資料 */
 	public function delete_item($id)
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
 		$model = new Post();
 		$post = $model->find($id); //取得資料
 
@@ -340,6 +376,10 @@ class PostController extends BaseController
 	/* 修改商品資料 */
 	public function modify($id)
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
 		$model = new Post();
 		$users = $model->find($id); //取得資料
 
@@ -366,6 +406,10 @@ class PostController extends BaseController
 	/* 修改使用者頭貼 */
 	public function change_header()
 	{
+		if(!isset($_SESSION['name'])){
+			return redirect('LoginController/login');
+		}
+
 		$model = new Login_account();
 		$users = $model->findAll();
 

@@ -13,18 +13,30 @@ class LoginController extends BaseController
     /* 登入頁面 */
 	public function login()
 	{
+		if(isset($_SESSION['name'])){
+			return redirect('PostController/post');
+		}
+
         return view('login/login');
 	}
 
 	/* 註冊頁面 */
 	public function signup()
 	{
+		if(isset($_SESSION['name'])){
+			return redirect('PostController/post');
+		}
+
         return view('login/signup');
 	}
 
 	/* 驗證頁面 */
 	public function verify()
 	{
+		if(isset($_SESSION['name'])){
+			return redirect('PostController/post');
+		}
+
 		if(isset($_SESSION['code'])){
 			return view('login/verify');
 		}
@@ -37,18 +49,40 @@ class LoginController extends BaseController
 	/* 忘記密碼頁面 */
 	public function forget()
 	{
+		if(isset($_SESSION['name'])){
+			return redirect('PostController/post');
+		}
+
         return view('login/forget');
 	}
 
 	/* 臨時密碼頁面 */
 	public function check()
 	{
+		if(isset($_SESSION['name'])){
+			return redirect('PostController/post');
+		}
+
+		if(!isset($_SESSION['check'])){
+			return redirect('PostController/forget');
+		}
+
+		unset($_SESSION['check']);
         return view('login/check');
 	}
 
 	/* 更改密碼頁面 */
 	public function change()
 	{
+		if(isset($_SESSION['name'])){
+			return redirect('PostController/post');
+		}
+		
+		if(!isset($_SESSION['check2'])){
+			return redirect('PostController/forget');
+		}
+
+		unset($_SESSION['check2']);
         return view('login/change');
 	}
 
@@ -153,6 +187,7 @@ class LoginController extends BaseController
 		$mail->Body = $body; //內文
 
 		if($mail->send()){
+			$_SESSION['check'] = 1;
 			echo '<script>alert("臨時密碼傳送至您的信箱，請立即確認！")</script>';
 			echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/check'>";
 			return ;
@@ -173,6 +208,7 @@ class LoginController extends BaseController
 
 		if($data['verify'] == $_SESSION['temp_password']){
 			unset($_SESSION['temp_password']);
+			$_SESSION['check2'] = 1;
 			return redirect('LoginController/change');
 		}
 		else{

@@ -80,7 +80,12 @@
                     echo '<img class="img1" src="/item_images/'.$img.'"><br><br>';
                     echo '<p class="type2">【'.$way[$i].'】 '.$name[$i].'</p>';
                     if($number[$i] == 0){
-                        echo '<span class="type3" style="float: left;"> 已售出 </span>';
+                        if($way[$i] == '徵'){
+                            echo '<span class="type3" style="float: left;"> 已徵到 </span>';
+                        }
+                        else{
+                            echo '<span class="type3" style="float: left;"> 已售出 </span>';
+                        }
                     }
                     else{
                         echo '<span class="type3" style="float: left;">$'.$price[$i].'</span>';

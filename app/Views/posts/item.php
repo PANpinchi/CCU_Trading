@@ -91,7 +91,12 @@
                 echo '</tr>';
                 echo '<tr>';
                 if($post['number'] == 0){
-                    echo '<td colspan="8"><span class="type3">&nbsp已售出&nbsp</span>';
+                    if($post['way'] == '徵'){
+                        echo '<td colspan="8"><span class="type3">&nbsp已徵到&nbsp</span>';
+                    }
+                    else{
+                        echo '<td colspan="8"><span class="type3">&nbsp已售出&nbsp</span>';
+                    }
                 }
                 else{
                     echo '<td colspan="8"><span class="type3">&nbsp$'.$post['price'].'&nbsp</span>';
