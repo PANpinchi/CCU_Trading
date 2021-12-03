@@ -413,11 +413,15 @@ class PostController extends BaseController
 		$model = new Login_account();
 		$users = $model->findAll();
 
+		if(isset($_SESSION['header'])){
+			unlink('./header/'.$_SESSION['header']);
+		}
+
 		$ServerFilename = ' ';
 		if(is_uploaded_file($_FILES['header']['tmp_name'])){
 			$File_Extension = explode(".", $_FILES['header']['name']);
 			$File_Extension = $File_Extension[count($File_Extension)-1];
-			$ServerFilename = date("YmdHis").$File_Extension;
+			$ServerFilename = date("YmdHis").'.'.$File_Extension;
 			move_uploaded_file($_FILES['header']['tmp_name'], 'header/'.$ServerFilename);
 		}
 
