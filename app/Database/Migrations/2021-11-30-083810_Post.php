@@ -65,7 +65,7 @@ class Post extends Migration
                 'constraint' => '200',
                 'null'       => TRUE
             ],
-            'describe' => [
+            'item_describe' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '500',
                 'null'       => TRUE

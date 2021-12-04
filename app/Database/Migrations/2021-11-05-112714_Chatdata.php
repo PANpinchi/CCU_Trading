@@ -15,12 +15,12 @@ class Chatdata extends Migration
                 'unsigned'       => TRUE,
                 'auto_increment' => TRUE
             ],
-            'from' => [
+            'name_from' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '200',
                 'null'       => TRUE
             ],
-            'to' => [
+            'name_to' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '200',
                 'null'       => TRUE

@@ -35,16 +35,16 @@ class ChatController extends BaseController
 			$check = 0;
 			for($i = 0; isset($users[$i]); $i++)
 			{
-				$cmp_from = strcmp($_SESSION['account'], $users[$i]['from']);
-				$cmp_to = strcmp($_SESSION['to'], $users[$i]['to']);
+				$cmp_from = strcmp($_SESSION['account'], $users[$i]['name_from']);
+				$cmp_to = strcmp($_SESSION['to'], $users[$i]['name_to']);
 
 				if($cmp_from == 0 && $cmp_to == 0){
 					$check = 1;
 					break;
 				}
 
-				$cmp_from = strcmp($_SESSION['account'], $users[$i]['to']);
-				$cmp_to = strcmp($_SESSION['to'], $users[$i]['from']);
+				$cmp_from = strcmp($_SESSION['account'], $users[$i]['name_to']);
+				$cmp_to = strcmp($_SESSION['to'], $users[$i]['name_from']);
 
 				if($cmp_from == 0 && $cmp_to == 0){
 					$check = 1;
@@ -55,8 +55,8 @@ class ChatController extends BaseController
 			/* 若無則創建空白訊息 */
 			if($check == 0){
 				$data = [
-					'from' => $_SESSION['account'],
-					'to' => $_SESSION['to'],
+					'name_from' => $_SESSION['account'],
+					'name_to' => $_SESSION['to'],
 				];
 				$model->save($data);
 			}
@@ -73,27 +73,27 @@ class ChatController extends BaseController
 		while($i >= 0)
 		{
 			$check = 0;
-			if($users[$i]['from'] == $_SESSION['account']){
+			if($users[$i]['name_from'] == $_SESSION['account']){
 				for($j = 0; isset($chat_people[$j]); $j++){
-					if($chat_people[$j] == $users[$i]['to']){
+					if($chat_people[$j] == $users[$i]['name_to']){
 						$check = 1;
 						break;
 					}
 				}
 				if($check == 0){
-					array_push($chat_people, $users[$i]['to']);
+					array_push($chat_people, $users[$i]['name_to']);
 					$count++;
 				}
 			}
-			else if($users[$i]['to'] == $_SESSION['account']){
+			else if($users[$i]['name_to'] == $_SESSION['account']){
 				for($j = 0; isset($chat_people[$j]); $j++){
-					if($chat_people[$j] == $users[$i]['from']){
+					if($chat_people[$j] == $users[$i]['name_from']){
 						$check = 1;
 						break;
 					}
 				}
 				if($check == 0){
-					array_push($chat_people, $users[$i]['from']);
+					array_push($chat_people, $users[$i]['name_from']);
 					$count++;
 				}
 			}
@@ -122,22 +122,22 @@ class ChatController extends BaseController
 		/* 顯示聊天紀錄 */
 		for($i = 0; isset($users[$i]); $i++)
 		{
-			$cmp_from = strcmp($_SESSION['account'], $users[$i]['from']);
-			$cmp_to = strcmp($_SESSION['to'], $users[$i]['to']);
+			$cmp_from = strcmp($_SESSION['account'], $users[$i]['name_from']);
+			$cmp_to = strcmp($_SESSION['to'], $users[$i]['name_to']);
 
 			if($cmp_from == 0 && $cmp_to == 0){
-				array_push($from, $users[$i]['from']);
-				array_push($to, $users[$i]['to']);
+				array_push($from, $users[$i]['name_from']);
+				array_push($to, $users[$i]['name_to']);
 				array_push($content, $users[$i]['content']);
 				array_push($time, $users[$i]['time']);
 			}
 
-			$cmp_from = strcmp($_SESSION['account'], $users[$i]['to']);
-			$cmp_to = strcmp($_SESSION['to'], $users[$i]['from']);
+			$cmp_from = strcmp($_SESSION['account'], $users[$i]['name_to']);
+			$cmp_to = strcmp($_SESSION['to'], $users[$i]['name_from']);
 
 			if($cmp_from == 0 && $cmp_to == 0){
-				array_push($from, $users[$i]['from']);
-				array_push($to, $users[$i]['to']);
+				array_push($from, $users[$i]['name_from']);
+				array_push($to, $users[$i]['name_to']);
 				array_push($content, $users[$i]['content']);
 				array_push($time, $users[$i]['time']);
 			}
@@ -171,8 +171,8 @@ class ChatController extends BaseController
 		$time = date('Y/m/d H:i:s');
 
 		$data = [
-			'from' => $_SESSION['account'],
-			'to' => $_SESSION['to'],
+			'name_from' => $_SESSION['account'],
+			'name_to' => $_SESSION['to'],
 			'content' => $this->request->getVar('message'),
 			'time' => $time
 		];

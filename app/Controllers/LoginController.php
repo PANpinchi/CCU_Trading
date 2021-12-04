@@ -13,30 +13,18 @@ class LoginController extends BaseController
     /* 登入頁面 */
 	public function login()
 	{
-		if(isset($_SESSION['name'])){
-			return redirect('PostController/post');
-		}
-
         return view('login/login');
 	}
 
 	/* 註冊頁面 */
 	public function signup()
 	{
-		if(isset($_SESSION['name'])){
-			return redirect('PostController/post');
-		}
-
         return view('login/signup');
 	}
 
 	/* 驗證頁面 */
 	public function verify()
 	{
-		if(isset($_SESSION['name'])){
-			return redirect('PostController/post');
-		}
-
 		if(isset($_SESSION['code'])){
 			return view('login/verify');
 		}
@@ -49,20 +37,12 @@ class LoginController extends BaseController
 	/* 忘記密碼頁面 */
 	public function forget()
 	{
-		if(isset($_SESSION['name'])){
-			return redirect('PostController/post');
-		}
-
         return view('login/forget');
 	}
 
 	/* 臨時密碼頁面 */
 	public function check()
 	{
-		if(isset($_SESSION['name'])){
-			return redirect('PostController/post');
-		}
-
 		if(!isset($_SESSION['check'])){
 			return redirect('PostController/forget');
 		}
@@ -73,11 +53,7 @@ class LoginController extends BaseController
 
 	/* 更改密碼頁面 */
 	public function change()
-	{
-		if(isset($_SESSION['name'])){
-			return redirect('PostController/post');
-		}
-		
+	{		
 		if(!isset($_SESSION['check2'])){
 			return redirect('PostController/forget');
 		}

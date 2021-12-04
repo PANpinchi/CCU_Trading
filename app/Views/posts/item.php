@@ -138,7 +138,7 @@
                 echo '<td colspan="8"><span class="type7">【商品描述】</span></td>';
                 echo '</tr>';
                 echo '<tr>';
-                echo '<td colspan="8"><span class="type7">'.$post['describe'].'</span></td>';
+                echo '<td colspan="8"><span class="type7">'.$post['item_describe'].'</span></td>';
                 echo '</tr>';
                 for($j = 0; $j < 8; $j++){
                     echo '<tr>';

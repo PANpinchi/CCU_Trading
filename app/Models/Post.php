@@ -25,7 +25,7 @@ class Post extends Model
         'place',
         'type',
         'image',
-        'describe',
+        'item_describe',
         'post_time'
     ];
 

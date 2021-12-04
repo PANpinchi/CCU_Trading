@@ -41,7 +41,7 @@ class PostController extends BaseController
 			$data['place'][$i] = $posts[$i]['place'];
 			$data['type'][$i] = $posts[$i]['type'];
 			$data['image'][$i] = $posts[$i]['image'];
-			$data['describe'][$i] = $posts[$i]['describe'];
+			$data['describe'][$i] = $posts[$i]['item_describe'];
 
 			for($j = 0; isset($users[$j]); $j++){
 				if($users[$j]['account'] == $posts[$i]['seller_account']){
@@ -317,7 +317,7 @@ class PostController extends BaseController
 			'place' => $this->request->getVar('place'),
 			'type' => $type,
 			'image' => $ServerFilename,
-			'describe' => $this->request->getVar('describe'),
+			'item_describe' => $this->request->getVar('describe'),
 			'post_time' => $time
 		];
 
@@ -396,7 +396,7 @@ class PostController extends BaseController
 			'number' => $this->request->getVar('number'),
 			'time' => $this->request->getVar('time'),
 			'place' => $this->request->getVar('place'),
-			'describe' => $this->request->getVar('describe'),
+			'item_describe' => $this->request->getVar('describe'),
 		];
 
 		$model->save($data);

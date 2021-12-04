@@ -36,7 +36,7 @@ class Database extends Config
         'username' => '',
         'password' => '',
         'database' => WRITEPATH.'database/webdata.db',
-        'DBDriver' => 'SQLite3',
+        'DBDriver' => 'sqlite3',
         'DBPrefix' => '',
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),

@@ -15,8 +15,8 @@ class Message extends Model
     protected $useSoftDeletes       = false;
     protected $protectFields        = true;
     protected $allowedFields        = [
-        'from',
-        'to',
+        'name_from',
+        'name_to',
         'content',
         'time'
     ];
