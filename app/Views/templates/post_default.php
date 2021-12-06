@@ -36,6 +36,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="/PostController/create_type"><strong>新增商品</strong></a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/LoginController/logout"><strong>登出</strong></a>
+                        </li>
                     </ul>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="搜尋商品" aria-label="Search" style="height: 40px; width:500px;">
