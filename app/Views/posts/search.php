@@ -194,61 +194,57 @@
             </div>
             <div style="height: 90px;"> </div>
         </div>
-        <div class="col-8" style="background-color: rgb(250, 250, 250); width: 1031px; user-select: none;" align="center">
+        <div class="col-8" style="background-color: rgb(250, 250, 250); width: 1031px; user-select: none;">
             <div style="height: 100px;"></div>
+            <p class="type0" style="font-size: 40px"> 以下為可能的搜尋結果 </p>
+            <hr>
             <?php
-                if($count == -1){
-                    echo '<div style="height: 100px;"></div>';
-                    echo '<img src="/img/no_item.png" style="width: auto; height: auto;max-width: 50%; max-height: 50%;"><br>';
-                    echo '<p class="type6" style="user-select: none;"><br>暫無商品</p>';
-                    echo '<p class="type6" style="user-select: none;">趕快去新增商品吧</p>';
-                }
-                else{
-                    for($i = $count; $i >= 0; $i--){
-                        echo '<div class="border1">';
-                        echo '<div style="height: 45px; width: 400px; text-align: left; user-select: none;">';
+                echo '<p class="type1">&nbsp&nbsp搜尋使用者結果 </p>';
+                if(isset($search_users[0])){
+                    for($i = 0; isset($search_users[$i]); $i++){
+                        echo '<div class="border2">';
+                        echo '<a href="/PostController/account/'.$search_users[$i]['account'].'">';
+                        echo '<div style="height: 45px; text-align: left; user-select: none;">';
                         echo '<div style="height: 10px;"></div>';
-                        if(isset($header[$i])){
-                            echo '
-                            <a href="/PostController/account/'.$seller_account[$i].'">
-                                <img class="user2" src="/header/'.$header[$i].'">
-                                <span class="type6" style="height: 50px;"> '.$seller[$i].'</span>
-                            </a>';
+                        if(isset($search_users[$i]['header'])){
+                            echo '&nbsp&nbsp&nbsp
+                                <img class="user4" src="/header/'.$search_users[$i]['header'].'">
+                                <span class="type7" style="height: 100px;">&nbsp&nbsp&nbsp'.$search_users[$i]['name2'].'</span>';
                         }
                         else{
-                            echo '
-                            <a href="/PostController/account/'.$seller_account[$i].'">
-                                <img class="user2" src="/header/user.jpg">
-                                <span class="type6" style="height: 50px;"> '.$seller[$i].'</span>
-                            </a>';
+                            echo '&nbsp&nbsp&nbsp
+                                <img class="user4" src="/header/user.jpg">
+                                <span class="type6" style="height: 50px;">&nbsp&nbsp&nbsp'.$search_users[$i]['name2'].'</span>';
                         }
+                        echo '</div></a></div>';
+                    }
+                }
+                else{
+                    echo '
+                    <div style="text-align: center;">
+                    <p class="type1" style="color: rgb(150, 150, 150)"> 查無使用者 </p><br>
+                    </div>';
+                }
 
-                        echo '<span class="type5" style="float: right; height: 30px; margin-top: 11px; margin-bottom: 5px;">';
-                        if($post_time_type[$i] == 0){
-                            echo $post_time[$i].' day ago';
-                        }
-                        else if($post_time_type[$i] == 1){
-                            echo $post_time[$i].' seconds ago';
-                        }
-                        else if($post_time_type[$i] == 2){
-                            echo $post_time[$i].' minutes ago';
-                        }
-                        else if($post_time_type[$i] == 3){
-                            echo $post_time[$i].' hours ago';
-                        }
-                        echo '</span></div>';
-                        echo '<a href="/PostController/item/'.$id[$i].'">';
-                        echo '<div style="height: 90%; width: 400px; text-align: left;">';
+                echo '<hr>';
+                echo '<p class="type1">&nbsp&nbsp搜尋商品結果 </p>';
+                if(isset($search_posts[0])){
+                    for($i = 0; isset($search_posts[$i]); $i++){
+                        echo '<div class="border2">';
+                        echo '<div style="height: 45px; text-align: left; user-select: none;">';
+                        echo '<div style="height: 10px;"></div>';
+                        echo '<a href="/PostController/item/'.$search_posts[$i]['id'].'">';
+                        echo '<div style="text-align: left;">';
                         $img = '';
-                        for($j = 0; isset($image[$i][$j]); $j++){
-                            if($image[$i][$j] == ':'){
-                                if($image[$i][$j+1] == ' '){
+                        for($j = 0; isset($search_posts[$i]['image'][$j]); $j++){
+                            if($search_posts[$i]['image'][$j] == ':'){
+                                if($search_posts[$i]['image'][$j+1] == ' '){
                                     continue;
                                 }
                                 else{
-                                    for($k = $j+1; isset($image[$i][$k]); $k++){
-                                        if($image[$i][$k] != ' '){
-                                            $img[$k-($j+1)] = $image[$i][$k];
+                                    for($k = $j+1; isset($search_posts[$i]['image'][$k]); $k++){
+                                        if($search_posts[$i]['image'][$k] != ' '){
+                                            $img[$k-($j+1)] = $search_posts[$i]['image'][$k];
                                         }
                                         else{
                                             break;
@@ -258,22 +254,30 @@
                                 }
                             }
                         }
-                        echo '<img class="img1" src="/item_images/'.$img.'"><br><br>';
-                        echo '<p class="type2">【'.$way[$i].'】 '.$name[$i].'</p>';
-                        if($number[$i] == 0){
-                            if($way[$i] == '徵'){
-                                echo '<span class="type3" style="float: left;"> 已徵到 </span>';
+                        echo '<table><tr><td rowspan="2">';
+                        echo '&nbsp&nbsp&nbsp<img class="img3" src="/item_images/'.$img.'"></td>';
+                        echo '<td><span class="type2">&nbsp&nbsp&nbsp【'.$search_posts[$i]['way'].'】 '.$search_posts[$i]['name'].'</span></td>';
+                        echo '</tr><tr><td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                        if($search_posts[$i]['number'] == 0){
+                            if($search_posts[$i]['way'] == '徵'){
+                                echo '<span class="type3"> 已徵到 </span>';
                             }
                             else{
-                                echo '<span class="type3" style="float: left;"> 已售出 </span>';
+                                echo '<span class="type3"> 已售出 </span>';
                             }
                         }
                         else{
-                            echo '<span class="type3" style="float: left;">$'.$price[$i].'</span>';
+                            echo '<span class="type3">$'.$search_posts[$i]['price'].'</span>';
                         }
-                        echo '<span class="type4" style="float: right;">數量：'.$number[$i].'</span>';
-                        echo '</div></a></div><br>';
+                        echo '<span class="type4"> | 數量：'.$search_posts[$i]['number'].'</span>';
+                        echo '</td></tr></table></div></a></div></div>';
                     }
+                }
+                else{
+                    echo '
+                    <div style="text-align: center;">
+                    <p class="type1" style="color: rgb(150, 150, 150)"> 查無商品 </p><br>
+                    </div>';
                 }
             ?>
         </div>

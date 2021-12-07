@@ -68,7 +68,7 @@
                 }
                 ?>
                 <br><br>
-                <?php echo '<p class="type1"> 商品描述&nbsp:&nbsp</p> <textarea id="describe" name="describe" value="'.$post['describe'].'" required></textarea><br><br>'?>
+                <?php echo '<p class="type1"> 商品描述&nbsp:&nbsp</p> <textarea id="describe" name="describe" value="'.$post['item_describe'].'" required></textarea><br><br>'?>
                 <div style="text-align:center">
                     <button class="btn btn-primary" style="font-weight: bold;"> 儲存修改 </button><br><br><br>
                 <div>

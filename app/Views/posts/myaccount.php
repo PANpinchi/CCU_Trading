@@ -22,12 +22,12 @@
         <div class="col-2"></div>
         <div class="col-8">
             <div style="height: 100px"></div>
-            <p class="type0">個人資料</p>
+            <p class="type0" style="user-select: none;">個人資料</p>
             <hr>
             <div style="text-align: center;">
                 <form name = "accounts" action = "/PostController/change_header" enctype="multipart/form-data" method="POST">
                     <input name="header" id="header" style="display: none;" type="file" accept=".jpg,.png" required>
-                    <button name="capture01" id="capture01" type="button" style="border: none; background-color: rgb(245, 245, 245);" onclick="header.click()">
+                    <button name="capture01" id="capture01" type="button" style="border: none; background-color: rgb(250, 250, 250);" onclick="header.click()">
                         <?php 
                         if(isset($header)){
                             echo'<img id="img1" name="img1" class="user" src="/header/'.$header.'">';
@@ -41,11 +41,11 @@
                     <button class="btn btn-secondary" style="font-weight: bold; opacity: .5;"> 儲存照片 </button>
                 </form>
             </div>
-            <span class="type2">姓名&nbsp:&nbsp<?php echo $name; ?></span><br>
-            <span class="type2">使用者帳號&nbsp:&nbsp<?php echo $name2; ?></span><br>
-            <span class="type2">系所&nbsp:&nbsp<?php echo $department; ?></span><br>
-            <span class="type2">Email&nbsp:&nbsp<?php echo $account; ?></span><br>
-            <span class="type2">密碼&nbsp:&nbsp
+            <span class="type2" style="user-select: none;">姓名&nbsp:&nbsp<?php echo $name; ?></span><br>
+            <span class="type2" style="user-select: none;">使用者帳號&nbsp:&nbsp<?php echo $name2; ?></span><br>
+            <span class="type2" style="user-select: none;">系所&nbsp:&nbsp<?php echo $department; ?></span><br>
+            <span class="type2" style="user-select: none;">Email&nbsp:&nbsp<?php echo $account; ?></span><br>
+            <span class="type2" style="user-select: none;">密碼&nbsp:&nbsp
                 <?php 
                     echo $password[0].$password[1];
                     for($i = 2; isset($password[$i+2]); $i++){
@@ -54,7 +54,7 @@
                     echo $password[$i].$password[$i+1];
                 ?>
             </span><br>
-            <span class="type2">手機號碼&nbsp:&nbsp
+            <span class="type2" style="user-select: none;">手機號碼&nbsp:&nbsp
                 <?php 
                     echo $phone[0].$phone[1];
                     for($i = 2; isset($phone[$i+2]); $i++){
@@ -63,12 +63,12 @@
                     echo $phone[$i].$phone[$i+1];
                 ?>
             </span><br>
-            <span class="type2">性別&nbsp:&nbsp<?php echo $sex; ?>性</span><br>
-            <span class="type2">生日&nbsp:&nbsp<?php echo $birthday; ?></span><br><br><br>
+            <span class="type2" style="user-select: none;">性別&nbsp:&nbsp<?php echo $sex; ?>性</span><br>
+            <span class="type2" style="user-select: none;">生日&nbsp:&nbsp<?php echo $birthday; ?></span><br><br><br>
             <!--<div align="center">
                 <a href="#" type="button" class="btn btn-secondary" style="font-weight: bold;"> 修改個人資料 </a>
             </div>-->
-            <p class="type0">個人賣場</p>
+            <p class="type0" style="user-select: none;">個人賣場</p>
             <hr>
             <table width="100%" style="table-layout:fixed;" cellspacing="50" align="center">
                 <?php
@@ -76,7 +76,7 @@
                         if($j % 3 == 0){
                             echo '<br><tr>';
                         }
-                        echo '<td style="background-color: rgb(255, 255, 255); border: 10px solid rgb(245, 245, 245)">';
+                        echo '<td style="background-color: rgb(255, 255, 255); border: 10px solid rgb(250, 250, 250)">';
                         echo '<a href="/PostController/item/'.$post[$j]['id'].'">';
                         echo '<div style="height: 10px"></div>';
                         echo '<div align="center" style="height: 430px;">';

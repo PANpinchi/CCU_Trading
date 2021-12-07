@@ -13,7 +13,6 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
-        <script src="//cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
         <link rel="stylesheet" href="/style/post.css">
 
         <title>中正大學買賣交流</title>
@@ -21,11 +20,11 @@
     
     <body>
         <div class="col-2"></div>
-        <div class="col-8" style="background-color: rgb(255, 255, 255)">
+        <div class="col-8" style="background-color: rgb(255, 255, 255); user-select: none;">
             <div style="height: 100px"></div>
             <p class="type0"> 新增商品 </p>
             <hr>
-            <p class="type8"> 商品類別&nbsp:&nbsp</p>
+            <p class="type1"> 商品類別&nbsp:&nbsp</p>
             <div class="cart type8" style="text-align: center">
                 <li>
                     <a href="#">服飾/配件 <span style="float: right;">➲</span></a>
@@ -210,11 +209,11 @@
 
             $(this).toggleClass('active');
 
+            //其他隱藏起來
+            $(this).parent().siblings().find('ul').slideUp(10);
+
             //打開
             $(this).siblings('ul').slideToggle();
-            
-            //其他隱藏起來
-            $(this).parent().siblings().find('ul').slideUp();
 
             $(this).parent().siblings().find('a').removeClass('active');
         });

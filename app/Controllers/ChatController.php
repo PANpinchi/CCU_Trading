@@ -16,7 +16,7 @@ class ChatController extends BaseController
 	/* 聊天頁面 */
 	public function chat()
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 
@@ -161,7 +161,7 @@ class ChatController extends BaseController
 	/* 接收訊息 */
 	public function message()
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 		

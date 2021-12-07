@@ -13,18 +13,30 @@ class LoginController extends BaseController
     /* 登入頁面 */
 	public function login()
 	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
+		}
+
         return view('login/login');
 	}
 
 	/* 註冊頁面 */
 	public function signup()
 	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
+		}
+
         return view('login/signup');
 	}
 
 	/* 驗證頁面 */
 	public function verify()
 	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
+		}
+
 		if(isset($_SESSION['code'])){
 			return view('login/verify');
 		}
@@ -37,12 +49,20 @@ class LoginController extends BaseController
 	/* 忘記密碼頁面 */
 	public function forget()
 	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
+		}
+
         return view('login/forget');
 	}
 
 	/* 臨時密碼頁面 */
 	public function check()
 	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
+		}
+
 		if(!isset($_SESSION['check'])){
 			return redirect('PostController/forget');
 		}
@@ -53,18 +73,21 @@ class LoginController extends BaseController
 
 	/* 更改密碼頁面 */
 	public function change()
-	{		
-		if(!isset($_SESSION['check2'])){
-			return redirect('PostController/forget');
+	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
 		}
 
-		unset($_SESSION['check2']);
         return view('login/change');
 	}
 
 	/* 找回密碼 */
 	public function forget_password()
 	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
+		}
+
 		$model = new Login_account();
 		$users = $model->findAll(); //取得資料
 
@@ -178,6 +201,10 @@ class LoginController extends BaseController
 	/* 確認臨時密碼 */
 	public function check_password()
 	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
+		}
+
 		$data = [
 			'verify' => $this->request->getVar('verify')
 		];
@@ -197,6 +224,10 @@ class LoginController extends BaseController
 	/* 修改密碼 */
 	public function change_password()
 	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
+		}
+
 		$model = new Login_account();
 		$users = $model->findAll(); //取得資料
 
@@ -212,13 +243,13 @@ class LoginController extends BaseController
 		/* 檢查密碼長度 */
 		$password_len = strlen($pass1);
 		if($password_len < 6){
-			echo '<script>alert("密碼太短，請重新註冊！")</script>';
-			echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/signup'>";
+			echo '<script>alert("密碼太短，請重新輸入！")</script>';
+			echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/change'>";
 			return ;
 		}
 		else if($password_len > 15){
-			echo '<script>alert("密碼太長，請重新註冊！")</script>';
-			echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/signup'>";
+			echo '<script>alert("密碼太長，請重新輸入！")</script>';
+			echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/change'>";
 			return ;
 		}
 
@@ -252,6 +283,10 @@ class LoginController extends BaseController
 	/* 儲存帳戶 */
 	public function store_account()
 	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
+		}
+
 		$model = new Login_account();
 		$users = $model->findAll(); //取得資料
 
@@ -382,6 +417,10 @@ class LoginController extends BaseController
 	/* 驗證碼匹配 */
     public function compare_verification_code()
 	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
+		}
+
 		$model = new Login_account();
 		$users = $model->findAll(); //取得資料
 
@@ -422,6 +461,10 @@ class LoginController extends BaseController
 	/* 帳號匹配 */
     public function compare_account()
 	{
+		if(isset($_SESSION['login'])){
+			return redirect('PostController/post');
+		}
+
 		$model = new Login_account();
 		$users = $model->findAll(); //取得資料
 
@@ -471,6 +514,7 @@ class LoginController extends BaseController
 				$_SESSION['birthday'] = $users[$i]['birthday'];
 				$_SESSION['sex'] = $users[$i]['sex'];
 				$_SESSION['header'] = $users[$i]['header'];
+				$_SESSION['login'] = 1;
 				return redirect('PostController/post');
 			}
 			else if($account == 0 && $password != 0){
@@ -488,16 +532,7 @@ class LoginController extends BaseController
 	/* 登出 */
     public function logout()
 	{
-		unset($_SESSION['id']);
-		unset($_SESSION['name']);
-		unset($_SESSION['name2']);
-		unset($_SESSION['account']);
-		unset($_SESSION['password']);
-		unset($_SESSION['phone']);
-		unset($_SESSION['birthday']);
-		unset($_SESSION['sex']);
-		unset($_SESSION['header']);
-		unset($_SESSION);
+		session_unset();
 		return redirect('LoginController/login');
 	}
 }

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Login_account;
+use App\Models\Message;
 use App\Models\Post;
 
 session_start();
@@ -16,16 +17,195 @@ class PostController extends BaseController
     /* 全部商品頁面 */
 	public function post()
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 
 		$model1 = new Login_account();
 		$model2 = new Post();
+		$model3 = new Message();
 		
 		$users = $model1->findAll(); //取得資料
 		$posts = $model2->findAll();
+		$talks = $model3->findAll();
 
+		/* 計算聊過天的人數 */
+		$counts = 0;
+		$chat_people = array();
+		for($i = 0; isset($talks[$i]); $i++){}
+		$i--;
+		while($i >= 0)
+		{
+			$check = 0;
+			if($talks[$i]['name_from'] == $_SESSION['account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $talks[$i]['name_to']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $talks[$i]['name_to']);
+					$counts++;
+				}
+			}
+			else if($talks[$i]['name_to'] == $_SESSION['account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $talks[$i]['name_from']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $talks[$i]['name_from']);
+					$counts++;
+				}
+			}
+			$i--;
+		}
+
+		/* 聊過天的帳號轉換名稱 */
+		$chat_name = array();
+		$chat_header = array();
+		for($i = 0; isset($chat_people[$i]); $i++){
+			for($j = 0; isset($users[$j]); $j++){
+				if($users[$j]['account'] == $chat_people[$i]){
+					array_push($chat_name, $users[$j]['name2']);
+					array_push($chat_header, $users[$j]['header']);
+					break;
+				}
+			}
+		}
+
+		$data = [
+			'chat_people' => $chat_people,
+			'chat_name' => $chat_name,
+			'chat_header' => $chat_header,
+			'counts' => $counts
+		];
+		
+		$time = date('Y/m/d H:i:s'); // 取得日期與時間
+
+		for($i = 0; isset($posts[$i]); $i++)
+		{
+			$data['id'][$i] = $posts[$i]['id'];
+			$data['seller'][$i] = $posts[$i]['seller'];
+			$data['seller_account'][$i] = $posts[$i]['seller_account'];
+			$data['way'][$i] = $posts[$i]['way'];
+			$data['name'][$i] = $posts[$i]['name'];
+			$data['price'][$i] = $posts[$i]['price'];
+			$data['number'][$i] = $posts[$i]['number'];
+			$data['time'][$i] = $posts[$i]['time'];
+			$data['place'][$i] = $posts[$i]['place'];
+			$data['type'][$i] = $posts[$i]['type'];
+			$data['image'][$i] = $posts[$i]['image'];
+			$data['describe'][$i] = $posts[$i]['item_describe'];
+
+			for($j = 0; isset($users[$j]); $j++){
+				if($users[$j]['account'] == $posts[$i]['seller_account']){
+					$data['header'][$i] = $users[$j]['header'];
+					break;
+				}
+			}
+
+			/* 處理時間 */
+			$diff_day = abs(strtotime($time) - strtotime($posts[$i]['post_time'])) / 86400;
+			if($diff_day >= 1){
+				$data['post_time'][$i] = $diff_day;
+				$data['post_time_type'][$i] = 0; // 天
+			}
+			else{
+				$diff_time = abs(strtotime($time) - strtotime($posts[$i]['post_time']));
+				if ($diff_time < 60) {
+					$data['post_time'][$i] = $diff_time;
+					$data['post_time_type'][$i] = 1; // 秒
+				}
+				else {
+					if ($diff_time < 3600) {
+						$data['post_time'][$i] = floor($diff_time / 60);
+						$data['post_time_type'][$i] = 2; // 分
+					}
+					else {
+						$data['post_time'][$i] = floor($diff_time / 3600);
+						$data['post_time_type'][$i] = 3; // 小時
+					}
+				}
+			}
+		}
+		$data['count'] = $i - 1;
+        return view('posts/post', $data);
+	}
+
+	/* 特定類別商品頁面 */
+	public function post_type($item)
+	{
+		if(!isset($_SESSION['login'])){
+			return redirect('LoginController/login');
+		}
+
+		$model1 = new Login_account();
+		$model2 = new Post();
+		$model3 = new Message();
+		
+		$users = $model1->findAll(); //取得資料
+		$posts = $model2->where('type', $item)->findAll();
+		$talks = $model3->findAll();
+
+		/* 計算聊過天的人數 */
+		$counts = 0;
+		$chat_people = array();
+		for($i = 0; isset($talks[$i]); $i++){}
+		$i--;
+		while($i >= 0)
+		{
+			$check = 0;
+			if($talks[$i]['name_from'] == $_SESSION['account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $talks[$i]['name_to']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $talks[$i]['name_to']);
+					$counts++;
+				}
+			}
+			else if($talks[$i]['name_to'] == $_SESSION['account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $talks[$i]['name_from']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $talks[$i]['name_from']);
+					$counts++;
+				}
+			}
+			$i--;
+		}
+
+		/* 聊過天的帳號轉換名稱 */
+		$chat_name = array();
+		$chat_header = array();
+		for($i = 0; isset($chat_people[$i]); $i++){
+			for($j = 0; isset($users[$j]); $j++){
+				if($users[$j]['account'] == $chat_people[$i]){
+					array_push($chat_name, $users[$j]['name2']);
+					array_push($chat_header, $users[$j]['header']);
+					break;
+				}
+			}
+		}
+
+		$data = [
+			'chat_people' => $chat_people,
+			'chat_name' => $chat_name,
+			'chat_header' => $chat_header,
+			'counts' => $counts
+		];
+		
 		$time = date('Y/m/d H:i:s'); // 取得日期與時間
 
 		for($i = 0; isset($posts[$i]); $i++)
@@ -81,7 +261,7 @@ class PostController extends BaseController
 	/* 發文頁面-商品類型 */
 	public function create_type()
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 
@@ -91,7 +271,7 @@ class PostController extends BaseController
 	/* 發文頁面 */
 	public function create($type)
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 
@@ -102,7 +282,7 @@ class PostController extends BaseController
 	/* 修改商品資料頁面 */
 	public function modify_item($id)
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 
@@ -144,10 +324,10 @@ class PostController extends BaseController
         return view('posts/modify_item', $data);
 	}
 
-	/* 特定商品頁面 */
+	/* 單一商品頁面 */
 	public function item($id)
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 
@@ -198,7 +378,7 @@ class PostController extends BaseController
 	/* 我的帳號頁面 */
 	public function myaccount()
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 
@@ -243,7 +423,7 @@ class PostController extends BaseController
 	/* 帳號頁面 */
 	public function account($seller_account)
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 
@@ -269,10 +449,197 @@ class PostController extends BaseController
         return view('posts/account', $data);
 	}
 
+	/* 搜尋商品或使用者 */
+	public function search_item()
+	{
+		if(!isset($_SESSION['login'])){
+			return redirect('LoginController/login');
+		}
+
+		$model1 = new Login_account();
+		$model2 = new Post();
+		$model3 = new Message();
+
+		$users = $model1->findAll();
+		$posts = $model2->findAll();
+		$talks = $model3->findAll();
+
+		$search = $this->request->getVar('search');
+
+		$search_users = array();
+		$search_posts = array();
+
+		/* 計算聊過天的人數 */
+		$counts = 0;
+		$chat_people = array();
+		for($i = 0; isset($talks[$i]); $i++){}
+		$i--;
+		while($i >= 0)
+		{
+			$check = 0;
+			if($talks[$i]['name_from'] == $_SESSION['account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $talks[$i]['name_to']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $talks[$i]['name_to']);
+					$counts++;
+				}
+			}
+			else if($talks[$i]['name_to'] == $_SESSION['account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $talks[$i]['name_from']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $talks[$i]['name_from']);
+					$counts++;
+				}
+			}
+			$i--;
+		}
+
+		/* 聊過天的帳號轉換名稱 */
+		$chat_name = array();
+		$chat_header = array();
+		for($i = 0; isset($chat_people[$i]); $i++){
+			for($j = 0; isset($users[$j]); $j++){
+				if($users[$j]['account'] == $chat_people[$i]){
+					array_push($chat_name, $users[$j]['name2']);
+					array_push($chat_header, $users[$j]['header']);
+					break;
+				}
+			}
+		}
+
+		/* 搜尋使用者及商品 */
+		for($i = 0; isset($users[$i]) || isset($posts[$i]); $i++){
+			if(isset($users[$i])){
+				if($search == $users[$i]['name']){
+					for($j=0; isset($search_users[$j]); $j++){
+						if($search_users[$j]['name'] == $users[$i]['name']){
+							break;
+						}
+					}
+					if(!isset($search_users[$j])){
+						array_push($search_users, $users[$i]);
+					}
+				}
+				else if($search == $users[$i]['name2']){
+					for($j=0; isset($search_users[$j]); $j++){
+						if($search_users[$j]['name2'] == $users[$i]['name2']){
+							break;
+						}
+					}
+					if(!isset($search_users[$j])){
+						array_push($search_users, $users[$i]);
+					}
+				}
+				else{
+					$len = strlen($search);
+					for($j=0; $j<$len; $j++){
+						$substr = '';
+						for($k=0; $k<$len-$j; $k++){
+							$substr = $substr.$search[$k];
+							if(strpos($users[$i]['name'],$substr) !== false){
+								for($l=0; isset($search_users[$l]); $l++){
+									if($search_users[$l]['name'] == $users[$i]['name']){
+										break;
+									}
+								}
+								if(!isset($search_users[$l])){
+									array_push($search_users, $users[$i]);
+								}
+							}
+							else if(strpos($users[$i]['name2'],$substr) !== false){
+								for($l=0; isset($search_users[$l]); $l++){
+									if($search_users[$l]['name2'] == $users[$i]['name2']){
+										break;
+									}
+								}
+								if(!isset($search_users[$l])){
+									array_push($search_users, $users[$i]);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if(isset($posts[$i])){
+				if($search == $posts[$i]['seller']){
+					for($j=0; isset($search_posts[$j]); $j++){
+						if($search_posts[$j]['seller'] == $posts[$i]['seller']){
+							break;
+						}
+					}
+					if(!isset($search_posts[$j])){
+						array_push($search_posts, $posts[$i]);
+					}
+				}
+				else if($search == $posts[$i]['name']){
+					for($j=0; isset($search_posts[$j]); $j++){
+						if($search_posts[$j]['name'] == $posts[$i]['name']){
+							break;
+						}
+					}
+					if(!isset($search_posts[$j])){
+						array_push($search_posts, $posts[$i]);
+					}
+				}
+				else{
+					$len = strlen($search);
+					for($j=0; $j<$len; $j++){
+						$substr = '';
+						for($k=0; $k<$len-$j; $k++){
+							$substr = $substr.$search[$k];
+							if(strpos($posts[$i]['seller'],$substr) !== false){
+								for($l=0; isset($search_posts[$l]); $l++){
+									if($search_posts[$l]['seller'] == $posts[$i]['seller']){
+										break;
+									}
+								}
+								if(!isset($search_posts[$l])){
+									array_push($search_posts, $posts[$i]);
+								}
+							}
+							else if(strpos($posts[$i]['name'],$substr) !== false){
+								for($l=0; isset($search_posts[$l]); $l++){
+									if($search_posts[$l]['name'] == $posts[$i]['name']){
+										break;
+									}
+								}
+								if(!isset($search_posts[$l])){
+									array_push($search_posts, $posts[$i]);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		$data = [
+			'chat_people' => $chat_people,
+			'chat_name' => $chat_name,
+			'chat_header' => $chat_header,
+			'counts' => $counts,
+			'search_users' => $search_users,
+			'search_posts' => $search_posts
+		];
+
+		return view('posts/search', $data);
+	}
+
 	/* 發布商品 */
 	public function post_item($type)
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 
@@ -328,7 +695,7 @@ class PostController extends BaseController
 	/* 刪除商品資料 */
 	public function delete_item($id)
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 
@@ -376,7 +743,7 @@ class PostController extends BaseController
 	/* 修改商品資料 */
 	public function modify($id)
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 
@@ -406,7 +773,7 @@ class PostController extends BaseController
 	/* 修改使用者頭貼 */
 	public function change_header()
 	{
-		if(!isset($_SESSION['name'])){
+		if(!isset($_SESSION['login'])){
 			return redirect('LoginController/login');
 		}
 

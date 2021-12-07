@@ -26,10 +26,10 @@
                 echo '<div style="text-align: center; background-color: rgb(255, 255, 255);">';
                 echo '<div style="height: 20px;"></div>';
                 echo '
-                <table width="100%" style="table-layout:fixed; text-align: left">
+                <table width="100%" style="table-layout:fixed; text-align: left; user-select: none;">
                 <tr>
                 <td></td>
-                <td colspan="4" style="vertical-align:middle;">';
+                <td colspan="4">';
                 if(isset($header)){
                     echo '
                     <a href="/PostController/account/'.$post['seller_account'].'" style="height: 53px; width: 198px;">
@@ -38,6 +38,7 @@
                     </a>
                     <div style="height: 10px"></div>
                     </td>
+                    <td colspan="10"></td>
                     </tr>
                     <tr>';
                 }
@@ -80,37 +81,29 @@
                         }
                     }
                 }
-                echo '<td rowspan="12" colspan="10" style="text-align: center;">
+                echo '<td colspan="10" style="text-align: center; vertical-align:text-top;">
                     <img id="img03" name="img03" class="img1" src="/item_images/'.$img[0].'"><br><br>
                 ';
                 for($i = 0; $i < $count; $i++){
                     echo '<img id="img0'.$i.'" name="img0'.$i.'" class="img3" src="/item_images/'.$img[$i].'" style="margin-left: 10px; margin-right: 10px;">';
                 }
                 echo '</td>';
-                echo '<td colspan="8"><span class="type2">【'.$post['way'].'】 '.$post['name'].'</span></td>';
-                echo '</tr>';
-                echo '<tr>';
+                echo '<td colspan="10">
+                        <p class="type2">【'.$post['way'].'】 '.$post['name'].'</p>';
                 if($post['number'] == 0){
                     if($post['way'] == '徵'){
-                        echo '<td colspan="8"><span class="type3">&nbsp已徵到&nbsp</span>';
+                        echo '<span class="type3">&nbsp已徵到&nbsp</span>';
                     }
                     else{
-                        echo '<td colspan="8"><span class="type3">&nbsp已售出&nbsp</span>';
+                        echo '<span class="type3">&nbsp已售出&nbsp</span>';
                     }
                 }
                 else{
-                    echo '<td colspan="8"><span class="type3">&nbsp$'.$post['price'].'&nbsp</span>';
+                    echo '<span class="type3">&nbsp$'.$post['price'].'&nbsp</span>';
                 }
-                echo '<span class="type4">&nbsp&nbsp|&nbsp&nbsp數量：'.$post['number'].'</span></td>';
-                echo '</tr>';
-                echo '<tr>';
-                echo '<td colspan="8">&nbsp</td>';
-                echo '</tr>';
-                echo '<tr>';
-                echo '<td colspan="8"><span class="type7" style="background-color: yellow;">&nbsp商品詳情&nbsp</span></td>';
-                echo '</tr>';
-                echo '<tr>';
-                echo '<td colspan="8"><span class="type7">【上架時間】 ';
+                echo '<span class="type4">&nbsp&nbsp|&nbsp&nbsp數量：'.$post['number'].'</span><br><br>';
+                echo '<p class="type6" style="max-width: 95px; background-color: yellow;">&nbsp商品詳情&nbsp</p>';
+                echo '<p class="type6">【上架時間】 ';
                 if($post_time_type == 0){
                     echo $post['post_time'].' day ago';
                 }
@@ -123,36 +116,21 @@
                 else if($post_time_type == 3){
                     echo $post['post_time'].' hours ago';
                 }
-                echo '</span></td>';
-                echo '</tr>';
-                echo '<tr>';
-                echo '<td colspan="8"><span class="type7">【商品類別】 '.$post['type'].'</span></td>';
-                echo '</tr>';
-                echo '<tr>';
-                echo '<td colspan="8"><span class="type7">【時間】 '.$post['time'].'</span></td>';
-                echo '</tr>';
-                echo '<tr>';
-                echo '<td colspan="8"><span class="type7">【地點】 '.$post['place'].'</span></td>';
-                echo '</tr>';
-                echo '<tr>';
-                echo '<td colspan="8"><span class="type7">【商品描述】</span></td>';
-                echo '</tr>';
-                echo '<tr>';
-                echo '<td colspan="8"><span class="type7">'.$post['item_describe'].'</span></td>';
-                echo '</tr>';
-                for($j = 0; $j < 8; $j++){
-                    echo '<tr>';
-                    for($j = 0; $j < 10; $j++){
-                        echo '<td>&nbsp</td>';
-                    }
-                    echo '</tr>';
-                }
+                echo '</p>';
+                echo '<p class="type6">【商品類別】 '.$post['type'].'</p>';
+                echo '<p class="type6">【時間】 '.$post['time'].'</p>';
+                echo '<p class="type6">【地點】 '.$post['place'].'</p>';
+                echo '<p class="type6">【商品描述】</p>';
+                echo '<p class="type6">'.$post['item_describe'].'</p>';
+                echo '</td></tr>';
                 echo '</table>';
                 
             if($post['seller'] != $_SESSION['name2']){
                 if($post['number'] == 0){
                     echo '
                     <br>
+                    <button class="btn btn-primary" style="font-weight: bold;" onclick="javascript:history.back();">返回</button>
+                    <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                     <a href="/ChatController/chat?value='.$post['seller_account'].'" type="button" class="btn btn-success" style="font-weight: bold;"> 私訊賣家 </a>
                     <br><br>
                     ';
@@ -160,6 +138,8 @@
                 else{
                     echo '
                     <br>
+                    <button class="btn btn-primary" style="font-weight: bold;" onclick="javascript:history.back();">返回</button>
+                    <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                     <a href="/ChatController/chat?value='.$post['seller_account'].'" type="button" class="btn btn-success" style="font-weight: bold;"> 💲 我想排看 </a>
                     <br><br>
                     ';
@@ -168,7 +148,10 @@
             else{
                 echo '
                 <br>
+                <button class="btn btn-primary" style="font-weight: bold;" onclick="javascript:history.back();">返回</button>
+                <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                 <a href="/PostController/delete_item/'.$post['id'].'" type="button" class="btn btn-danger" style="font-weight: bold;"> 🗑️ 刪除此商品 </a>
+                <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                 <a href="/PostController/modify_item/'.$post['id'].'" type="button" class="btn btn-secondary" style="font-weight: bold;"> 🛠️ 修改商品資料 </a>
                 <br><br>
                 ';

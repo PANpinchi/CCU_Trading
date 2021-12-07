@@ -21,15 +21,15 @@
     
     <body>
         <div class="col-2"></div>
-        <div class="col-8" style="background-color: rgb(255, 255, 255)">
+        <div class="col-8" style="background-color: rgb(255, 255, 255); user-select: none;">
             <div style="height: 100px"></div>
             <?php echo '<form name = "accounts" action = "/PostController/post_item/'.$type.'" enctype="multipart/form-data" method="POST">'?>
                 <p class="type0"> 新增商品 </p>
                 <hr>
                 <span class="type1"> 商品需求&nbsp:&nbsp</span>
-                <input id="way" name="way" type="radio" style="width: 15px; height: 15px;" value="賣" required><span class="type1">&nbsp&nbsp賣&nbsp&nbsp</span>
-                <input id="way" name="way" type="radio" style="width: 15px; height: 15px;" value="徵" required><span class="type1">&nbsp&nbsp徵&nbsp&nbsp</span>
-                <input id="way" name="way" type="radio" style="width: 15px; height: 15px;" value="送" required><span class="type1">&nbsp&nbsp送&nbsp&nbsp</span>
+                <input id="way1" name="way" type="radio" style="width: 15px; height: 15px;" value="賣" required><span class="type1"><label for="way1">&nbsp&nbsp賣&nbsp&nbsp</label></span>
+                <input id="way2" name="way" type="radio" style="width: 15px; height: 15px;" value="徵" required><span class="type1"><label for="way2">&nbsp&nbsp徵&nbsp&nbsp</label></span>
+                <input id="way3" name="way" type="radio" style="width: 15px; height: 15px;" value="送" required><span class="type1"><label for="way3">&nbsp&nbsp送&nbsp&nbsp</label></span>
                 <br><br>
                 <span class="type1"> 商品名稱&nbsp:&nbsp</span> <input id="name" name="name" type="text" style="width: 250px" placeholder="商品名稱" autocomplete="off" required><br><br>
                 <span class="type1"> 商品價格&nbsp:&nbsp</span> <input id="price" name="price" type="number" style="width: 250px" placeholder="NT$" autocomplete="off" required><br><br>

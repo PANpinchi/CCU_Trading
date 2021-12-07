@@ -19,7 +19,7 @@
     
     <body>
         <div class="col-2"></div>
-        <div class="col-8">
+        <div class="col-8" style="user-select: none;">
             <div style="height: 100px"></div>
             <p class="type0">賣家資料</p>
             <hr>
@@ -54,7 +54,7 @@
                 </tr>
             </table>
             <br><br><br>
-            <p class="type0">個人賣場</p>
+            <p class="type0" style="user-select: none;">個人賣場</p>
             <hr>
             <table width="100%" style="table-layout:fixed;" cellspacing="50" align="center">
                 <?php
@@ -62,7 +62,7 @@
                         if($j % 3 == 0){
                             echo '<br><tr>';
                         }
-                        echo '<td style="background-color: rgb(255, 255, 255); border: 10px solid rgb(245, 245, 245)">';
+                        echo '<td style="background-color: rgb(255, 255, 255); border: 10px solid rgb(250, 250, 250)">';
                         echo '<a href="/PostController/item/'.$post[$j]['id'].'">';
                         echo '<div style="height: 10px"></div>';
                         echo '<div align="center" style="height: 430px;">';
@@ -102,7 +102,10 @@
                 <br><br>
                 <?php
                     if($user['name'] != $_SESSION['name']){
-                        echo '<a href="/ChatController/chat?value='.$user['account'].'" type="button" class="btn btn-primary" style="font-weight: bold;"> 私訊賣家 </a>';
+                        echo '
+                        <button class="btn btn-primary" style="font-weight: bold;" onclick="javascript:history.back();">返回</button>
+                        <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                        <a href="/ChatController/chat?value='.$user['account'].'" type="button" class="btn btn-primary" style="font-weight: bold;"> 私訊賣家 </a>';
                     }
                 ?>
                 <br><br><br>

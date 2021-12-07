@@ -1,10 +1,14 @@
 body{
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(250, 250, 250);
     min-width: 1500px;
 }
 
 a{
     text-decoration:none;
+}
+
+.touch:hover{
+    background-color : rgb(230, 230, 230);
 }
 
 .user{
@@ -18,6 +22,20 @@ a{
     border:  3px solid rgb(150, 255, 63);
 	width: 35px;
 	height: 35px;
+    border-radius: 50%;
+}
+
+.user3{
+    border:  3px solid rgb(150, 255, 63);
+	width: 50px;
+	height: 50px;
+    border-radius: 50%;
+}
+
+.user4{
+    border:  3px solid rgb(150, 255, 63);
+	width: 80px;
+	height: 80px;
     border-radius: 50%;
 }
 
@@ -79,7 +97,7 @@ a{
 
 .type7{
     font-weight: bold;
-    font-size: 20px;
+    font-size: 30px;
     color : rgb(50, 50, 50);
 }
 
@@ -93,6 +111,16 @@ a{
     width: 450px;
     height: 575px;
     background-color: rgb(255, 255, 255);
+}
+
+.border2{
+    width: 100%;
+    height: 100px;
+    background-color: rgb(255, 255, 255);
+    margin: 5px;
+    margin-bottom: 20px;
+    border: 1px solid rgb(175, 175, 175);
+    border-radius: 10px;
 }
 
 .cart a{
@@ -134,7 +162,7 @@ a{
 }
 
 .cart>li>a:hover, .cart>li>a.active{
-	background-color: orange;
+	background-color: rgb(110, 199, 235);
 	color: #fff;
 }
 
@@ -143,5 +171,55 @@ a{
 }
 
 .cart ul{
+	display: none;
+}
+
+.cart2 a{
+	text-decoration: none;
+	color: #000;
+}
+
+.cart2>li{
+    list-style: none;
+    width: 105%;
+    border-bottom: 1px solid rgb(230, 230, 230)
+}
+
+.cart2>li>a{
+	display: block;
+    height: 50px;
+	padding: 5px;
+}
+
+.cart2>li>ul{
+    position: absolute;
+    left: 230px;
+    width: 202px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #000;
+    z-index: 20;
+}
+
+.cart2>li>ul>li{
+	list-style: none;
+    margin-left: -32px;
+}
+
+.cart2>li>ul>li>a{
+	display: block;
+    padding: 5px;
+    padding-right: 10px;
+}
+
+.cart2>li>a:hover, .cart>li>a.active{
+	background-color: rgb(110, 199, 235);
+	color: #fff;
+}
+
+.cart2>li>ul>li>a:hover, .cart>li>ul>li>a.active{
+	background-color: rgb(230, 230, 230);
+}
+
+.cart2 ul{
 	display: none;
 }

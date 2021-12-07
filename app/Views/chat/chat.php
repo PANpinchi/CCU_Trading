@@ -28,7 +28,7 @@
         <div class="col-2" style="min-width: 258px;">
             <div style="height: 90px;"> </div>
             <div style="height: 60px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
-                <p class="type5">✉ Message</p>
+                <p class="type5" style="user-select: none;">✉ Message</p>
             </div>
             <?php
             for($i = 0; isset($chat_name[$i]); $i++){
@@ -83,13 +83,13 @@
                             $year = $temp_year;
                             $month = $temp_month;
                             $day = $temp_day;
-                            echo '<p class="type0">━━━ '.$year.' 年 '.$month.' 月 '.$day.' 日 ━━━</p>';
+                            echo '<p class="type0" style="user-select: none;">━━━ '.$year.' 年 '.$month.' 月 '.$day.' 日 ━━━</p>';
                         }
 
                         if($from[$i] == $_SESSION['account']){
                             echo '
                             <div align="right" style="margin-right: 5%;">
-                                <span class="type2">';
+                                <span class="type2" style="user-select: none;">';
                                     if($afternoon == 0){
                                         echo '上午 '.$hours.':'.$minutes;
                                     }
@@ -108,7 +108,7 @@
                         else{
                             echo '
                             <div align="left" style="margin-left: 5%">
-                                <span class="type3">';
+                                <span class="type2" style="user-select: none;">';
                                     if($afternoon == 0){
                                         echo '上午 '.$hours.':'.$minutes;
                                     }

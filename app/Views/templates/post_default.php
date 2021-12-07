@@ -40,8 +40,8 @@
                             <a class="nav-link active" href="/LoginController/logout"><strong>登出</strong></a>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="搜尋商品" aria-label="Search" style="height: 40px; width:500px;">
+                    <form class="d-flex" action = "/PostController/search_item" method="POST">
+                        <input name="search" class="form-control me-2" type="search" placeholder="搜尋商品" aria-label="Search" style="height: 40px; width:300px;">
                         <button class="btn btn-primary" type="submit">🔍搜尋</button>
                     </form>
                     </div>
