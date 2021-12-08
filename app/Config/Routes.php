@@ -40,6 +40,8 @@ $routes->get('/LoginController/check', 'LoginController::check');
 $routes->get('/LoginController/change', 'LoginController::change');
 $routes->get('/PostController', 'PostController::post');
 $routes->get('/PostController/post', 'PostController::post');
+$routes->get('/PostController/myaccount', 'PostController::myaccount');
+$routes->get('/PostController/change_account', 'PostController::change_account');
 $routes->get('/ChatController', 'ChatController::chat');
 $routes->get('/ChatController/chat', 'ChatController::chat');
 

@@ -11,45 +11,42 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <script>
-            window.onload = function(){
-                var scrollTop = window.pageYOffset|| document.documentElement.scrollTop || document.body.scrollTop;
-                window.pageYOffset = 999999999999999999999999999999;
-                document.documentElement.scrollTop = 999999999999999999999999999999;
-                document.body.scrollTop = 999999999999999999999999999999;
-            };
-        </script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
         <link rel="stylesheet" href="/style/chat.css">
 
         <title>中正大學買賣交流</title>
     </head>
 
     <body>
-        <div class="col-2" style="min-width: 258px;">
+        <div class="col-2" style="width: 258px;">
             <div style="height: 90px;"> </div>
-            <div style="height: 60px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
-                <p class="type5" style="user-select: none;">✉ Message</p>
+            <div id="chat_people" style="position: fixed; width: 245px;">
+                <div style="height: 60px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
+                    <p class="type5" style="user-select: none;">✉ Message</p>
+                </div>
+                <div class="scr">
+                    <?php
+                    for($i = 0; isset($chat_name[$i]); $i++){
+                        echo '
+                        <a href="/ChatController/chat?value='.$chat_people[$i].'">
+                            <div id="'.$chat_name[$i].'" class="type4 touch" style="height:90px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
+                            <div style="height: 22px;"></div>';
+                            if(isset($chat_header[$i])){
+                                echo '<img class="user" src="/header/'.$chat_header[$i].'">';
+                            }
+                            else{
+                                echo '<img class="user" src="/header/user.jpg">';
+                            }
+                            echo '&nbsp'.$chat_name[$i].'<br></div>
+                        </a>';
+                    }
+                    ?>
+                </div>
             </div>
-            <?php
-            for($i = 0; isset($chat_name[$i]); $i++){
-                echo '
-                <a href="/ChatController/chat?value='.$chat_people[$i].'">
-                    <div class="type4 touch" style="height:90px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
-                    <div style="height: 22px;"></div>';
-                    if(isset($chat_header[$i])){
-                        echo '<img class="user" src="/header/'.$chat_header[$i].'">';
-                    }
-                    else{
-                        echo '<img class="user" src="/header/user.jpg">';
-                    }
-                    echo '&nbsp'.$chat_name[$i].'<br></div>
-                </a>';
-            }
-            ?>
         </div>
-        <div id="my" class="col-8" align="center" style="background-color: rgb(250, 250, 250); min-width: 1032px;">
+        <div id="my" class="col-8" align="center" style="background-color: rgb(250, 250, 250); width: 1031px; user-select: none;">
             <div style="height: 100px;"></div>
-            <div>
+            <div id="results">
                 <!--訊息-->
                 <?php 
                     $year = NULL;
@@ -127,25 +124,46 @@
                     }
                 ?>
             </div>
-            <div style="height: 100px;"></div>
+            <div id="tail" style="height: 100px;"></div>
             
-            <div class="footer" style="width:66%; background-color: rgb(250, 250, 250); z-index:9;">
+            <div class="footer" style="width: 1015px; background-color: rgb(250, 250, 250); z-index:9;">
                 <div style="height: 20px;"></div>
                 <!--輸入-->
                 <?php
                 if($display){
                     echo '
-                    <form name = "messages" action="/ChatController/message" method="POST">
+                    <form id="messages" name="messages" method="POST">
                         <input name = "message" id = "message" type="text" placeholder="輸入文字" autocomplete="off"></input>
-                        <button class="btn btn-primary" type="submit" style="height:40px;">發送</button>
+                        <button class="btn btn-primary" id="submitData" onclick="SubmitFormData();" style="width: 80px;height:40px;"> 發送 </button>
                     </form>';
                 }
                 ?>
                 <div style="height: 20px;"></div>
             </div>
         </div>
-        <div class="col-2"></div>
+        <div class="col-2" style="width: 100px;"></div>
     <body>
 </html>
+
+<script>
+function SubmitFormData() {
+    var message = $("#message").val();
+    $.post("/ChatController/message", {message: message},
+    function(data) {
+	 $('#messages')[0].reset();
+    });
+}
+
+document.documentElement.scrollTo({
+    top: $(document.documentElement)[0].scrollHeight,
+    behavior: 'instant'
+});
+
+<?php echo '
+$("#'.$talking.'")[0].scrollIntoView();
+$("#'.$talking.'").css({"background-color":"rgb(240, 240, 240)"});
+';?>
+
+</script>
 
 <?= $this->endSection() ?>

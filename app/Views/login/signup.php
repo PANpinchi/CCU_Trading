@@ -24,7 +24,7 @@
                     <br>
                     <p class="type1">註冊</p>
                     <input id = "name" name = "name" type = "text" class="type2" style="height:35px; width:250px" placeholder = "姓名" required>
-                    <input id = "name2" name = "name2" type = "text" class="type2" style="height:35px; width:250px" placeholder = "暱稱" required>
+                    <input id = "name2" name = "name2" type = "text" class="type2" style="height:35px; width:250px" placeholder = "暱稱(長度限制最多7位)" required>
                     <br><br>
                     <select id= "department" name = "department" class="type2" style="height:35px; width:250px" required>
                         <option value="" disabled selected>請選擇科系</option>
@@ -124,11 +124,11 @@
                     <input id = "account" name = "account" type = "email" class="type2" style="height:35px; width:250px" placeholder = "帳號/電子郵件" required>
                     <input id = "birthday" name = "birthday" type = "text" class="type2" style="height:35px; width:250px" placeholder = "生日" onfocus="(this.type = 'date')" required>
                     <br><br>
-                    <input id = "password" name = "password" type = "password" class="type2" style="height:35px; width:250px" placeholder = "密碼長度限制6至15位" required>
+                    <input id = "password" name = "password" type = "password" class="type2" style="height:35px; width:250px" placeholder = "密碼(長度限制6至15位)" required>
                     <span style="height:35px; width:250px; display:inline-block; text-align:left;">
                         <span class="type6">&nbsp性別&nbsp&nbsp:&nbsp&nbsp&nbsp</span>
-                        <input id = "sex" name = "sex" type = "radio" style="height:15px; width:15px;" value="男" required><span class="type6">&nbsp&nbsp男&nbsp&nbsp&nbsp</span>
-                        <input id = "sex" name = "sex" type = "radio" style="height:15px; width:15px;" value="女" required><span class="type6">&nbsp&nbsp女&nbsp&nbsp</span>
+                        <input id = "sex1" name = "sex" type = "radio" style="height:15px; width:15px;" value="男" required><label for="sex1"><span class="type6">&nbsp&nbsp男&nbsp&nbsp&nbsp</span></label>
+                        <input id = "sex2" name = "sex" type = "radio" style="height:15px; width:15px;" value="女" required><label for="sex2"><span class="type6">&nbsp&nbsp女&nbsp&nbsp</span></label>
                     </span>
                     <br><br>
                     <a class="btn btn-primary" role="button" href="/LoginController/login" style="font-weight: bold; margin-right: 30px"> 返回 </a>

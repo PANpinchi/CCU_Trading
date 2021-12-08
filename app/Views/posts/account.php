@@ -103,9 +103,9 @@
                 <?php
                     if($user['name'] != $_SESSION['name']){
                         echo '
-                        <button class="btn btn-primary" style="font-weight: bold;" onclick="javascript:history.back();">返回</button>
+                        <button class="btn btn-secondary" style="font-weight: bold; opacity: .9;" onclick="javascript:history.back();">返回</button>
                         <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-                        <a href="/ChatController/chat?value='.$user['account'].'" type="button" class="btn btn-primary" style="font-weight: bold;"> 私訊賣家 </a>';
+                        <a href="/ChatController/chat?value='.$user['account'].'" type="button" class="btn btn-primary" style="font-weight: bold; opacity: .9;"> 私訊賣家 </a>';
                     }
                 ?>
                 <br><br><br>

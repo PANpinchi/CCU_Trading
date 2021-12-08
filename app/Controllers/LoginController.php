@@ -338,6 +338,14 @@ class LoginController extends BaseController
 			}
 		}
 
+		/* 檢查暱稱長度 */
+		$name2_len = strlen($data['name2']);
+		if($name2_len > 7){
+			echo '<script>alert("暱稱太長囉，請重新註冊！")</script>';
+			echo "<meta http-equiv='Refresh' content='0 ;URL=/LoginController/signup'>";
+			return ;
+		}
+
 		/* 檢查密碼長度 */
 		$password_len = strlen($data['password']);
 		if($password_len < 6){

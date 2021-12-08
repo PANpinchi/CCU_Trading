@@ -111,6 +111,7 @@ class PostController extends BaseController
 			/* 處理時間 */
 			$diff_day = abs(strtotime($time) - strtotime($posts[$i]['post_time'])) / 86400;
 			if($diff_day >= 1){
+				$diff_day = floor($diff_day);
 				$data['post_time'][$i] = $diff_day;
 				$data['post_time_type'][$i] = 0; // 天
 			}
@@ -233,6 +234,7 @@ class PostController extends BaseController
 			/* 處理時間 */
 			$diff_day = abs(strtotime($time) - strtotime($posts[$i]['post_time'])) / 86400;
 			if($diff_day >= 1){
+				$diff_day = floor($diff_day);
 				$data['post_time'][$i] = $diff_day;
 				$data['post_time_type'][$i] = 0; // 天
 			}
@@ -350,6 +352,7 @@ class PostController extends BaseController
 		/* 處理時間 */
 		$diff_day = abs(strtotime($time) - strtotime($data['post']['post_time'])) / 86400;
 		if($diff_day >= 1){
+			$diff_day = floor($diff_day);
 			$data['post']['post_time'] = $diff_day;
 			$data['post_time_type'] = 0; // 天
 		}
@@ -418,6 +421,51 @@ class PostController extends BaseController
 
 		$data['count'] = $j;
         return view('posts/myaccount', $data);
+	}
+
+	/* 修改我的帳號頁面 */
+	public function change_account()
+	{
+		if(!isset($_SESSION['login'])){
+			return redirect('LoginController/login');
+		}
+
+		$model = new Login_account();
+		$model2 = new Post();
+		$users = $model->findAll(); //取得資料
+		$posts = $model2->findAll();
+
+		/* 尋找帳號 */
+		for($i = 0; isset($users[$i]); $i++)
+		{
+			$name = strcmp($_SESSION['name'], $users[$i]['name']);
+			$account = strcmp($_SESSION['account'], $users[$i]['account']);
+			$password = strcmp($_SESSION['password'], $users[$i]['password']);
+
+			if($name == 0 && $account == 0 && $password == 0){
+				$data = [
+					'name' => $users[$i]['name'],
+					'name2' => $users[$i]['name2'],
+					'department' => $users[$i]['department'],
+					'account' => $users[$i]['account'],
+					'password' => $users[$i]['password'],
+					'phone' => $users[$i]['phone'],
+					'birthday' => $users[$i]['birthday'],
+					'sex' => $users[$i]['sex'],
+					'header' => $_SESSION['header']
+				];
+				break;
+			}
+		}
+
+		for($i = 0, $j = 0; isset($posts[$i]); $i++){
+			if($posts[$i]['seller_account'] == $_SESSION['account']){
+				$data['post'][$j++] = $posts[$i];
+			}
+		}
+
+		$data['count'] = $j;
+        return view('posts/change_account', $data);
 	}
 
 	/* 帳號頁面 */
@@ -540,7 +588,35 @@ class PostController extends BaseController
 						array_push($search_users, $users[$i]);
 					}
 				}
-				else{
+			}
+
+			if(isset($posts[$i])){
+				if($search == $posts[$i]['seller']){
+					for($j=0; isset($search_posts[$j]); $j++){
+						if($search_posts[$j]['seller'] == $posts[$i]['seller']){
+							break;
+						}
+					}
+					if(!isset($search_posts[$j])){
+						array_push($search_posts, $posts[$i]);
+					}
+				}
+				else if($search == $posts[$i]['name']){
+					for($j=0; isset($search_posts[$j]); $j++){
+						if($search_posts[$j]['name'] == $posts[$i]['name']){
+							break;
+						}
+					}
+					if(!isset($search_posts[$j])){
+						array_push($search_posts, $posts[$i]);
+					}
+				}
+			}
+		}
+
+		for($i = 0; isset($users[$i]) || isset($posts[$i]); $i++){
+			if(isset($users[$i])){
+				if($search != $users[$i]['name'] && $search != $users[$i]['name2']){
 					$len = strlen($search);
 					for($j=0; $j<$len; $j++){
 						$substr = '';
@@ -572,27 +648,7 @@ class PostController extends BaseController
 			}
 
 			if(isset($posts[$i])){
-				if($search == $posts[$i]['seller']){
-					for($j=0; isset($search_posts[$j]); $j++){
-						if($search_posts[$j]['seller'] == $posts[$i]['seller']){
-							break;
-						}
-					}
-					if(!isset($search_posts[$j])){
-						array_push($search_posts, $posts[$i]);
-					}
-				}
-				else if($search == $posts[$i]['name']){
-					for($j=0; isset($search_posts[$j]); $j++){
-						if($search_posts[$j]['name'] == $posts[$i]['name']){
-							break;
-						}
-					}
-					if(!isset($search_posts[$j])){
-						array_push($search_posts, $posts[$i]);
-					}
-				}
-				else{
+				if($search != $posts[$i]['seller'] && $search != $posts[$i]['name']){
 					$len = strlen($search);
 					for($j=0; $j<$len; $j++){
 						$substr = '';
@@ -634,6 +690,54 @@ class PostController extends BaseController
 		];
 
 		return view('posts/search', $data);
+	}
+
+	/* 修改帳號 */
+	public function change_acc()
+	{
+		$model = new Login_account();
+
+		/* 檢查暱稱長度 */
+		$name2_len = strlen($this->request->getVar('name2'));
+		if($name2_len > 7){
+			echo '<script>alert("暱稱太長，請重新輸入！")</script>';
+			echo "<meta http-equiv='Refresh' content='0 ;URL=/PostController/change_account'>";
+			return ;
+		}
+
+		/* 檢查密碼長度 */
+		$password_len = strlen($this->request->getVar('password'));
+		if($password_len < 6){
+			echo '<script>alert("密碼太短，請重新輸入！")</script>';
+			echo "<meta http-equiv='Refresh' content='0 ;URL=/PostController/change_account'>";
+			return ;
+		}
+		else if($password_len > 15){
+			echo '<script>alert("密碼太長，請重新輸入！")</script>';
+			echo "<meta http-equiv='Refresh' content='0 ;URL=/PostController/change_account'>";
+			return ;
+		}
+
+		$_SESSION['name2'] = $this->request->getVar('name2');
+		$_SESSION['department'] = $this->request->getVar('department');
+		$_SESSION['password'] = $this->request->getVar('password');
+		$_SESSION['phone'] = $this->request->getVar('phone');
+		$_SESSION['sex'] = $this->request->getVar('sex');
+
+		$data = [
+			'id' => $_SESSION['id'],
+			'name' => $_SESSION['name'],
+			'name2' => $_SESSION['name2'],
+			'department' => $_SESSION['department'],
+			'account' => $_SESSION['account'],
+			'password' => $_SESSION['password'],
+			'phone' => $_SESSION['phone'],
+        	'birthday' => $_SESSION['birthday'],
+        	'sex' => $_SESSION['sex']
+		];
+
+		$model->save($data);
+		return redirect('PostController/myaccount');
 	}
 
 	/* 發布商品 */

@@ -65,9 +65,9 @@
             </span><br>
             <span class="type2" style="user-select: none;">性別&nbsp:&nbsp<?php echo $sex; ?>性</span><br>
             <span class="type2" style="user-select: none;">生日&nbsp:&nbsp<?php echo $birthday; ?></span><br><br><br>
-            <!--<div align="center">
-                <a href="#" type="button" class="btn btn-secondary" style="font-weight: bold;"> 修改個人資料 </a>
-            </div>-->
+            <div align="center">
+                <a href="/Postcontroller/change_account" type="button" class="btn btn-secondary" style="font-weight: bold; opacity: .5;"> 修改個人資料 </a>
+            </div>
             <p class="type0" style="user-select: none;">個人賣場</p>
             <hr>
             <table width="100%" style="table-layout:fixed;" cellspacing="50" align="center">
@@ -114,7 +114,7 @@
             </table>
             <div align="center">
                 <br><br>
-                <a href="/LoginController/logout" type="button" class="btn btn-primary" style="font-weight: bold;"> 登出 </a>
+                <a href="/LoginController/logout" type="button" class="btn btn-primary" style="font-weight: bold; opacity: .9"> 登出 </a>
                 <br><br><br>
             </div>
         </div>

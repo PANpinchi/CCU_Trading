@@ -29,11 +29,11 @@
                 <table width="100%" style="table-layout:fixed; text-align: left; user-select: none;">
                 <tr>
                 <td></td>
-                <td colspan="4">';
+                <td colspan="8">';
                 if(isset($header)){
                     echo '
                     <a href="/PostController/account/'.$post['seller_account'].'" style="height: 53px; width: 198px;">
-                        <img class="user2" src="/header/'.$header.'">
+                        <img class="user2" src="/header/'.$header.'" style="margin-bottom: 10px">
                         <span class="type2"> '.$post['seller'].'</span>
                     </a>
                     <div style="height: 10px"></div>
@@ -45,7 +45,7 @@
                 else{
                     echo '
                     <a href="/PostController/account/'.$post['seller_account'].'">
-                        <img class="user2" src="/header/user.jpg">
+                        <img class="user2" src="/header/user.jpg" style="margin-bottom: 10px">
                         <span class="type2"> '.$post['seller'].'</span>
                     </a>
                     <div style="height: 10px"></div>
@@ -105,7 +105,7 @@
                 echo '<p class="type6" style="max-width: 95px; background-color: yellow;">&nbsp商品詳情&nbsp</p>';
                 echo '<p class="type6">【上架時間】 ';
                 if($post_time_type == 0){
-                    echo $post['post_time'].' day ago';
+                    echo $post['post_time'].' days ago';
                 }
                 else if($post_time_type == 1){
                     echo $post['post_time'].' seconds ago';

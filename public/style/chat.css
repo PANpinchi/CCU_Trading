@@ -1,5 +1,5 @@
 body{
-    min-width: 1524px;
+    min-width: 1500px;
 }
 
 a{
@@ -8,7 +8,33 @@ a{
 }
 
 .touch:hover{
-    background-color : rgb(199, 199, 199);
+    background-color : rgb(230, 230, 230);
+}
+
+.scr{
+    height: 550px;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.scr::-webkit-scrollbar {
+    width:4px;
+    height:8px;
+}
+.scr::-webkit-scrollbar-thumb {
+    background-color: rgb(200, 200, 200); 
+    border-radius:6px;
+}
+.scr::-webkit-scrollbar-track {
+    background:rgb(240, 240, 240);
+}
+
+.scr:hover{
+    height: 550px;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .user{

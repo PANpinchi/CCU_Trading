@@ -1,6 +1,6 @@
 body{
     background-color: rgb(250, 250, 250);
-    min-width: 1500px;
+    width: 1507px;
 }
 
 a{
@@ -9,6 +9,32 @@ a{
 
 .touch:hover{
     background-color : rgb(230, 230, 230);
+}
+
+.scr{
+    height: 550px;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.scr::-webkit-scrollbar {
+    width:4px;
+    height:8px;
+}
+.scr::-webkit-scrollbar-thumb {
+    background-color: rgb(200, 200, 200); 
+    border-radius:6px;
+}
+.scr::-webkit-scrollbar-track {
+    background:rgb(240, 240, 240);
+}
+
+.scr:hover{
+    height: 550px;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .user{
@@ -181,7 +207,7 @@ a{
 
 .cart2>li{
     list-style: none;
-    width: 105%;
+    width: 100%;
     border-bottom: 1px solid rgb(230, 230, 230)
 }
 
@@ -192,12 +218,11 @@ a{
 }
 
 .cart2>li>ul{
-    position: absolute;
+    position: fixed;
     left: 230px;
     width: 202px;
     background-color: rgb(255, 255, 255);
     border: 1px solid #000;
-    z-index: 20;
 }
 
 .cart2>li>ul>li{

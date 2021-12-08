@@ -27,6 +27,7 @@ class ChatController extends BaseController
 		$display = 0;
 
 		$_SESSION['to'] = ' ';
+		$talking = '';
 		if(isset($_GET['value'])){
 			$display = 1;
 			$_SESSION['to'] = $_GET['value'];
@@ -106,6 +107,9 @@ class ChatController extends BaseController
 		for($i = 0; isset($chat_people[$i]); $i++){
 			for($j = 0; isset($accounts[$j]); $j++){
 				if($accounts[$j]['account'] == $chat_people[$i]){
+					if($_SESSION['to'] == $accounts[$j]['account']){
+						$talking = $accounts[$j]['name2'];
+					}
 					array_push($chat_name, $accounts[$j]['name2']);
 					array_push($chat_header, $accounts[$j]['header']);
 					break;
@@ -152,7 +156,8 @@ class ChatController extends BaseController
 			'chat_name' => $chat_name,
 			'chat_header' => $chat_header,
 			'count' => $count,
-			'display' => $display
+			'display' => $display,
+			'talking' => $talking
 		];
 
 		return view('chat/chat', $data);
@@ -173,11 +178,11 @@ class ChatController extends BaseController
 		$data = [
 			'name_from' => $_SESSION['account'],
 			'name_to' => $_SESSION['to'],
-			'content' => $this->request->getVar('message'),
+			'content' => $_POST['message'],
 			'time' => $time
 		];
 
 		$model->save($data);
-		echo "<meta http-equiv='Refresh' content='0 ;URL=/ChatController/chat?value=".$_SESSION['to']."'>";
+		//echo "<meta http-equiv='Refresh' content='0 ;URL=/ChatController/chat?value=".$_SESSION['to']."'>";
 	}
 }
