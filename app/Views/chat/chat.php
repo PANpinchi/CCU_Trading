@@ -18,13 +18,13 @@
     </head>
 
     <body>
-        <div class="col-2" style="width: 258px;">
+        <div class="col-2">
             <div style="height: 90px;"> </div>
-            <div id="chat_people" style="position: fixed; width: 245px;">
+            <div id="chat_people" style="position: absolute; width: 16%; min-width: 243px;">
                 <div style="height: 60px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
                     <p class="type5" style="user-select: none;">✉ Message</p>
                 </div>
-                <div class="scr">
+                <div id="chat_people2" class="scr">
                     <?php
                     for($i = 0; isset($chat_name[$i]); $i++){
                         echo '
@@ -41,10 +41,11 @@
                         </a>';
                     }
                     ?>
+                    <div style="height: 90px;"></div>
                 </div>
             </div>
         </div>
-        <div id="my" class="col-8" align="center" style="background-color: rgb(250, 250, 250); width: 1031px; user-select: none;">
+        <div id="my" class="col-8" align="center" style="background-color: rgb(250, 250, 250); user-select: none;">
             <div style="height: 100px;"></div>
             <div id="results">
                 <!--訊息-->
@@ -126,7 +127,7 @@
             </div>
             <div id="tail" style="height: 100px;"></div>
             
-            <div class="footer" style="width: 1015px; background-color: rgb(250, 250, 250); z-index:9;">
+            <div class="footer" style="width: 66%; background-color: rgb(250, 250, 250); z-index:9;">
                 <div style="height: 20px;"></div>
                 <!--輸入-->
                 <?php
@@ -141,29 +142,43 @@
                 <div style="height: 20px;"></div>
             </div>
         </div>
-        <div class="col-2" style="width: 100px;"></div>
+        <div class="col-2"></div>
     <body>
 </html>
 
 <script>
-function SubmitFormData() {
-    var message = $("#message").val();
-    $.post("/ChatController/message", {message: message},
-    function(data) {
-	 $('#messages')[0].reset();
+    $(window).on('scroll', function() {
+        const w_h = $(window).scrollTop();
+        $('#chat_people').css({'top': w_h+90});
     });
-}
 
-document.documentElement.scrollTo({
-    top: $(document.documentElement)[0].scrollHeight,
-    behavior: 'instant'
-});
+    $(document).ready(function(){
+        var height = $(window).height();
+        $('#chat_people2').css({'height': height - 200});
 
-<?php echo '
-$("#'.$talking.'")[0].scrollIntoView();
-$("#'.$talking.'").css({"background-color":"rgb(240, 240, 240)"});
-';?>
+        $(window).resize(function() {
+            var height = $(window).height();
+            $('#chat_people2').css({'height': height - 200});
+        });
+    });
 
+    <?php echo '
+    $("#'.$talking.'")[0].scrollIntoView();
+    $("#'.$talking.'").css({"background-color":"rgb(240, 240, 240)"});
+    ';?>
+    
+    function SubmitFormData() {
+        var message = $("#message").val();
+        $.post("/ChatController/message", {message: message},
+        function(data) {
+        $('#messages')[0].reset();
+        });
+    }
+
+    document.documentElement.scrollTo({
+        top: $(document.documentElement)[0].scrollHeight,
+        behavior: 'instant'
+    });
 </script>
 
 <?= $this->endSection() ?>

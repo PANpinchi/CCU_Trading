@@ -12,7 +12,6 @@ a{
 }
 
 .scr{
-    height: 550px;
     overflow: scroll;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -31,7 +30,6 @@ a{
 }
 
 .scr:hover{
-    height: 550px;
     overflow: scroll;
     overflow-x: hidden;
     overflow-y: scroll;

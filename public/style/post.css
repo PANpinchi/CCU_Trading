@@ -1,6 +1,6 @@
 body{
     background-color: rgb(250, 250, 250);
-    width: 1507px;
+    min-width: 1507px;
 }
 
 a{
@@ -12,7 +12,6 @@ a{
 }
 
 .scr{
-    height: 550px;
     overflow: scroll;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -31,7 +30,6 @@ a{
 }
 
 .scr:hover{
-    height: 550px;
     overflow: scroll;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -219,7 +217,7 @@ a{
 
 .cart2>li>ul{
     position: fixed;
-    left: 230px;
+    left: 16%;
     width: 202px;
     background-color: rgb(255, 255, 255);
     border: 1px solid #000;

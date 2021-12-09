@@ -20,13 +20,13 @@
 
     
     <body>
-        <div class="col-2" style="background-color: rgb(255, 255, 255); width: 242px;">
+        <div class="col-2" style="background-color: rgb(255, 255, 255);">
             <div style="height: 90px;"> </div>
-            <div style="position: fixed; width: 230px;">
+            <div id="type_box" style="position: absolute; width: 16%; min-width: 243px;">
                 <div style="width: 100%; height: 60px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
                     <p class="type7" style="user-select: none;">📦 商品分類</p>
                 </div>
-                <div class="cart2 type8 scr" style="text-align: center;">
+                <div id="type_box2" class="cart2 type8 scr" style="text-align: center;">
                     <li>
                         <ul>
                             <li><a href="/PostController/post_type/上衣">上衣</a></li>
@@ -196,9 +196,8 @@
                     </li>
                 </div>
             </div>
-            <div style="height: 90px;"> </div>
         </div>
-        <div class="col-8" style="background-color: rgb(250, 250, 250); width: 1031px; user-select: none;" align="center">
+        <div class="col-8" style="background-color: rgb(250, 250, 250); user-select: none;" align="center">
             <div style="height: 100px;"></div>
             <?php
                 if($count == -1){
@@ -281,13 +280,13 @@
                 }
             ?>
         </div>
-        <div class="col-2" style="background-color: rgb(255, 255, 255); min-width: 258px;">
+        <div class="col-2" style="background-color: rgb(255, 255, 255);">
             <div style="height: 90px;"> </div>
-            <div style="position: fixed; width: 245px;">
+            <div id="chat_box" style="position: absolute; width: 16%; min-width: 243px;">
                 <div style="height: 60px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
                     <p class="type7" style="user-select: none;">✉ Message</p>
                 </div>
-                <div class="scr">
+                <div id="chat_box2" class="scr">
                     <?php
                     for($i = 0; isset($chat_name[$i]); $i++){
                         echo '
@@ -314,8 +313,8 @@
     jQuery(document).ready(function($) {
         $('.cart2>li>a').click(function(event) {
             const h = $(this).offset().top;
-            const w_h = $(window).scrollTop();
-            $(this).siblings('ul').css({'top': h-w_h});
+            const w_s = $(window).scrollTop();
+            $(this).siblings('ul').css({'top': h-w_s});
 
             event.preventDefault();
 
@@ -347,6 +346,24 @@
             });
 
             $(this).parent().siblings().find('a').removeClass('active');
+        });
+    });
+
+    $(window).on('scroll', function() {
+        const w_s = $(window).scrollTop();
+        $('#type_box').css({'top': w_s+90});
+        $('#chat_box').css({'top': w_s+90});
+    });
+
+    $(document).ready(function(){
+        var height = $(window).height();
+        $('#type_box2').css({'height': height - 200});
+        $('#chat_box2').css({'height': height - 200});
+
+        $(window).resize(function() {
+            var height = $(window).height();
+            $('#type_box2').css({'height': height - 200});
+            $('#chat_box2').css({'height': height - 200});
         });
     });
 </script>

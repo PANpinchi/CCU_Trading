@@ -13,7 +13,7 @@
     </head>
 
     <body>
-        <div class="row">
+        <div class="row" style="user-select: none;">
             <div class="col-4"></div>
             <div class="col-4" align="center">
                 <br><br><br>

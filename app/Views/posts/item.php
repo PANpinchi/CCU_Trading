@@ -28,13 +28,12 @@
                 echo '
                 <table width="100%" style="table-layout:fixed; text-align: left; user-select: none;">
                 <tr>
-                <td></td>
-                <td colspan="8">';
+                <td id="head_name" colspan="10" style="text-align: center;">';
                 if(isset($header)){
                     echo '
                     <a href="/PostController/account/'.$post['seller_account'].'" style="height: 53px; width: 198px;">
                         <img class="user2" src="/header/'.$header.'" style="margin-bottom: 10px">
-                        <span class="type2"> '.$post['seller'].'</span>
+                        <span id="name_len" class="type2"> '.$post['seller'].'</span>
                     </a>
                     <div style="height: 10px"></div>
                     </td>
@@ -46,7 +45,7 @@
                     echo '
                     <a href="/PostController/account/'.$post['seller_account'].'">
                         <img class="user2" src="/header/user.jpg" style="margin-bottom: 10px">
-                        <span class="type2"> '.$post['seller'].'</span>
+                        <span id="name_len" class="type2"> '.$post['seller'].'</span>
                     </a>
                     <div style="height: 10px"></div>
                     </td>
@@ -182,6 +181,12 @@
         },
         function(){
             $("#img03").attr("src","/item_images/'.$img[0].'");
+        });
+
+        $(document).ready(function(){
+            var width = $("#head_name").width();
+            var len = $("#name_len").width();
+            $("#head_name").css({"padding-right": width * 0.74 - len});
         });
     </script>
     ';

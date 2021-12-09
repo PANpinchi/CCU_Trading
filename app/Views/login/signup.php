@@ -17,7 +17,7 @@
     <body>
         <div class="row">
             <div class="col-2"></div>
-            <div class="col-8" align="center">
+            <div class="col-8" style="user-select: none;" align="center">
                 <br><br><br>
                 <p class="type0">中 正 大 學 買 賣 交 流</p>
                 <form name = "accounts" action = "/LoginController/store_account" method="POST" style="width: 800px; border: 1px rgb(230, 215, 210) solid;">
