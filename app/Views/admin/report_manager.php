@@ -26,7 +26,7 @@
                 <div style="width: 100%; height: 60px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
                     <p class="type7" style="user-select: none;">📦 商品分類</p>
                 </div>
-                <div id="type_box2" class="cart2 type8 scr" style="text-align: center;">
+                <div id="type_box2" class="cart2 type8 scr" style="text-align: center">
                     <li>
                         <ul>
                             <li><a href="/AdminController/admin_post_type/上衣">上衣</a></li>
@@ -198,51 +198,18 @@
             </div>
             <div style="height: 90px;"> </div>
         </div>
-        <div class="col-8" style="background-color: rgb(250, 250, 250); user-select: none;" align="center">
+        <div class="col-8" style="background-color: rgb(250, 250, 250); user-select: none;">
             <div style="height: 100px;"></div>
+            <p class="type0" style="font-size: 40px">&nbsp被檢舉商品 </p>
+            <br>
             <?php
-                if($count == -1){
-                    echo '<div style="height: 100px;"></div>';
-                    echo '<img src="/img/no_item.png" style="width: auto; height: auto;max-width: 50%; max-height: 50%;"><br>';
-                    echo '<p class="type6" style="user-select: none;"><br>暫無商品</p>';
-                    echo '<p class="type6" style="user-select: none;">趕快去新增商品吧</p>';
-                }
-                else{
+                if($count >= 0){
                     for($i = $count; $i >= 0; $i--){
-                        echo '<div class="border1">';
-                        echo '<div style="height: 45px; width: 400px; text-align: left; user-select: none;">';
+                        echo '<div class="border2">';
+                        echo '<div style="height: 45px; text-align: left; user-select: none;">';
                         echo '<div style="height: 10px;"></div>';
-                        if(isset($header[$i])){
-                            echo '
-                            <a href="/AdminController/admin_account/'.$seller_account[$i].'">
-                                <img class="user2" src="/header/'.$header[$i].'" style="margin-bottom: 5px">
-                                <span class="type6" style="height: 50px; margin-top: 6px; display: inline-block;"> '.$seller[$i].'</span>
-                            </a>';
-                        }
-                        else{
-                            echo '
-                            <a href="/AdminController/admin_account/'.$seller_account[$i].'">
-                                <img class="user2" src="/header/user.jpg" style="margin-bottom: 5px">
-                                <span class="type6" style="height: 50px; margin-top: 6px; display: inline-block;"> '.$seller[$i].'</span>
-                            </a>';
-                        }
-
-                        echo '<span class="type5" style="float: right; height: 30px; margin-top: 11px; margin-bottom: 5px;">';
-                        if($post_time_type[$i] == 0){
-                            echo $post_time[$i].' days ago';
-                        }
-                        else if($post_time_type[$i] == 1){
-                            echo $post_time[$i].' seconds ago';
-                        }
-                        else if($post_time_type[$i] == 2){
-                            echo $post_time[$i].' minutes ago';
-                        }
-                        else if($post_time_type[$i] == 3){
-                            echo $post_time[$i].' hours ago';
-                        }
-                        echo '</span></div>';
                         echo '<a href="/AdminController/item_manager/'.$id[$i].'">';
-                        echo '<div style="height: 90%; width: 400px; text-align: left;">';
+                        echo '<div style="text-align: left;">';
                         $img = '';
                         for($j = 0; isset($image[$i][$j]); $j++){
                             if($image[$i][$j] == ':'){
@@ -262,24 +229,49 @@
                                 }
                             }
                         }
-                        echo '<img class="img1" src="/item_images/'.$img.'"><br><br>';
-                        echo '<p class="type2">【'.$way[$i].'】 '.$name[$i].'</p>';
+                        echo '<table style="display: inline-block"><tr><td rowspan="2">';
+                        echo '&nbsp&nbsp&nbsp<img class="img3" src="/item_images/'.$img.'"></td>';
+                        echo '<td><span class="type2">&nbsp&nbsp&nbsp【'.$way[$i].'】 '.$name[$i].'</span></td>';
+                        echo '</tr><tr><td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
                         if($number[$i] == 0){
                             if($way[$i] == '徵'){
-                                echo '<span class="type3" style="float: left;"> 已徵到 </span>';
+                                echo '<span class="type3"> 已徵到 </span>';
                             }
                             else{
-                                echo '<span class="type3" style="float: left;"> 已售出 </span>';
+                                echo '<span class="type3"> 已售出 </span>';
                             }
                         }
                         else{
-                            echo '<span class="type3" style="float: left;">$'.$price[$i].'</span>';
+                            echo '<span class="type3">$'.$price[$i].'&nbsp</span>';
                         }
-                        echo '<span class="type4" style="float: right;">數量：'.$number[$i].'</span>';
-                        echo '</div></a></div><br>';
+                        echo '<span class="type4"> | 數量：'.$number[$i].'</span>';
+                        echo '</td></tr></table>';
+
+                        echo '<span class="type1" style="float: right; margin-right: 20px; color: red;">';
+                        if($reason[$i] == 1){
+                            echo '商品描述或圖片中含有不當內容';
+                        }
+                        else if($reason[$i] == 2){
+                            echo '詐騙';
+                        }
+                        else if($reason[$i] == 3){
+                            echo '販售仿冒品';
+                        }
+                        else if($reason[$i] == 4){
+                            echo '其他(不符合本網站規範)';
+                        }
+                        
+                        echo '</span></div></a></div></div>';
                     }
                 }
+                else{
+                    echo '
+                    <div style="text-align: center;">
+                    <p class="type1" style="color: rgb(150, 150, 150)"> 暫無檢舉商品 </p><br>
+                    </div>';
+                }
             ?>
+            <br><br><br>
         </div>
         <div class="col-2" style="background-color: rgb(255, 255, 255);">
             <div style="height: 90px;"> </div>
@@ -304,7 +296,7 @@
                         </a>';
                     }
                     ?>
-            </div>
+                </div>
             </div>
         </div>
     <body>

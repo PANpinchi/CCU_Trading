@@ -45,6 +45,7 @@ $routes->get('/PostController/change_account', 'PostController::change_account')
 $routes->get('/ChatController', 'ChatController::chat');
 $routes->get('/ChatController/chat', 'ChatController::chat');
 $routes->get('/AdminController', 'AdminController::admin_login');
+$routes->get('/AdminController/post_manager', 'AdminController::post_manager');
 $routes->get('/AdminController/face_recognition', 'AdminController::face_recognition');
 $routes->get('/AdminController/admin_login', 'AdminController::admin_login');
 

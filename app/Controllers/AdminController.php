@@ -7,9 +7,13 @@ use App\Models\Admin_account;
 use App\Models\Login_account;
 use App\Models\Message;
 use App\Models\Post;
+use App\Models\Report;
 use PHPMailer\PHPMailer\PHPMailer;
 
 session_start();
+
+/* 設定時區 */
+date_default_timezone_set('Asia/Taipei');
 
 class AdminController extends BaseController
 {
@@ -18,6 +22,9 @@ class AdminController extends BaseController
     {
         if(isset($_SESSION['login'])){
             return redirect('PostController/post');
+        }
+		if(isset($_SESSION['admin_login'])){
+            return redirect('AdminController/post_manager');
         }
 
         return view('admin/admin_login');
@@ -29,6 +36,9 @@ class AdminController extends BaseController
         if(isset($_SESSION['login'])){
             return redirect('PostController/post');
         }
+		if(isset($_SESSION['admin_login'])){
+            return redirect('AdminController/post_manager');
+        }
 
         return view('admin/face_recognition');
     }
@@ -36,8 +46,8 @@ class AdminController extends BaseController
     /* 管理貼文頁面 */
     public function post_manager()
     {
-        if(isset($_SESSION['login'])){
-            return redirect('PostController/post');
+        if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
         }
 
         $model1 = new Login_account();
@@ -47,6 +57,61 @@ class AdminController extends BaseController
 		$users = $model1->findAll(); //取得資料
 		$posts = $model2->findAll();
 		$talks = $model3->findAll();
+
+		/* 計算聊過天的人數 */
+		$counts = 0;
+		$chat_people = array();
+		for($i = 0; isset($talks[$i]); $i++){}
+		$i--;
+		while($i >= 0)
+		{
+			$check = 0;
+			if($talks[$i]['name_from'] == $_SESSION['admin_account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $talks[$i]['name_to']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $talks[$i]['name_to']);
+					$counts++;
+				}
+			}
+			else if($talks[$i]['name_to'] == $_SESSION['admin_account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $talks[$i]['name_from']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $talks[$i]['name_from']);
+					$counts++;
+				}
+			}
+			$i--;
+		}
+
+		/* 聊過天的帳號轉換名稱 */
+		$chat_name = array();
+		$chat_header = array();
+		for($i = 0; isset($chat_people[$i]); $i++){
+			for($j = 0; isset($users[$j]); $j++){
+				if($users[$j]['account'] == $chat_people[$i]){
+					array_push($chat_name, $users[$j]['name2']);
+					array_push($chat_header, $users[$j]['header']);
+					break;
+				}
+			}
+		}
+
+		$data = [
+			'chat_people' => $chat_people,
+			'chat_name' => $chat_name,
+			'chat_header' => $chat_header,
+			'counts' => $counts
+		];
 		
 		$time = date('Y/m/d H:i:s'); // 取得日期與時間
 
@@ -102,30 +167,30 @@ class AdminController extends BaseController
         return view('admin/post_manager', $data);
     }
 
-	/* 特定類別商品頁面 */
-	public function admin_post_type($item)
-	{
-		if(isset($_SESSION['login'])){
-            return redirect('PostController/post');
+	/* 管理檢舉頁面 */
+    public function admin_report()
+    {
+        if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
         }
 
-		$model1 = new Login_account();
-		$model2 = new Post();
+        $model1 = new Login_account();
+		$model2 = new Report();
 		$model3 = new Message();
 		
 		$users = $model1->findAll(); //取得資料
-		$posts = $model2->where('type', $item)->findAll();
+		$reports = $model2->findAll();
 		$talks = $model3->findAll();
 
 		/* 計算聊過天的人數 */
-		/*$counts = 0;
+		$counts = 0;
 		$chat_people = array();
 		for($i = 0; isset($talks[$i]); $i++){}
 		$i--;
 		while($i >= 0)
 		{
 			$check = 0;
-			if($talks[$i]['name_from'] == $_SESSION['account']){
+			if($talks[$i]['name_from'] == $_SESSION['admin_account']){
 				for($j = 0; isset($chat_people[$j]); $j++){
 					if($chat_people[$j] == $talks[$i]['name_to']){
 						$check = 1;
@@ -137,7 +202,7 @@ class AdminController extends BaseController
 					$counts++;
 				}
 			}
-			else if($talks[$i]['name_to'] == $_SESSION['account']){
+			else if($talks[$i]['name_to'] == $_SESSION['admin_account']){
 				for($j = 0; isset($chat_people[$j]); $j++){
 					if($chat_people[$j] == $talks[$i]['name_from']){
 						$check = 1;
@@ -153,7 +218,7 @@ class AdminController extends BaseController
 		}
 
 		/* 聊過天的帳號轉換名稱 */
-		/*$chat_name = array();
+		$chat_name = array();
 		$chat_header = array();
 		for($i = 0; isset($chat_people[$i]); $i++){
 			for($j = 0; isset($users[$j]); $j++){
@@ -170,7 +235,108 @@ class AdminController extends BaseController
 			'chat_name' => $chat_name,
 			'chat_header' => $chat_header,
 			'counts' => $counts
-		];*/
+		];
+		
+		$time = date('Y/m/d H:i:s'); // 取得日期與時間
+
+		for($i = 0; isset($reports[$i]); $i++)
+		{
+			$data['id'][$i] = $reports[$i]['id'];
+			$data['seller'][$i] = $reports[$i]['seller'];
+			$data['seller_account'][$i] = $reports[$i]['seller_account'];
+			$data['way'][$i] = $reports[$i]['way'];
+			$data['name'][$i] = $reports[$i]['name'];
+			$data['price'][$i] = $reports[$i]['price'];
+			$data['number'][$i] = $reports[$i]['number'];
+			$data['time'][$i] = $reports[$i]['time'];
+			$data['place'][$i] = $reports[$i]['place'];
+			$data['type'][$i] = $reports[$i]['type'];
+			$data['image'][$i] = $reports[$i]['image'];
+			$data['describe'][$i] = $reports[$i]['item_describe'];
+			$data['post_time'][$i] = $reports[$i]['post_time'];
+			$data['reason'][$i] = $reports[$i]['reason'];
+
+			for($j = 0; isset($users[$j]); $j++){
+				if($users[$j]['account'] == $reports[$i]['seller_account']){
+					$data['header'][$i] = $users[$j]['header'];
+					break;
+				}
+			}
+		}
+		$data['count'] = $i - 1;
+
+        return view('admin/report_manager', $data);
+    }
+
+	/* 特定類別商品頁面 */
+	public function admin_post_type($item)
+	{
+		if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
+        }
+
+		$model1 = new Login_account();
+		$model2 = new Post();
+		$model3 = new Message();
+		
+		$users = $model1->findAll(); //取得資料
+		$posts = $model2->where('type', $item)->findAll();
+		$talks = $model3->findAll();
+
+		/* 計算聊過天的人數 */
+		$counts = 0;
+		$chat_people = array();
+		for($i = 0; isset($talks[$i]); $i++){}
+		$i--;
+		while($i >= 0)
+		{
+			$check = 0;
+			if($talks[$i]['name_from'] == $_SESSION['admin_account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $talks[$i]['name_to']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $talks[$i]['name_to']);
+					$counts++;
+				}
+			}
+			else if($talks[$i]['name_to'] == $_SESSION['admin_account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $talks[$i]['name_from']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $talks[$i]['name_from']);
+					$counts++;
+				}
+			}
+			$i--;
+		}
+
+		/* 聊過天的帳號轉換名稱 */
+		$chat_name = array();
+		$chat_header = array();
+		for($i = 0; isset($chat_people[$i]); $i++){
+			for($j = 0; isset($users[$j]); $j++){
+				if($users[$j]['account'] == $chat_people[$i]){
+					array_push($chat_name, $users[$j]['name2']);
+					array_push($chat_header, $users[$j]['header']);
+					break;
+				}
+			}
+		}
+
+		$data = [
+			'chat_people' => $chat_people,
+			'chat_name' => $chat_name,
+			'chat_header' => $chat_header,
+			'counts' => $counts
+		];
 		
 		$time = date('Y/m/d H:i:s'); // 取得日期與時間
 
@@ -228,18 +394,20 @@ class AdminController extends BaseController
 	/* 單一商品頁面 */
 	public function item_manager($id)
 	{
-		if(isset($_SESSION['login'])){
-            return redirect('PostController/post');
+		if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
         }
 
 		$model1 = new Login_account();
 		$model2 = new Post();
+		$model3 = new Report();
 
 		$time = date('Y/m/d H:i:s'); // 取得日期與時間
 
 		$users = $model1->findAll();
 		$data = [
-			'post' => $model2->find($id)
+			'post' => $model2->find($id),
+			'report' => $model3->find($id)
 		];
 
 		for($i = 0; isset($users[$i]); $i++){
@@ -279,8 +447,8 @@ class AdminController extends BaseController
 	/* 帳號頁面 */
 	public function admin_account($seller_account)
 	{
-		if(isset($_SESSION['login'])){
-            return redirect('PostController/post');
+		if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
         }
 
 		$model1 = new Login_account();
@@ -306,11 +474,290 @@ class AdminController extends BaseController
 	}
 
 
+	/* 聊天頁面 */
+	public function admin_chat()
+	{
+		if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
+        }
+
+		$model = new Message();
+		$model2 = new Login_account();
+		$users = $model->findAll(); //取得資料
+		$accounts = $model2->findAll(); //取得資料
+		$display = 0;
+
+		$_SESSION['to'] = ' ';
+		$talking = '';
+		if(isset($_GET['value'])){
+			$display = 1;
+			$_SESSION['to'] = $_GET['value'];
+
+			/* 檢查是否曾有聊天紀錄 */
+			$check = 0;
+			for($i = 0; isset($users[$i]); $i++)
+			{
+				$cmp_from = strcmp($_SESSION['admin_account'], $users[$i]['name_from']);
+				$cmp_to = strcmp($_SESSION['to'], $users[$i]['name_to']);
+
+				if($cmp_from == 0 && $cmp_to == 0){
+					$check = 1;
+					break;
+				}
+
+				$cmp_from = strcmp($_SESSION['admin_account'], $users[$i]['name_to']);
+				$cmp_to = strcmp($_SESSION['to'], $users[$i]['name_from']);
+
+				if($cmp_from == 0 && $cmp_to == 0){
+					$check = 1;
+					break;
+				}
+			}
+
+			/* 若無則創建空白訊息 */
+			if($check == 0){
+				$data = [
+					'name_from' => $_SESSION['admin_account'],
+					'name_to' => $_SESSION['to'],
+				];
+				$model->save($data);
+			}
+		}
+
+		$model = new Message();
+		$users = $model->findAll(); //取得資料
+
+		/* 計算聊過天的人數 */
+		$count = 0;
+		$chat_people = array();
+		for($i = 0; isset($users[$i]); $i++){}
+		$i--;
+		while($i >= 0)
+		{
+			$check = 0;
+			if($users[$i]['name_from'] == $_SESSION['admin_account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $users[$i]['name_to']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $users[$i]['name_to']);
+					$count++;
+				}
+			}
+			else if($users[$i]['name_to'] == $_SESSION['admin_account']){
+				for($j = 0; isset($chat_people[$j]); $j++){
+					if($chat_people[$j] == $users[$i]['name_from']){
+						$check = 1;
+						break;
+					}
+				}
+				if($check == 0){
+					array_push($chat_people, $users[$i]['name_from']);
+					$count++;
+				}
+			}
+			$i--;
+		}
+
+		/* 聊過天的帳號轉換名稱 */
+		$chat_name = array();
+		$chat_header = array();
+		for($i = 0; isset($chat_people[$i]); $i++){
+			for($j = 0; isset($accounts[$j]); $j++){
+				if($accounts[$j]['account'] == $chat_people[$i]){
+					if($_SESSION['to'] == $accounts[$j]['account']){
+						$talking = $accounts[$j]['name2'];
+					}
+					array_push($chat_name, $accounts[$j]['name2']);
+					array_push($chat_header, $accounts[$j]['header']);
+					break;
+				}
+			}
+		}
+
+		/* 準備資料 */
+		$from = array();
+    	$to = array();
+		$content = array();
+		$time = array();
+
+		/* 顯示聊天紀錄 */
+		for($i = 0; isset($users[$i]); $i++)
+		{
+			$cmp_from = strcmp($_SESSION['admin_account'], $users[$i]['name_from']);
+			$cmp_to = strcmp($_SESSION['to'], $users[$i]['name_to']);
+
+			if($cmp_from == 0 && $cmp_to == 0){
+				array_push($from, $users[$i]['name_from']);
+				array_push($to, $users[$i]['name_to']);
+				array_push($content, $users[$i]['content']);
+				array_push($time, $users[$i]['time']);
+			}
+
+			$cmp_from = strcmp($_SESSION['admin_account'], $users[$i]['name_to']);
+			$cmp_to = strcmp($_SESSION['to'], $users[$i]['name_from']);
+
+			if($cmp_from == 0 && $cmp_to == 0){
+				array_push($from, $users[$i]['name_from']);
+				array_push($to, $users[$i]['name_to']);
+				array_push($content, $users[$i]['content']);
+				array_push($time, $users[$i]['time']);
+			}
+		}
+
+		$data = [
+			'from' => $from,
+			'to' => $to,
+			'content' => $content,
+			'time' => $time,
+			'chat_people' => $chat_people,
+			'chat_name' => $chat_name,
+			'chat_header' => $chat_header,
+			'count' => $count,
+			'display' => $display,
+			'talking' => $talking
+		];
+
+		return view('admin/admin_chat', $data);
+	}
+
+	/* 聊天資料頁面 */
+	public function chat_database()
+	{
+		if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
+        }
+
+		return view('admin/chat_database');
+	}
+
+	/* 搜尋聊天紀錄 */
+	public function search_message()
+	{
+		if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
+        }
+
+		$model1 = new Login_account();
+		$model2 = new Admin_account();
+		$model3 = new Message();
+
+		$from_name = $this->request->getVar('from');
+		$to_name = $this->request->getVar('to');
+
+		if($from_name == 'admin'){
+			$search_from = $model2->where('id', 1)->findColumn('account');
+		}
+		else{
+			$search_from = $model1->where('name', $from_name)->findColumn('account');
+		}
+
+		if($to_name == 'admin'){
+			$search_to = $model2->where('id', 1)->findColumn('account');
+		}
+		else{
+			$search_to = $model1->where('name', $to_name)->findColumn('account');
+		}
+		$messages = $model3->findAll();
+
+		if(isset($search_from)){
+			$search_from = $search_from[0];
+		}
+		if(isset($search_to)){
+			$search_to = $search_to[0];
+		}
+
+		/* 準備資料 */
+		$from = array();
+    	$to = array();
+		$content = array();
+		$time = array();
+
+		/* 顯示聊天紀錄 */
+		for($i = 0; isset($messages[$i]); $i++)
+		{
+			$cmp_from = strcmp($search_from, $messages[$i]['name_from']);
+			$cmp_to = strcmp($search_to, $messages[$i]['name_to']);
+
+			if($cmp_from == 0 && $cmp_to == 0){
+				array_push($from, $messages[$i]['name_from']);
+				array_push($to, $messages[$i]['name_to']);
+				array_push($content, $messages[$i]['content']);
+				array_push($time, $messages[$i]['time']);
+			}
+
+			$cmp_from = strcmp($search_from, $messages[$i]['name_to']);
+			$cmp_to = strcmp($search_to, $messages[$i]['name_from']);
+
+			if($cmp_from == 0 && $cmp_to == 0){
+				array_push($from, $messages[$i]['name_from']);
+				array_push($to, $messages[$i]['name_to']);
+				array_push($content, $messages[$i]['content']);
+				array_push($time, $messages[$i]['time']);
+			}
+		}
+
+		$data = [
+			'from' => $from,
+			'to' => $to,
+			'content' => $content,
+			'time' => $time,
+			'search_from_name' => $from_name,
+			'search_to_name' => $to_name,
+			'search_from_account' => $search_from,
+			'search_to_account' => $search_to
+		];
+
+		return view('admin/chat_database', $data);
+	}
+
+	/* 接收訊息 */
+	public function message()
+	{		
+		if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
+        }
+
+		$model = new Message();
+
+		// 取得日期與時間
+		$time = date('Y/m/d H:i:s');
+
+		$data = [
+			'name_from' => $_SESSION['admin_account'],
+			'name_to' => $_SESSION['to'],
+			'content' => $_POST['message'],
+			'time' => $time
+		];
+
+		$model->save($data);
+	}
+
+
+	/* 撤回商品檢舉 */
+	public function cancel_report($id)
+	{
+		if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
+        }
+
+		$model = new Report();
+		$model->where('id', $id)->delete();
+
+		echo '<script>alert("已撤回此商品檢舉！")</script>';
+		echo "<meta http-equiv='Refresh' content='0 ;URL=/AdminController/item_manager/".$id."'>";
+		return ;
+	}
+
+
 	/* 刪除商品資料 */
 	public function delete_item($id)
 	{
-		if(isset($_SESSION['login'])){
-            return redirect('PostController/post');
+		if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
         }
 
 		$model = new Post();
@@ -399,8 +846,8 @@ class AdminController extends BaseController
 	/* 警告商品規範 */
 	public function warning($id)
 	{
-		if(isset($_SESSION['login'])){
-            return redirect('PostController/post');
+		if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
         }
 
 		$model = new Post();
@@ -454,8 +901,8 @@ class AdminController extends BaseController
 	/* 搜尋商品或使用者 */
 	public function search_item()
 	{
-		if(isset($_SESSION['login'])){
-            return redirect('PostController/post');
+		if(!isset($_SESSION['admin_login'])){
+            return redirect('AdminController/admin_login');
         }
 
 		$model1 = new Login_account();
@@ -472,14 +919,14 @@ class AdminController extends BaseController
 		$search_posts = array();
 
 		/* 計算聊過天的人數 */
-		/*$counts = 0;
+		$counts = 0;
 		$chat_people = array();
 		for($i = 0; isset($talks[$i]); $i++){}
 		$i--;
 		while($i >= 0)
 		{
 			$check = 0;
-			if($talks[$i]['name_from'] == $_SESSION['account']){
+			if($talks[$i]['name_from'] == $_SESSION['admin_account']){
 				for($j = 0; isset($chat_people[$j]); $j++){
 					if($chat_people[$j] == $talks[$i]['name_to']){
 						$check = 1;
@@ -491,7 +938,7 @@ class AdminController extends BaseController
 					$counts++;
 				}
 			}
-			else if($talks[$i]['name_to'] == $_SESSION['account']){
+			else if($talks[$i]['name_to'] == $_SESSION['admin_account']){
 				for($j = 0; isset($chat_people[$j]); $j++){
 					if($chat_people[$j] == $talks[$i]['name_from']){
 						$check = 1;
@@ -507,7 +954,7 @@ class AdminController extends BaseController
 		}
 
 		/* 聊過天的帳號轉換名稱 */
-		/*$chat_name = array();
+		$chat_name = array();
 		$chat_header = array();
 		for($i = 0; isset($chat_people[$i]); $i++){
 			for($j = 0; isset($users[$j]); $j++){
@@ -635,10 +1082,10 @@ class AdminController extends BaseController
 		}
 
 		$data = [
-			//'chat_people' => $chat_people,
-			//'chat_name' => $chat_name,
-			//'chat_header' => $chat_header,
-			//'counts' => $counts,
+			'chat_people' => $chat_people,
+			'chat_name' => $chat_name,
+			'chat_header' => $chat_header,
+			'counts' => $counts,
 			'search_users' => $search_users,
 			'search_posts' => $search_posts
 		];
@@ -649,10 +1096,6 @@ class AdminController extends BaseController
     /* 管理員帳號匹配 */
     public function compare_admin_account()
 	{
-		if(isset($_SESSION['login'])){
-			return redirect('PostController/post');
-		}
-
 		$model = new Admin_account();
 		$users = $model->findAll(); //取得資料
 
@@ -680,7 +1123,7 @@ class AdminController extends BaseController
 			}
 		}
 
-		echo '<script>alert("密碼輸入錯誤，請重新登入！")</script>';
+		echo '<script>alert("帳號輸入錯誤，請重新登入！")</script>';
 		echo "<meta http-equiv='Refresh' content='0 ;URL=/AdminController/admin_login'>";
 		return ;
 	}

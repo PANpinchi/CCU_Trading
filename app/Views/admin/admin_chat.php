@@ -1,4 +1,4 @@
-<?= $this->extend('templates\post_default') ?>
+<?= $this->extend('templates\admin_default') ?>
 <?= $this->section('content') ?>
 
 <!doctype html>
@@ -28,7 +28,7 @@
                     <?php
                     for($i = 0; isset($chat_name[$i]); $i++){
                         echo '
-                        <a href="/ChatController/chat?value='.$chat_people[$i].'">
+                        <a href="/AdminController/admin_chat?value='.$chat_people[$i].'">
                             <div id="'.$chat_name[$i].'" class="type4 touch" style="height:90px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
                             <div style="height: 22px;"></div>';
                             if(isset($chat_header[$i])){
@@ -84,7 +84,7 @@
                             echo '<p class="type0" style="user-select: none;">━━━ '.$year.' 年 '.$month.' 月 '.$day.' 日 ━━━</p>';
                         }
 
-                        if($from[$i] == $_SESSION['account']){
+                        if($from[$i] == $_SESSION['admin_account']){
                             echo '
                             <div align="right" style="margin-right: 5%;">
                                 <span class="type2" style="user-select: none;">';
@@ -169,7 +169,7 @@
     
     function SubmitFormData() {
         var message = $("#message").val();
-        $.post("/ChatController/message", {message: message},
+        $.post("/AdminController/message", {message: message},
         function(data) {
         $('#messages')[0].reset();
         });

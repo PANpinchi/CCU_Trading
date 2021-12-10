@@ -36,10 +36,19 @@
                         <span id="name_len" class="type2"> '.$post['seller'].'</span>
                     </a>
                     <div style="height: 10px"></div>
-                    </td>
-                    <td colspan="10"></td>
-                    </tr>
-                    <tr>';
+                    </td>';
+
+                    if($report){
+                        echo '
+                        <td colspan="10" style="text-align: right; padding-right: 30px; opacity: .9;">
+                            <a href="/AdminController/cancel_report/'.$post['id'].'" type="button" class="btn btn-danger" style="font-weight: bold;"> 撤銷檢舉 </a>
+                        </td>';
+                    }
+                    else{
+                        echo '<td colspan="10"></td>';
+                    }
+                    
+                    echo '</tr><tr>';
                 }
                 else{
                     echo '
@@ -48,9 +57,19 @@
                         <span id="name_len" class="type2"> '.$post['seller'].'</span>
                     </a>
                     <div style="height: 10px"></div>
-                    </td>
-                    </tr>
-                    <tr>';
+                    </td>';
+
+                    if($report){
+                        echo '
+                        <td colspan="10" style="text-align: right; padding-right: 30px; opacity: .9;">
+                            <a href="/AdminController/cancel_report/'.$post['id'].'" type="button" class="btn btn-danger" style="font-weight: bold;"> 撤銷檢舉 </a>
+                        </td>';
+                    }
+                    else{
+                        echo '<td colspan="10"></td>';
+                    }
+                    
+                    echo '</tr><tr>';
                 }
                 $img[0] = '';
                 $img[1] = '';
@@ -126,11 +145,13 @@
                 
                 echo '
                 <br>
-                <button class="btn btn-secondary" style="font-weight: bold;" onclick="javascript:history.back();">返回</button>
+                <a href="#" id="back" class="btn btn-secondary" style="font-weight: bold;" onclick="javascript:history.back();">返回</a>
                 <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                 <a href="/AdminController/delete_item/'.$post['id'].'" type="button" class="btn btn-danger" style="font-weight: bold;"> 🗑️ 刪除商品 </a>
                 <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                 <a href="/AdminController/warning/'.$post['id'].'" type="button" class="btn btn-warning" style="font-weight: bold;"> ⚠️ 警告賣家 </a>
+                <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                    <a href="/AdminController/admin_chat?value='.$post['seller_account'].'" type="button" class="btn btn-success" style="font-weight: bold;"> 🗨 私訊賣家 </a>
                 <br><br>
                 ';
             ?>
@@ -165,6 +186,13 @@
             var width = $("#head_name").width();
             var len = $("#name_len").width();
             $("#head_name").css({"padding-right": width * 0.74 - len});
+        });
+
+        $(document).ready(function(){
+            if (document.referrer.indexOf("/AdminController/search_item") >= 0) {
+                $("#back").attr("onclick", " ");
+                $("#back").attr("href", "/AdminController/post_manager");
+            }
         });
     </script>
     ';

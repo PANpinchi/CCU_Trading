@@ -4,8 +4,10 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Login_account;
+use App\Models\Admin_account;
 use App\Models\Message;
 use App\Models\Post;
+use App\Models\Report;
 
 session_start();
 
@@ -24,10 +26,12 @@ class PostController extends BaseController
 		$model1 = new Login_account();
 		$model2 = new Post();
 		$model3 = new Message();
+		$model4 = new Admin_account();
 		
 		$users = $model1->findAll(); //取得資料
 		$posts = $model2->findAll();
 		$talks = $model3->findAll();
+		$admin = $model4->findAll();
 
 		/* 計算聊過天的人數 */
 		$counts = 0;
@@ -68,10 +72,20 @@ class PostController extends BaseController
 		$chat_name = array();
 		$chat_header = array();
 		for($i = 0; isset($chat_people[$i]); $i++){
+			/* 檢查使用者名稱 */
 			for($j = 0; isset($users[$j]); $j++){
 				if($users[$j]['account'] == $chat_people[$i]){
 					array_push($chat_name, $users[$j]['name2']);
 					array_push($chat_header, $users[$j]['header']);
+					break;
+				}
+			}
+
+			/* 檢查管理員名稱 */
+			for($j = 0; isset($admin[$j]); $j++){
+				if($admin[$j]['account'] == $chat_people[$i]){
+					array_push($chat_name, '管理員大大');
+					array_push($chat_header, NULL);
 					break;
 				}
 			}
@@ -147,10 +161,12 @@ class PostController extends BaseController
 		$model1 = new Login_account();
 		$model2 = new Post();
 		$model3 = new Message();
+		$model4 = new Admin_account();
 		
 		$users = $model1->findAll(); //取得資料
 		$posts = $model2->where('type', $item)->findAll();
 		$talks = $model3->findAll();
+		$admin = $model4->findAll();
 
 		/* 計算聊過天的人數 */
 		$counts = 0;
@@ -191,10 +207,20 @@ class PostController extends BaseController
 		$chat_name = array();
 		$chat_header = array();
 		for($i = 0; isset($chat_people[$i]); $i++){
+			/* 檢查使用者名稱 */
 			for($j = 0; isset($users[$j]); $j++){
 				if($users[$j]['account'] == $chat_people[$i]){
 					array_push($chat_name, $users[$j]['name2']);
 					array_push($chat_header, $users[$j]['header']);
+					break;
+				}
+			}
+
+			/* 檢查管理員名稱 */
+			for($j = 0; isset($admin[$j]); $j++){
+				if($admin[$j]['account'] == $chat_people[$i]){
+					array_push($chat_name, '管理員大大');
+					array_push($chat_header, NULL);
 					break;
 				}
 			}
@@ -497,6 +523,32 @@ class PostController extends BaseController
         return view('posts/account', $data);
 	}
 
+	/* 檢舉商品 */
+	public function report($id)
+	{
+		if(!isset($_SESSION['login'])){
+			return redirect('LoginController/login');
+		}
+
+		$model1 = new Post();
+		$model2 = new Report();
+
+		$post = $model1->find($id);
+		$report = $model2->find($id);
+
+		$reason = $this->request->getVar('reason');
+
+		$post['reason'] = $reason;
+
+		if(!$report){
+			$model2->insert($post);
+		}
+
+		echo '<script>alert("已向網站管理員檢舉！")</script>';
+		echo "<meta http-equiv='Refresh' content='0 ;URL=/PostController/item/".$id."'>";
+		return ;
+	}
+
 	/* 搜尋商品或使用者 */
 	public function search_item()
 	{
@@ -507,10 +559,12 @@ class PostController extends BaseController
 		$model1 = new Login_account();
 		$model2 = new Post();
 		$model3 = new Message();
+		$model4 = new Admin_account();
 
 		$users = $model1->findAll();
 		$posts = $model2->findAll();
 		$talks = $model3->findAll();
+		$admin = $model4->findAll();
 
 		$search = $this->request->getVar('search');
 
@@ -556,6 +610,7 @@ class PostController extends BaseController
 		$chat_name = array();
 		$chat_header = array();
 		for($i = 0; isset($chat_people[$i]); $i++){
+			/* 檢查使用者名稱 */
 			for($j = 0; isset($users[$j]); $j++){
 				if($users[$j]['account'] == $chat_people[$i]){
 					array_push($chat_name, $users[$j]['name2']);
@@ -563,6 +618,26 @@ class PostController extends BaseController
 					break;
 				}
 			}
+
+			/* 檢查管理員名稱 */
+			for($j = 0; isset($admin[$j]); $j++){
+				if($admin[$j]['account'] == $chat_people[$i]){
+					array_push($chat_name, '管理員大大');
+					array_push($chat_header, NULL);
+					break;
+				}
+			}
+		}
+
+		/* 搜尋管理員 */
+		if($search == '管理員大大' || strpos('管理員', $search) !== false){
+			$search_admin = [
+				'name' => '管理員大大',
+				'account' => $admin[0]['account']
+			];
+		}
+		else{
+			$search_admin = NULL;
 		}
 
 		/* 搜尋使用者及商品 */
@@ -686,7 +761,8 @@ class PostController extends BaseController
 			'chat_header' => $chat_header,
 			'counts' => $counts,
 			'search_users' => $search_users,
-			'search_posts' => $search_posts
+			'search_posts' => $search_posts,
+			'search_admin' => $search_admin
 		];
 
 		return view('posts/search', $data);

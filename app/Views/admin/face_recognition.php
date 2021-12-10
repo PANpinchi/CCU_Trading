@@ -103,7 +103,8 @@
                             const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString()})
                             if (result.toString()[result.toString().length-3] <= 3) {
                                 const id = result.toString()[0];
-                                window.location.href="/adminController/post_manager";
+                                <?php $_SESSION['admin_login'] = 1;?>
+                                window.location.href="/AdminController/post_manager";
                             }
 
                             if (time > 0){

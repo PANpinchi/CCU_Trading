@@ -37,7 +37,9 @@
                     </a>
                     <div style="height: 10px"></div>
                     </td>
-                    <td colspan="10"></td>
+                    <td colspan="10" style="text-align: right; padding-right: 30px; opacity: .9;">
+                        <a href="#" type="button" class="btn btn-danger" style="font-weight: bold;" data-bs-toggle="modal" data-bs-target="#report"> ⚠ 檢舉 </a>
+                    </td>
                     </tr>
                     <tr>';
                 }
@@ -48,6 +50,9 @@
                         <span id="name_len" class="type2"> '.$post['seller'].'</span>
                     </a>
                     <div style="height: 10px"></div>
+                    </td>
+                    <td colspan="10" style="text-align: right; padding-right: 30px; opacity: .9;">
+                    <a href="#" type="button" class="btn btn-danger" style="font-weight: bold;" data-bs-toggle="modal" data-bs-target="#report"> ⚠ 檢舉 </a>
                     </td>
                     </tr>
                     <tr>';
@@ -137,7 +142,7 @@
                 else{
                     echo '
                     <br>
-                    <button class="btn btn-primary" style="font-weight: bold;" onclick="javascript:history.back();">返回</button>
+                    <button class="btn btn-secondary" style="font-weight: bold;" onclick="javascript:history.back();">返回</button>
                     <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                     <a href="/ChatController/chat?value='.$post['seller_account'].'" type="button" class="btn btn-success" style="font-weight: bold;"> 💲 我想排看 </a>
                     <br><br>
@@ -147,11 +152,11 @@
             else{
                 echo '
                 <br>
-                <button class="btn btn-primary" style="font-weight: bold;" onclick="javascript:history.back();">返回</button>
+                <a href="#" id="back" class="btn btn-secondary" style="font-weight: bold;" onclick="javascript:history.back();">返回</a>
                 <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
                 <a href="/PostController/delete_item/'.$post['id'].'" type="button" class="btn btn-danger" style="font-weight: bold;"> 🗑️ 刪除此商品 </a>
                 <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-                <a href="/PostController/modify_item/'.$post['id'].'" type="button" class="btn btn-secondary" style="font-weight: bold;"> 🛠️ 修改商品資料 </a>
+                <a href="/PostController/modify_item/'.$post['id'].'" type="button" class="btn btn-primary" style="font-weight: bold;"> 🛠️ 修改商品資料 </a>
                 <br><br>
                 ';
             }
@@ -159,6 +164,31 @@
             </div><br>
         </div>
         <div class="col-2"></div>
+
+        <div class="modal fade" id="report" style="user-select: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <?php echo '
+                    <form action="/PostController/report/'.$post['id'].'">';?>
+                        <div class="modal-header">
+                            <h5 class="modal-title">檢舉此商品</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="text-align: left">
+                            <p class="type6">選擇原因</p>
+                            <input id = "reason1" name = "reason" type = "radio" value="1" required><label for="reason1"><p class="type6">&nbsp&nbsp&nbsp商品描述或圖片中含有不當內容&nbsp&nbsp&nbsp</p></label><br>
+                            <input id = "reason2" name = "reason" type = "radio" value="2" required><label for="reason2"><p class="type6">&nbsp&nbsp&nbsp詐騙&nbsp&nbsp&nbsp</p></label><br>
+                            <input id = "reason3" name = "reason" type = "radio" value="3" required><label for="reason3"><p class="type6">&nbsp&nbsp&nbsp販售仿冒品&nbsp&nbsp&nbsp</p></label><br>
+                            <input id = "reason4" name = "reason" type = "radio" value="4" required><label for="reason4"><p class="type6">&nbsp&nbsp&nbsp其他(不符合本網站規範)&nbsp&nbsp&nbsp</p></label>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">返回</a>
+                            <button type="submit" class="btn btn-danger">送出</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     <body>
 </html>
 
@@ -187,6 +217,13 @@
             var width = $("#head_name").width();
             var len = $("#name_len").width();
             $("#head_name").css({"padding-right": width * 0.74 - len});
+        });
+
+        $(document).ready(function(){
+            if (document.referrer.indexOf("/AdminController/search_item") >= 0) {
+                $("#back").attr("onclick", " ");
+                $("#back").attr("href", "/AdminController/post_manager");
+            }
         });
     </script>
     ';

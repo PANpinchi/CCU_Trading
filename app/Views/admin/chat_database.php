@@ -1,4 +1,4 @@
-<?= $this->extend('templates\post_default') ?>
+<?= $this->extend('templates\admin_default') ?>
 <?= $this->section('content') ?>
 
 <!doctype html>
@@ -18,35 +18,28 @@
     </head>
 
     <body>
-        <div class="col-2">
-            <div style="height: 90px;"> </div>
-            <div id="chat_people" style="position: absolute; width: 16%; min-width: 243px;">
-                <div style="height: 60px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
-                    <p class="type5" style="user-select: none;">✉ Message</p>
-                </div>
-                <div id="chat_people2" class="scr">
-                    <?php
-                    for($i = 0; isset($chat_name[$i]); $i++){
-                        echo '
-                        <a href="/ChatController/chat?value='.$chat_people[$i].'">
-                            <div id="'.$chat_name[$i].'" class="type4 touch" style="height:90px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
-                            <div style="height: 22px;"></div>';
-                            if(isset($chat_header[$i])){
-                                echo '<img class="user" src="/header/'.$chat_header[$i].'">';
-                            }
-                            else{
-                                echo '<img class="user" src="/header/user.jpg">';
-                            }
-                            echo '&nbsp'.$chat_name[$i].'<br></div>
-                        </a>';
-                    }
-                    ?>
-                    <div style="height: 90px;"></div>
-                </div>
-            </div>
-        </div>
+        <div class="col-2"></div>
         <div id="my" class="col-8" align="center" style="background-color: rgb(250, 250, 250); user-select: none;">
             <div style="height: 100px;"></div>
+            <p class="type1">搜尋聊天紀錄</p>
+            <form class="d-flex" action = "/AdminController/search_message" method="POST">
+                <?php
+                if(isset($search_from_name)){
+                    echo '<input name="from" class="form-control me-2 type4" type="search" placeholder="From (學生姓名)" value="'.$search_from_name.'" aria-label="Search" style="height: 40px; width: 45%;">';
+                }
+                else{
+                    echo '<input name="from" class="form-control me-2 type4" type="search" placeholder="From (學生姓名)" aria-label="Search" style="height: 40px; width: 45%;">';
+                }
+                if(isset($search_to_name)){
+                    echo '<input name="to" class="form-control me-2 type4" type="search" placeholder="To (學生姓名)" value="'.$search_to_name.'" aria-label="Search" style="height: 40px; width: 45%;">';
+                }
+                else{
+                    echo '<input name="to" class="form-control me-2 type4" type="search" placeholder="To (學生姓名)" aria-label="Search" style="height: 40px; width: 45%;">';
+                }
+                ?>
+                <button class="btn btn-primary" type="submit" style="height: 40px; width: 8%;">搜尋</button>
+            </form>
+            <div style="height: 40px"></div>
             <div id="results">
                 <!--訊息-->
                 <?php 
@@ -84,7 +77,7 @@
                             echo '<p class="type0" style="user-select: none;">━━━ '.$year.' 年 '.$month.' 月 '.$day.' 日 ━━━</p>';
                         }
 
-                        if($from[$i] == $_SESSION['account']){
+                        if($from[$i] != $search_from_account){
                             echo '
                             <div align="right" style="margin-right: 5%;">
                                 <span class="type2" style="user-select: none;">';
@@ -123,24 +116,16 @@
                             </div>';
                         }
                     }
+
+                    if($i == 1){
+                        echo '
+                        <div style="text-align: center;">
+                        <p class="type1" style="color: rgb(150, 150, 150)"> 查無聊天紀錄 </p><br>
+                        </div>';
+                    }
                 ?>
             </div>
             <div id="tail" style="height: 100px;"></div>
-            
-            <div class="footer" style="width: 66%; background-color: rgb(250, 250, 250); z-index:9;">
-                <div style="height: 20px;"></div>
-                <!--輸入-->
-                <?php
-                if($display){
-                    echo '
-                    <form id="messages" name="messages" method="POST">
-                        <input name = "message" id = "message" type="text" placeholder="輸入文字" autocomplete="off" autofocus></input>
-                        <button class="btn btn-primary" id="submitData" onclick="SubmitFormData();" style="width: 80px;height:40px;"> 發送 </button>
-                    </form>';
-                }
-                ?>
-                <div style="height: 20px;"></div>
-            </div>
         </div>
         <div class="col-2"></div>
     <body>
@@ -161,15 +146,10 @@
             $('#chat_people2').css({'height': height - 200});
         });
     });
-
-    <?php echo '
-    $("#'.$talking.'")[0].scrollIntoView();
-    $("#'.$talking.'").css({"background-color":"rgb(240, 240, 240)"});
-    ';?>
     
     function SubmitFormData() {
         var message = $("#message").val();
-        $.post("/ChatController/message", {message: message},
+        $.post("/AdminController/message", {message: message},
         function(data) {
         $('#messages')[0].reset();
         });

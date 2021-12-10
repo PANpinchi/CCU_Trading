@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Message;
 use App\Models\Login_account;
+use App\Models\Admin_account;
 
 session_start();
 
@@ -22,8 +23,10 @@ class ChatController extends BaseController
 
 		$model = new Message();
 		$model2 = new Login_account();
+		$model3 = new Admin_account();
 		$users = $model->findAll(); //取得資料
 		$accounts = $model2->findAll(); //取得資料
+		$admin = $model3->findAll(); //取得資料
 		$display = 0;
 
 		$_SESSION['to'] = ' ';
@@ -105,6 +108,7 @@ class ChatController extends BaseController
 		$chat_name = array();
 		$chat_header = array();
 		for($i = 0; isset($chat_people[$i]); $i++){
+			/* 檢查使用者名稱 */
 			for($j = 0; isset($accounts[$j]); $j++){
 				if($accounts[$j]['account'] == $chat_people[$i]){
 					if($_SESSION['to'] == $accounts[$j]['account']){
@@ -112,6 +116,18 @@ class ChatController extends BaseController
 					}
 					array_push($chat_name, $accounts[$j]['name2']);
 					array_push($chat_header, $accounts[$j]['header']);
+					break;
+				}
+			}
+
+			/* 檢查管理員名稱 */
+			for($j = 0; isset($admin[$j]); $j++){
+				if($admin[$j]['account'] == $chat_people[$i]){
+					if($_SESSION['to'] == $accounts[$j]['account']){
+						$talking = '管理員大大';
+					}
+					array_push($chat_name, '管理員大大');
+					array_push($chat_header, NULL);
 					break;
 				}
 			}
@@ -183,6 +199,5 @@ class ChatController extends BaseController
 		];
 
 		$model->save($data);
-		//echo "<meta http-equiv='Refresh' content='0 ;URL=/ChatController/chat?value=".$_SESSION['to']."'>";
 	}
 }

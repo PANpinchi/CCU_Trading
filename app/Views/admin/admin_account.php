@@ -12,6 +12,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
         <link rel="stylesheet" href="/style/post.css">
 
         <title>中正大學買賣交流</title>
@@ -95,9 +96,9 @@
                 <br><br>
                 <?php
                     echo '
-                    <button class="btn btn-secondary" style="font-weight: bold; opacity: .9;" onclick="javascript:history.back();">返回</button>
+                    <a href="#" id="back" class="btn btn-secondary" style="font-weight: bold; opacity: .9;" onclick="javascript:history.back();">返回</a>
                     <span style="user-select: none;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-                    <a href="/ChatController/chat?value='.$user['account'].'" type="button" class="btn btn-primary" style="font-weight: bold; opacity: .9;"> 私訊賣家 </a>';
+                    <a href="/AdminController/admin_chat?value='.$user['account'].'" type="button" class="btn btn-primary" style="font-weight: bold; opacity: .9;"> 私訊賣家 </a>';
                 ?>
                 <br><br><br>
             </div>
@@ -105,5 +106,14 @@
         <div class="col-2"></div>
     <body>
 </html>
+
+<script>
+$(document).ready(function(){
+    if (document.referrer.indexOf("/AdminController/search_item") >= 0) {
+        $("#back").attr("onclick", " ");
+        $("#back").attr("href", "/AdminController/post_manager");
+    }
+});
+</script>
 
 <?= $this->endSection() ?>

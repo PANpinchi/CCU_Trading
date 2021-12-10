@@ -28,10 +28,13 @@
                             <a class="nav-link active" aria-current="page" href="/AdminController/post_manager"><strong>首頁</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#"><strong>檢舉商品</strong></a>
+                            <a class="nav-link active" href="/AdminController/admin_report"><strong>檢舉商品</strong></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#"><strong>聊天訊息</strong></a>
+                            <a class="nav-link active" href="/AdminController/admin_chat"><strong>聊天訊息</strong></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/AdminController/chat_database"><strong>聊天資料</strong></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="/AdminController/admin_logout"><strong>登出</strong></a>

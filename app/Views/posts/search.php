@@ -204,6 +204,19 @@
             <br>
             <?php
                 echo '<p class="type1">&nbsp&nbsp搜尋使用者結果 </p>';
+                $check = 0;
+                if(isset($search_admin)){
+                    $check = 1;
+                    echo '<div class="border2">';
+                    echo '<a href="/ChatController/chat?value='.$search_admin['account'].'">';
+                    echo '<div style="height: 45px; text-align: left; user-select: none;">';
+                    echo '<div style="height: 10px;"></div>';
+                    echo '&nbsp&nbsp&nbsp
+                        <img class="user4" src="/header/user.jpg">
+                        <span class="type6" style="height: 50px;">&nbsp&nbsp&nbsp'.$search_admin['name'].'</span>';
+                    echo '</div></a></div>';
+                }
+
                 if(isset($search_users[0])){
                     for($i = 0; isset($search_users[$i]); $i++){
                         echo '<div class="border2">';
@@ -213,7 +226,7 @@
                         if(isset($search_users[$i]['header'])){
                             echo '&nbsp&nbsp&nbsp
                                 <img class="user4" src="/header/'.$search_users[$i]['header'].'">
-                                <span class="type7" style="height: 100px;">&nbsp&nbsp&nbsp'.$search_users[$i]['name2'].'</span>';
+                                <span class="type6" style="height: 100px;">&nbsp&nbsp&nbsp'.$search_users[$i]['name2'].'</span>';
                         }
                         else{
                             echo '&nbsp&nbsp&nbsp
@@ -224,10 +237,12 @@
                     }
                 }
                 else{
-                    echo '
-                    <div style="text-align: center;">
-                    <p class="type1" style="color: rgb(150, 150, 150)"> 查無使用者 </p><br>
-                    </div>';
+                    if($check == 0){
+                        echo '
+                        <div style="text-align: center;">
+                        <p class="type1" style="color: rgb(150, 150, 150)"> 查無使用者 </p><br>
+                        </div>';
+                    }
                 }
 
                 echo '<br>';
