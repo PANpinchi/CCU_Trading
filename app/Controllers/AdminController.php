@@ -820,7 +820,7 @@ class AdminController extends BaseController
 		$mail->Host = "smtp.gmail.com";
 		$mail->SMTPAuth = true;
 		$mail->Username = "ccutrading@gmail.com"; //寄件人
-		$mail->Password = "27105081";
+		$mail->Password = "Aa27105081";
 		$mail->Port = 465;
 		$mail->SMTPSecure = "ssl";
 
@@ -875,7 +875,7 @@ class AdminController extends BaseController
 		$mail->Host = "smtp.gmail.com";
 		$mail->SMTPAuth = true;
 		$mail->Username = "ccutrading@gmail.com"; //寄件人
-		$mail->Password = "27105081";
+		$mail->Password = "Aa27105081";
 		$mail->Port = 465;
 		$mail->SMTPSecure = "ssl";
 

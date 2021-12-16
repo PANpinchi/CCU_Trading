@@ -179,6 +179,17 @@
         top: $(document.documentElement)[0].scrollHeight,
         behavior: 'instant'
     });
+
+    $(function() { 
+        setTimeout(function() { 
+            $.ajax({
+                url:"/ChatController/chat",
+                success:function(result){
+                    alert(result);
+                }
+            });
+        }, 1000); 
+    });         
 </script>
 
 <?= $this->endSection() ?>
