@@ -641,8 +641,10 @@ class PostController extends BaseController
 		}
 
 		/* 搜尋使用者及商品 */
+		$users_num = 0;
+		$items_num = 0;
 		for($i = 0; isset($users[$i]) || isset($posts[$i]); $i++){
-			if(isset($users[$i])){
+			if(isset($users[$i]) && $users_num < 10){
 				if($search == $users[$i]['name']){
 					for($j=0; isset($search_users[$j]); $j++){
 						if($search_users[$j]['name'] == $users[$i]['name']){
@@ -651,6 +653,7 @@ class PostController extends BaseController
 					}
 					if(!isset($search_users[$j])){
 						array_push($search_users, $users[$i]);
+						$users_num++;
 					}
 				}
 				else if($search == $users[$i]['name2']){
@@ -661,11 +664,12 @@ class PostController extends BaseController
 					}
 					if(!isset($search_users[$j])){
 						array_push($search_users, $users[$i]);
+						$users_num++;
 					}
 				}
 			}
 
-			if(isset($posts[$i])){
+			if(isset($posts[$i])  && $items_num < 10){
 				if($search == $posts[$i]['seller']){
 					for($j=0; isset($search_posts[$j]); $j++){
 						if($search_posts[$j]['seller'] == $posts[$i]['seller']){
@@ -674,6 +678,7 @@ class PostController extends BaseController
 					}
 					if(!isset($search_posts[$j])){
 						array_push($search_posts, $posts[$i]);
+						$items_num++;
 					}
 				}
 				else if($search == $posts[$i]['name']){
@@ -684,13 +689,14 @@ class PostController extends BaseController
 					}
 					if(!isset($search_posts[$j])){
 						array_push($search_posts, $posts[$i]);
+						$items_num++;
 					}
 				}
 			}
 		}
 
 		for($i = 0; isset($users[$i]) || isset($posts[$i]); $i++){
-			if(isset($users[$i])){
+			if(isset($users[$i]) && $users_num < 10){
 				if($search != $users[$i]['name'] && $search != $users[$i]['name2']){
 					$len = strlen($search);
 					for($j=0; $j<$len; $j++){
@@ -705,6 +711,7 @@ class PostController extends BaseController
 								}
 								if(!isset($search_users[$l])){
 									array_push($search_users, $users[$i]);
+									$users_num++;
 								}
 							}
 							else if(strpos($users[$i]['name2'],$substr) !== false){
@@ -715,6 +722,7 @@ class PostController extends BaseController
 								}
 								if(!isset($search_users[$l])){
 									array_push($search_users, $users[$i]);
+									$users_num++;
 								}
 							}
 						}
@@ -722,7 +730,7 @@ class PostController extends BaseController
 				}
 			}
 
-			if(isset($posts[$i])){
+			if(isset($posts[$i]) && $items_num < 10){
 				if($search != $posts[$i]['seller'] && $search != $posts[$i]['name']){
 					$len = strlen($search);
 					for($j=0; $j<$len; $j++){
@@ -737,6 +745,7 @@ class PostController extends BaseController
 								}
 								if(!isset($search_posts[$l])){
 									array_push($search_posts, $posts[$i]);
+									$items_num++;
 								}
 							}
 							else if(strpos($posts[$i]['name'],$substr) !== false){
@@ -747,6 +756,7 @@ class PostController extends BaseController
 								}
 								if(!isset($search_posts[$l])){
 									array_push($search_posts, $posts[$i]);
+									$items_num++;
 								}
 							}
 						}

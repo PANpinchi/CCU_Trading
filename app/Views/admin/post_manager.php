@@ -283,7 +283,7 @@
         </div>
         <div class="col-2" style="background-color: rgb(255, 255, 255);">
             <div style="height: 90px;"> </div>
-            <div id="chat_box" style="position: absolute; width: 16%; min-width: 243px;">
+            <div id="chat_box" style="position: absolute; width: 16.5%; min-width: 243px; margin-left: -10px;">
                 <div style="height: 60px; padding-left: 20px; border-bottom: 1px solid rgb(230, 230, 230)">
                     <p class="type7" style="user-select: none;">✉ Message</p>
                 </div>
