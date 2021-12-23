@@ -23,9 +23,8 @@ class AdminController extends BaseController
         if(isset($_SESSION['login'])){
             return redirect('PostController/post');
         }
-		if(isset($_SESSION['admin_login'])){
-            return redirect('AdminController/post_manager');
-        }
+		
+		unset($_SESSION['admin_login']);
 
         return view('admin/admin_login');
     }
