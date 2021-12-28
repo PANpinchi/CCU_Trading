@@ -29,8 +29,10 @@ class ChatController extends BaseController
 		$admin = $model3->findAll(); //取得資料
 		$display = 0;
 
-		$_SESSION['to'] = ' ';
-		$talking = '';
+		$_SESSION['to'] = NULL;
+		$talking = NULL;
+		$talking_account = NULL;
+		$talking_header = NULL;
 		if(isset($_GET['value'])){
 			$display = 1;
 			$_SESSION['to'] = $_GET['value'];
@@ -60,7 +62,7 @@ class ChatController extends BaseController
 			if($check == 0){
 				$data = [
 					'name_from' => $_SESSION['account'],
-					'name_to' => $_SESSION['to'],
+					'name_to' => $_SESSION['to']
 				];
 				$model->save($data);
 			}
@@ -113,6 +115,8 @@ class ChatController extends BaseController
 				if($accounts[$j]['account'] == $chat_people[$i]){
 					if($_SESSION['to'] == $accounts[$j]['account']){
 						$talking = $accounts[$j]['name2'];
+						$talking_account = $accounts[$j]['account'];
+						$talking_header = $accounts[$j]['header'];
 					}
 					array_push($chat_name, $accounts[$j]['name2']);
 					array_push($chat_header, $accounts[$j]['header']);
@@ -123,8 +127,9 @@ class ChatController extends BaseController
 			/* 檢查管理員名稱 */
 			for($j = 0; isset($admin[$j]); $j++){
 				if($admin[$j]['account'] == $chat_people[$i]){
-					if($_SESSION['to'] == $accounts[$j]['account']){
+					if($_SESSION['to'] == $admin[$j]['account']){
 						$talking = '管理員大大';
+						$talking_account = 'ccutrading';
 					}
 					array_push($chat_name, '管理員大大');
 					array_push($chat_header, NULL);
@@ -173,7 +178,9 @@ class ChatController extends BaseController
 			'chat_header' => $chat_header,
 			'count' => $count,
 			'display' => $display,
-			'talking' => $talking
+			'talking' => $talking,
+			'talking_account' => $talking_account,
+			'talking_header' => $talking_header
 		];
 
 		return view('chat/chat', $data);

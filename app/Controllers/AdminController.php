@@ -734,7 +734,48 @@ class AdminController extends BaseController
 
 		$model->save($data);
 	}
+	
+	public function new_message()
+	{		
+		$model = new Message();
+		$users = $model->findAll(); //取得資料
 
+		$num = $_POST['num'];
+		$count_num = 0;
+
+		/* 準備資料 */
+		$from = array();
+    	$to = array();
+		$content = array();
+		$time = array();
+
+		/* 計算聊天數量 */
+		for($i = 0; isset($users[$i]); $i++)
+		{
+			$cmp_from = strcmp($_SESSION['account'], $users[$i]['name_from']);
+			$cmp_to = strcmp($_SESSION['to'], $users[$i]['name_to']);
+
+			if($cmp_from == 0 && $cmp_to == 0){
+				$count_num++;
+			}
+
+			$cmp_from = strcmp($_SESSION['account'], $users[$i]['name_to']);
+			$cmp_to = strcmp($_SESSION['to'], $users[$i]['name_from']);
+
+			if($cmp_from == 0 && $cmp_to == 0){
+				$count_num++;
+			}
+		}
+
+		if($count_num > $num){
+			$json = json_encode(true);
+			echo $json;
+		}
+		else{
+			$json = json_encode(false);
+			echo $json;
+		}
+	}
 
 	/* 撤回商品檢舉 */
 	public function cancel_report($id)

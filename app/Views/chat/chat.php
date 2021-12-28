@@ -86,6 +86,7 @@
 
                         if($from[$i] == $_SESSION['account']){
                             echo '
+                            <div style="height: 20px"></div>
                             <div align="right" style="margin-right: 5%;">
                                 <span class="type2" style="user-select: none;">';
                                     if($afternoon == 0){
@@ -96,29 +97,59 @@
                                     }
                             echo '
                                 </span>
-                                <div class="speech-bubble-right" style="width: fit-content; max-width: 50%; min-width: 5%; text-align: center;">
-                                    <p class="type1">
-                                        &nbsp&nbsp'.$content[$i].'&nbsp&nbsp
-                                    </p>
+                                <div class="speech-bubble-right" align="center" style="width: fit-content; max-width: 50%; min-width: 8%; min-height: 37px;">
+                                    <div style="display: inline-block;">&nbsp&nbsp</div>
+                                    <div style="display: inline-block; margin-bottom: -15px; word-break: break-all; text-align: left; width: fit-content; max-width: 92%">
+                                        <p class="type1">
+                                            '.$content[$i].'
+                                        </p>
+                                    </div>
+                                    <div style="display: inline-block;">&nbsp&nbsp</div>
                                 </div>
                             </div>';
                         }
                         else{
                             echo '
-                            <div align="left" style="margin-left: 5%">
-                                <span class="type2" style="user-select: none;">';
+                            <div style="height: 20px"></div>
+                            <div align="left" style="margin-left: 5%;">
+                                <div class="type2" style="user-select: none; margin-left: 58px;">';
                                     if($afternoon == 0){
                                         echo '上午 '.$hours.':'.$minutes;
                                     }
                                     else{
                                         echo '下午 '.$hours.':'.$minutes;
                                     }
-                            echo '
+                                echo '</div>';
+                                if(isset($talking_header)){
+                                    echo '
+                                    <a href="/PostController/account/'.$talking_account.'">
+                                        <img class="user2" src="/header/'.$talking_header.'" style="margin-top: 0px">
+                                    </a>';
+                                }
+                                else{
+                                    if(isset($talking_account) && $talking_account == 'ccutrading'){
+                                        echo '
+                                        <a href="/ChatController/chat?value=ccutrading@gmail.com">
+                                            <img class="user2" src="/header/user.jpg" style="margin-top: 0px">
+                                        </a>';
+                                    }
+                                    else{
+                                        echo '
+                                        <a href="/PostController/account/'.$talking_account.'">
+                                            <img class="user2" src="/header/user.jpg" style="margin-top: 0px">
+                                        </a>';
+                                    }
+                                }
+                                echo '
                                 </span>
-                                <div class="speech-bubble-left" style="width: fit-content; max-width: 50%; min-width: 5%; text-align: center;">
-                                    <p class="type1">
-                                        &nbsp&nbsp'.$content[$i].'&nbsp&nbsp
-                                    </p>
+                                <div class="speech-bubble-left" align="center" style="display: inline-block; margin-left: 10px; width: fit-content; max-width: 50%; min-width: 8%; min-height: 37px;">
+                                    <div style="display: inline-block;">&nbsp&nbsp</div>
+                                    <div style="display: inline-block; margin-bottom: -15px; word-break: break-all; text-align: left; width: fit-content; max-width: 92%">
+                                        <p class="type1">
+                                            '.$content[$i].'
+                                        </p>
+                                    </div>
+                                    <div style="display: inline-block;">&nbsp&nbsp</div>
                                 </div>
                             </div>';
                         }

@@ -179,6 +179,15 @@
         top: $(document.documentElement)[0].scrollHeight,
         behavior: 'instant'
     });
+
+    setInterval(function(){
+        $.post("/AdminController/new_message", {num: <?php echo $i; ?>}, function(data) {
+            if(data){
+                $('#messages')[0].reset();
+                window.location.reload();
+            }
+        }, 'json');
+    }, 500); // 0.5 seconds
 </script>
 
 <?= $this->endSection() ?>

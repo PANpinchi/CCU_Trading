@@ -42,6 +42,13 @@ a{
     border-radius: 50%;
 }
 
+.user2{
+    border:  3px solid rgb(150, 255, 63);
+	width: 40px;
+	height: 40px;
+    border-radius: 50%;
+}
+
 .footer{
     position: fixed;
     bottom: 0px;
@@ -84,7 +91,7 @@ a{
     content: '';
     position: absolute;
     left: 10px;
-    top: 60%;
+    bottom: 5px;
     width: 0;
     height: 0;
     border: 20px solid transparent;
@@ -107,7 +114,7 @@ a{
     position: absolute;
     z-index:-1;
     right: 10px;
-    top: 60%;
+    bottom: 5px;
     width: 0;
     height: 0;
     border: 20px solid transparent;
