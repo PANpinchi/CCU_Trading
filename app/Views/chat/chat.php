@@ -115,7 +115,7 @@
                                     }
                             echo '
                                 </span>
-                                <div class="speech-bubble-left" style="width: fit-content;">
+                                <div class="speech-bubble-left" style="width: fit-content; max-width: 50%; min-width: 5%; text-align: center;">
                                     <p class="type1">
                                         &nbsp&nbsp'.$content[$i].'&nbsp&nbsp
                                     </p>
@@ -169,16 +169,24 @@
     
     function SubmitFormData() {
         var message = $("#message").val();
-        $.post("/ChatController/message", {message: message},
-        function(data) {
-        $('#messages')[0].reset();
+        $.post("/ChatController/message", {message: message},function(data) {
+            $('#messages')[0].reset();
         });
     }
 
     document.documentElement.scrollTo({
         top: $(document.documentElement)[0].scrollHeight,
         behavior: 'instant'
-    });       
+    });
+
+    setInterval(function(){
+        $.post("/ChatController/new_message", {num: <?php echo $i; ?>}, function(data) {
+            if(data){
+                $('#messages')[0].reset();
+                window.location.reload();
+            }
+        }, 'json');
+    }, 500); // 0.5 seconds
 </script>
 
 <?= $this->endSection() ?>
