@@ -206,7 +206,7 @@
     }
 
     document.documentElement.scrollTo({
-        top: $(document.documentElement)[0].scrollHeight,
+        top: $(document.documentElement)[0].scrollHeight + 100,
         behavior: 'instant'
     });
 
