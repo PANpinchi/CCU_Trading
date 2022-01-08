@@ -14,8 +14,8 @@
 
     <body>
         <div class="row" style="user-select: none;">
-            <div class="col-4"></div>
-            <div class="col-4" align="center">
+            <div class="col-md-4"></div>
+            <div class="col-md-4" align="center">
                 <br><br><br>
                 <p class="type0">中 正 大 學 買 賣 交 流</p>
                 <br><br>
@@ -30,7 +30,7 @@
                     <p class="type4">※ 請使用學校電子郵件登入</p>
                 </form>
             </div>
-            <div class="col-4" style="position: absolute; bottom: 10px; right: 0px; text-align: right;">
+            <div class="col-md-4" style="position: absolute; bottom: 10px; right: 0px; text-align: right;">
                     <a href="/AdminController/admin_login" type="button" class="btn btn-secondary" style="font-weight: bold; opacity: .5;">管理員登入</a>
             </div>
         </div>
